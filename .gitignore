@@ -1,0 +1,4 @@
+psda/__pycache__/
+psda/migrations/
+!psda/migrations/__init__.py
+smarthome/__pycache__/

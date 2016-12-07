@@ -1,0 +1,44 @@
+{% for device in devices %}
+    {% for unique_device in device.device_set.all %}
+        <div class="col-sm-3">
+            {% if unique_device.name == 'smoke' %}
+                <div class="card card-gray card-bold text-xs-center">
+                    <br />
+                    <i class="material-icons md-48">smoking_rooms</i>
+            {% elif unique_device.name == 'motion'%}
+                <div class="card card-green card-bold text-xs-center">
+                    <br />
+                    <i class="material-icons md-48">directions_run</i>
+            {% elif unique_device.name == 'magnet'%}
+                <div class="card card-orange card-bold text-xs-center">
+                    <br />
+                    <i class="material-icons md-48">filter_none</i>
+            {% elif device.name == 'RELAY'%}
+                <div class="card card-purple card-bold text-xs-center">
+                    <br />
+                    <i class="material-icons md-48">power</i>
+            {% elif unique_device.name == 'temperature_humidity'%}
+                <div class="card card-blue card-bold text-xs-center">
+                    <br />
+                    <i class="material-icons md-48">ac_unit</i>
+            {% elif unique_device.name == 'light'%}
+                <div class="card card-yellow card-bold text-xs-center">
+                    <br />
+                    <i class="material-icons md-48">lightbulb_outline</i>
+            {% else %}
+                <div class="card card-bold text-xs-center">
+            {% endif %}
+                  <div class="card-block">
+                      <p>{{ unique_device.name }}</p>
+                      <p>{{ device.name }}
+                          {% if unique_device.logic  == 1 %}
+                                ON
+                          {% else %}
+                                OFF
+                          {% endif %}
+                      </p>
+                  </div>
+                </div>
+        </div>
+    {% endfor %}
+{% endfor %}
