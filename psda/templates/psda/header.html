@@ -13,6 +13,7 @@
     <script type="text/javascript" src="{% static 'js/site.js' %}"></script>
   <script type="text/javascript" src="{% static 'js/jquery.min.js' %}"></script>
   <script type="text/javascript" src="{% static 'js/bootstrap.min.js' %}"></script>
+	<script type="text/javascript" src="{% static 'js/material-dashboard.js' %}"></script>
   <meta name="viewport" content = "width=device-width, initial-scale=1.0">
         <link href="http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
     <link href='http://fonts.googleapis.com/css?family=Roboto:400,700,300|Material+Icons' rel='stylesheet' type='text/css'>
@@ -52,28 +53,46 @@
                             Вы зашли как: {{ user.username }}
                         </li>
 
-                        <li">
+                        <li>
                             <a href = "{% url 'logout' %}" type="button" class="btn btn-outline-primary"> Log out </a>
                         </li>
                     {% else %}
                         <li>
-                            <a href = "{% url 'index' %}" type="button" class="btn btn-outline-primary"> Log in </a>
+                            <a href = "{% url 'scenarios' %}" type="button" class="btn btn-outline-primary"> Log in </a>
                         </li>
                     {% endif %}
+					{% if room == "overview" %}
+					<li class="active">
+						{% else %}
+						<li>
+					{% endif %}
+	                    <a href="{% url 'scenarios' %}">
+	                        <i class="material-icons">home</i>
+	                        <p>Home</p>
+	                    </a>
+	                </li>
                     <li>
 	                    <a href="notifications.html">
 	                        <i class="material-icons text-gray">notifications</i>
 	                        <p>Hall</p>
 	                    </a>
 	                </li>
-	                <li class="active">
-	                    <a href="dashboard.html">
+					{% if room.type == "LIVINGROOM" %}
+					<li class="active">
+						{% else %}
+						<li>
+					{% endif %}
+	                    <a href="{% url 'room' '1'%}">
 	                        <i class="material-icons">tv</i>
 	                        <p>Living room</p>
 	                    </a>
 	                </li>
-	                <li>
-	                    <a href="user.html">
+					{% if room.type == "BEDROOM" %}
+					<li class="active">
+						{% else %}
+						<li>
+					{% endif %}
+	                    <a href="{% url 'room' '1'%}">
 	                        <i class="material-icons">airline_seat_individual_suite</i>
 	                        <p>Bedroom</p>
 	                    </a>

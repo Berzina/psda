@@ -34,6 +34,10 @@ class Commands(models.Model):
 
 class Device(models.Model):
     name = models.CharField(max_length=20)
+    icon = models.CharField(max_length=100)
+    card_color = models.CharField(max_length=20)
+    state = models.ForeignKey('StatusList', models.DO_NOTHING, db_column='state')
+    in_room = models.ForeignKey('Rooms', models.DO_NOTHING, db_column='in_room')
     channel = models.ForeignKey(ChannelList, models.DO_NOTHING, db_column='channel')
     type = models.ForeignKey('DeviceList', models.DO_NOTHING, db_column='type')
     voltage = models.FloatField()
@@ -98,6 +102,15 @@ class Members(models.Model):
     class Meta:
         managed = False
         db_table = 'members'
+
+class Rooms(models.Model):
+    name = models.CharField(max_length=20)
+    type = models.CharField(max_length=20)
+    icon = models.CharField(max_length=100)
+
+    class Meta:
+        managed = False
+        db_table = 'rooms'
 
 
 class Scenarios(models.Model):

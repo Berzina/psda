@@ -182,33 +182,37 @@ margin-left: -2px;}
 	border-color: #1CA347;
 }
 
+.card-white {
+    background : white;
+}
+
 .card-gray {
     background : gray;
     color: white;
 }
 
 .card-green {
-    background : green;
+    background : #00af64;
     color: white;
 }
 
 .card-orange {
-    background : orange;
+    background : #FF7140;
     color: white;
 }
 
 .card-purple {
-    background : purple;
+    background : #A43DD4;
     color: white;
 }
 
 .card-yellow {
-    background : #e6e600;
+    background : #FFD040;
     color: white;
 }
 
 .card-blue {
-    background : #00004c;
+    background : #096aa3;
     color: white;
 }
 
