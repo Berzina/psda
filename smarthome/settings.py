@@ -25,7 +25,7 @@ SECRET_KEY = '7im%a6nanfl^p@$0w9^nkt$zfr!4s3f^0!-3i2*%1kbky9*_$t'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['warm-forest-43150.herokuapp.com']
 
 
 # Application definition
