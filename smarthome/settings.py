@@ -27,7 +27,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['warm-forest-43150.herokuapp.com',
                  'localhost',
-                 'psda666.heroku.com']
+                 'psda666.herokuapp.com']
 
 
 # Application definition
