@@ -2,5 +2,4 @@ dj-database-url
 django
 gunicorn
 mysqlclient
-rabbitmq-server
 celery
