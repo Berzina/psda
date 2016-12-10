@@ -1,52 +1,42 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-
 <head>
-
-
-  <meta charset="utf-8" />
-  {% load static %}
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" type = "text/css"/>
-  <link rel="stylesheet" href="{% static 'css/site.css' %}" type = "text/css"/>
+    <meta charset="utf-8" />
+    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
+    <meta name="viewport" content="width=device-width" />
+    {% load static %}
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" type = "text/css"/>
+    <link rel="stylesheet" href="{% static 'css/site.css' %}" type = "text/css"/>
     <link rel="stylesheet" href="{% static 'css/material-dashboard.css' %}" type = "text/css"/>
     <script type="text/javascript" src="{% static 'js/site.js' %}"></script>
-  <script type="text/javascript" src="{% static 'js/jquery.min.js' %}"></script>
-  <script src="https://npmcdn.com/tether@1.2.4/dist/js/tether.min.js"></script>
-  <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
- 
-        <link href="//maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
+    <script type="text/javascript" src="{% static 'js/jquery.min.js' %}"></script>
+    <script src="https://npmcdn.com/tether@1.2.4/dist/js/tether.min.js"></script>
+    <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="{% static 'js/material.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/material-dashboard.js' %}"></script>
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
     <link href='//fonts.googleapis.com/css?family=Roboto:400,700,300|Material+Icons' rel='stylesheet' type='text/css'>
-
-  <style type="text/css">
-    html,
-    body {
-      height:100%
-    }
-  </style>
 </head>
 
-<body class="body" style="background-color:#f6f6f6">
-  <div class="container-fluid" style="min-height:95%; ">
-      <div class="col-sm-3">
-        <div class="wrapper">
-            <div class="sidebar" data-color="purple" >
+<body>
+
+	<div class="wrapper">
+
+	    <div class="sidebar" data-color="purple" data-image="../assets/img/sidebar-1.jpg">
 			<!--
 		        Tip 1: You can change the color of the sidebar using: data-color="purple | blue | green | orange | red"
 
 		        Tip 2: you can also add an image using data-image tag
 		    -->
 
-
 			<div class="logo">
-				<a href="http://www.creative-tim.com" class="simple-text">
-					Logo | Project name
+				<a href="#" class="simple-text">
+					LOGO  |  PROJECT NAME
 				</a>
 			</div>
 
-
 	    	<div class="sidebar-wrapper">
 	            <ul class="nav">
-
                     {% if user.is_authenticated %}
                         <li>
                             Вы зашли как: {{ user.username }}
@@ -126,32 +116,77 @@
 	                        <p>Toilet</p>
 	                    </a>
 	                </li>
-
 	            </ul>
 	    	</div>
 	    </div>
-        </div> <!--col-sm-2-->
-      </div>
 
-      <div class="col-sm-9">
+	    <div class="main-panel">
+			<nav class="navbar navbar-transparent navbar-absolute">
+				<div class="container-fluid">
+					<div class="navbar-header">
+						<button type="button" class="navbar-toggle" data-toggle="collapse">
+							<span class="sr-only">Toggle navigation</span>
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+						</button>
+					</div>
+{#					<div class="collapse navbar-collapse">#}
+{#						<form class="navbar-form navbar-right" role="search">#}
+{#							<div class="form-group  is-empty">#}
+{#								<input type="text" class="form-control" placeholder="Search">#}
+{#								<span class="material-input"></span>#}
+{#							</div>#}
+{#							<button type="submit" class="btn btn-white btn-round btn-just-icon">#}
+{#								<i class="material-icons">search</i><div class="ripple-container"></div>#}
+{#							</button>#}
+{#						</form>#}
+{#					</div>#}
+				</div>
+			</nav>
 
-      <div class='container-fluid'>
-      <br><br>
-         {% block content %}
-         {% endblock %}
-      </div>
-      </div>
-    </div>
-  </div>
+          <div class='content'>
+          <br><br>
+             {% block content %}
+             {% endblock %}
+          </div>
 
-
-
-  <footer>
-    <div class="container-fluid" style='margin-left:15px'>
-      <p><a href="#" target="blank">Contact</a> | <a href="#" target="blank">LinkedIn</a> | <a href="#" target="blank">Twitter</a> | <a href="#" target="blank">Google+</a></p>
-    </div>
-  </footer>
+			<footer class="footer">
+				<div class="container-fluid">
+					<nav class="pull-left">
+						<ul>
+							<li>
+								<a href="#">
+									Home
+								</a>
+							</li>
+							<li>
+								<a href="#">
+									Company
+								</a>
+							</li>
+							<li>
+								<a href="#">
+									Portfolio
+								</a>
+							</li>
+							<li>
+								<a href="#">
+								   Blog
+								</a>
+							</li>
+						</ul>
+					</nav>
+					<p class="copyright pull-right">
+						&copy; <script>document.write(new Date().getFullYear())</script> <a href="#">Kate Khotko</a>
+					</p>
+				</div>
+			</footer>
+		</div>
+	</div>
 
 </body>
 
 </html>
+
+

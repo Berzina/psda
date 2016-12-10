@@ -36,7 +36,6 @@ ALLOWED_HOSTS = ['warm-forest-43150.herokuapp.com',
 
 INSTALLED_APPS = [
     'psda',
-    # 'django_mobile',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -59,7 +58,6 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'smarthome.urls'
 
-TEMPLATE_LOADERS = ['django_mobile.loader.Loader']
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
