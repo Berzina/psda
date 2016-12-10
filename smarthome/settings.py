@@ -28,13 +28,15 @@ DEBUG = True
 ALLOWED_HOSTS = ['warm-forest-43150.herokuapp.com',
                  'localhost',
                  'psda666.herokuapp.com',
-                 'psda.herokuapp.com']
+                 'psda.herokuapp.com',
+                 'ezhome.herokuapp.com']
 
 
 # Application definition
 
 INSTALLED_APPS = [
     'psda',
+    # 'django_mobile',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -46,6 +48,8 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    # 'django_mobile.middleware.MobileDetectionMiddleware',
+    # 'django_mobile.middleware.SetFlavourMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -55,6 +59,7 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'smarthome.urls'
 
+TEMPLATE_LOADERS = ['django_mobile.loader.Loader']
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -62,6 +67,7 @@ TEMPLATES = [
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
+                # 'django_mobile.context_processors.flavour',
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',

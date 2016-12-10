@@ -3,6 +3,7 @@
 {% block content %}
     {% include 'psda/includes/navpanel.html' %}
     {% if tab == "scenarios" %}
+        My site {% if flavour == "mobile" %}(mobile version){% endif %}
         {% include 'psda/includes/scenariolist.html' %}
     {% endif %}
 {% endblock %}
