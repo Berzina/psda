@@ -216,13 +216,52 @@ margin-left: -2px;}
     color: white !important;
 }
 
+.card-black {
+    background : black !important;
+    color: white !important;
+}
+
+.card-lightgray {
+    background : black !important;
+    color: white !important;
+}
+
 .card-bold {
     font-weight: bold;
 }
+
+.glyphicon-refresh-animate {
+    -animation: spin .7s infinite linear;
+    -ms-animation: spin .7s infinite linear;
+    -webkit-animation: spinw .7s infinite linear;
+    -moz-animation: spinm .7s infinite linear;
+}
+
+@keyframes spin {
+    from { transform: scale(1) rotate(0deg);}
+    to { transform: scale(1) rotate(360deg);}
+}
+
+@-webkit-keyframes spinw {
+    from { -webkit-transform: rotate(0deg);}
+    to { -webkit-transform: rotate(360deg);}
+}
+
+@-moz-keyframes spinm {
+    from { -moz-transform: rotate(0deg);}
+    to { -moz-transform: rotate(360deg);}
+}
+
 .material-icons.md-48 { font-size: 48px; }
 
+.md-12 { font-size: 12px !important; }
+
 .text-xs-center {
-  text-align: center !important;
+  text-align: center;
+}
+
+.text-xs-right {
+  align: right !important;
 }
 
 .card {

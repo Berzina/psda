@@ -1,14 +1,16 @@
 {% for device in room_object.device_set.all %}
     {% if device.name != "NONE" %}
-        <div class="col-sm-2 col-xs-12">
-            <div class="card card-{{device.card_color}} card-bold text-xs-center">
-                <br />
-                <i class="material-icons md-48"> {{device.icon}}</i>
-              <div class="card-block">
-                  <p>{{ device.name }}</p>
-                  <p>{{ device.type.name }} {{ device.state.name }}</p>
-              </div>
-            </div>
+        <div class="col-sm-3 col-xs-12">
+            <div class="card card-{{device.card_color}} card-bold">
+                <div class="card-title text-right">
+                     <span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span>
+                </div>
+                <div class="card-block text-xs-center">
+                    <i class="material-icons md-48"> {{device.icon}} </i>
+                    <p>{{ device.name }}</p>
+                    <p>{{ device.type.name }} {{ device.state.name }}</p>
+                  </div>
+                </div>
         </div>
     {% endif %}
 {% endfor %}
