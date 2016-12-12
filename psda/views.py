@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from .models import Device, DeviceList, Rooms, Scenarios
-
+from django_ajax.decorators import ajax
 
 def index(request):
 
@@ -34,3 +34,6 @@ def devices (request):
                "tab" : "devices"}
 
     return render(request, 'psda/index.html', context)
+@ajax
+def satisfy (request):
+    return {'result':'i love u kate, u are very cute and smart person :3'}

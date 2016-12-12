@@ -1,5 +1,21 @@
 {% extends "psda/header.html" %}
 
 {% block content %}
+    <button id = "satisfier" data-url ="{% url 'satisfy' %}" > Push me </button>
+    <p>And then just touch me</p>
+    <p>Till I can get my satisfaction </p>
     {% include 'psda/includes/devicelist.html' %}
+
+    <script>
+    $('#satisfier').click(function(ev){
+       ev.preventDefault();
+       var $this = $(this);
+        ajaxGet($this.attr('data-url'), function(content){
+            //onSuccess
+            alert(content.result);
+        })
+    });
+
+    </script>
 {% endblock %}
+
