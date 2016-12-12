@@ -85,10 +85,10 @@ WSGI_APPLICATION = 'smarthome.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'sql8147780',
-        'USER': 'sql8147780',
-        'PASSWORD': 'kZDkx7SFjr',
-        'HOST': 'sql8.freemysqlhosting.net',   # Or an IP Address that your DB is hosted on
+        'NAME': 'sql7148993',
+        'USER': 'sql7148993',
+        'PASSWORD': 'hUu52AKlch',
+        'HOST': 'sql7.freemysqlhosting.net',   # Or an IP Address that your DB is hosted on
         'PORT': '3306',
     }
 }

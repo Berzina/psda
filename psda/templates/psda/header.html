@@ -51,7 +51,7 @@
                             <a href = "{% url 'scenarios' %}" type="button" class="btn btn-outline-primary"> Log in </a>
                         </li>
                     {% endif %}
-					{% if room == "overview" %}
+					{% if current_roomtype == "overview" %}
 					<li class="active">
 						{% else %}
 						<li>
@@ -61,62 +61,21 @@
 	                        <p>Home</p>
 	                    </a>
 	                </li>
-                    <li>
-	                    <a href="notifications.html">
-	                        <i class="material-icons text-gray">notifications</i>
-	                        <p>Hall</p>
-	                    </a>
-	                </li>
-					{% if room.type == "LIVINGROOM" %}
-					<li class="active">
-						{% else %}
-						<li>
-					{% endif %}
-	                    <a href="{% url 'room' '1'%}">
-	                        <i class="material-icons">tv</i>
-	                        <p>Living room</p>
-	                    </a>
-	                </li>
-					{% if room.type == "BEDROOM" %}
-					<li class="active">
-						{% else %}
-						<li>
-					{% endif %}
-	                    <a href="{% url 'room' '1'%}">
-	                        <i class="material-icons">airline_seat_individual_suite</i>
-	                        <p>Bedroom</p>
-	                    </a>
-	                </li>
-                    <li>
-	                    <a href="user.html">
-	                        <i class="material-icons">child_care</i>
-	                        <p>Children room</p>
-	                    </a>
-	                </li>
-	                <li>
-	                    <a href="table.html">
-	                        <i class="material-icons">business_center</i>
-	                        <p>Office</p>
-	                    </a>
-	                </li>
-	                <li>
-	                    <a href="typography.html">
-	                        <i class="material-icons">kitchen</i>
-	                        <p>Kitchen</p>
-	                    </a>
-	                </li>
-	                <li>
-	                    <a href="icons.html">
-	                        <i class="material-icons">hot_tub</i>
-	                        <p>Bathroom</p>
-	                    </a>
-	                </li>
-	                <li>
-	                    <a href="maps.html">
-	                        <i class="material-icons">invert_colors</i>
-	                        <p>Toilet</p>
-	                    </a>
-	                </li>
+					{% for room_type in rooms %}
+						{% if room_type.name == current_roomtype.name %}
+							<li class="active">
+								{% else %}
+								<li>
+							{% endif %}
+								<a href="{% url 'room' room_type.id '1' %}">
+									<i class="material-icons">{{room_type.icon}}</i>
+									<p>{{room_type.name}}</p>
+								</a>
+							</li>
+					{% endfor %}
+
+
+
 	            </ul>
 	    	</div>
 	    </div>
@@ -147,7 +106,6 @@
 			</nav>
 
           <div class='content'>
-          <br><br>
              {% block content %}
              {% endblock %}
           </div>

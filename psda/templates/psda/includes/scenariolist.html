@@ -1,14 +1,40 @@
 {% for scenario in scenarios %}
-    <div class="col-sm-6">
-        <div class="card card-block">
-          <h3 class="card-title "> {{ scenario.name }} </h3>
-            <ul class="list-group list-group-flush">
-                <li class="list-group-item">Cras justo odio</li>
-                <li class="list-group-item">Dapibus ac facilisis in</li>
-                <li class="list-group-item">Vestibulum at eros</li>
-            </ul>
-          <a href="#" class="card-link">ON</a>
-          <a href="#" class="card-link">OFF</a>
+    {% if scenario.name != "NONE" %}
+        <div class="col-sm-6">
+            <div class="card">
+                <div class ="card-block">
+                  <h3 class="card-title "> {{ scenario.name }} </h3>
+                        <div class="list-group col-md-6">
+                            <a class="list-group-item disabled">
+                                What happened:
+                            </a>
+                            {% for event in events %}
+                                {% if scenario == event.scenario %}
+                                    {% if event.event_type.id == 1 %}
+                                          <a class="list-group-item">{{ event.device.name }} {{ event.command.name }}</a>
+                                    {% endif %}
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                        <div class="list-group col-md-6">
+                            <a class="list-group-item disabled">
+                                What I'll do:
+                            </a>
+                            {% for event in events %}
+                                {% if scenario == event.scenario %}
+                                    {% if event.event_type.id == 2 %}
+                                          <a class="list-group-item">{{ event.device.name }} {{ event.command.name }}</a>
+                                    {% endif %}
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                </div>
+                <div class="card-text" align ="center">
+                    <a href="#" class="card-text">ON</a>
+                    <a href="#" class="card-text">OFF</a>
+                </div>
+                <br />
+            </div>
         </div>
-    </div>
+    {% endif %}
 {% endfor %}

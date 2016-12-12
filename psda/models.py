@@ -2,7 +2,6 @@ from __future__ import unicode_literals
 
 from django.db import models
 
-
 class ChannelList(models.Model):
     name = models.CharField(max_length=11)
 
@@ -37,7 +36,7 @@ class Device(models.Model):
     icon = models.CharField(max_length=100)
     card_color = models.CharField(max_length=20)
     state = models.ForeignKey('StatusList', models.DO_NOTHING, db_column='state')
-    in_room = models.ForeignKey('Rooms', models.DO_NOTHING, db_column='in_room')
+    room = models.ForeignKey('Rooms', models.DO_NOTHING, db_column='room')
     channel = models.ForeignKey(ChannelList, models.DO_NOTHING, db_column='channel')
     type = models.ForeignKey('DeviceList', models.DO_NOTHING, db_column='type')
     voltage = models.FloatField()
@@ -65,7 +64,6 @@ class DeviceList(models.Model):
     class Meta:
         managed = False
         db_table = 'device_list'
-
 
 class EventList(models.Model):
     name = models.CharField(max_length=10)
@@ -103,10 +101,19 @@ class Members(models.Model):
         managed = False
         db_table = 'members'
 
+
+class RoomList(models.Model):
+    name = models.CharField(max_length=20)
+    icon = models.CharField(max_length=100)
+
+    class Meta:
+        managed = False
+        db_table = 'room_list'
+
+
 class Rooms(models.Model):
     name = models.CharField(max_length=20)
-    type = models.CharField(max_length=20)
-    icon = models.CharField(max_length=100)
+    type_room = models.ForeignKey(RoomList, models.DO_NOTHING, db_column='type_room')
 
     class Meta:
         managed = False
@@ -150,4 +157,3 @@ class StatusList(models.Model):
     class Meta:
         managed = False
         db_table = 'status_list'
-

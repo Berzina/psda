@@ -1,9 +1,8 @@
 {% extends "psda/header.html" %}
 
 {% block content %}
+    {% include 'psda/includes/navpanelroom.html' %}
     <button id = "satisfier" data-url ="{% url 'satisfy' %}" > Push me </button>
-    <p>And then just touch me</p>
-    <p>Till I can get my satisfaction </p>
     {% include 'psda/includes/devicelist.html' %}
 
     <script>

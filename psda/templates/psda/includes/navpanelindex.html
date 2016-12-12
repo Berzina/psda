@@ -1,0 +1,14 @@
+<div class="well">
+    <ul class="nav nav-pills">
+      <li class="nav-item" role="presentation" id = "nav-scenarios">
+          <a class="nav-link" href="{% url 'scenarios' %}">Scenarios</a>
+      </li>
+      <li class="nav-item" role="presentation" id = "nav-devices">
+          <a class="nav-link" href="{% url 'devices' %}">Devices</a>
+      </li>
+    </ul>
+</div>
+
+<script>
+$( "#nav-{{ tab }}" ).addClass("active");
+</script>
