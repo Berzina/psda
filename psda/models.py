@@ -2,6 +2,18 @@ from __future__ import unicode_literals
 
 from django.db import models
 
+class AjaxRequests(models.Model):
+    id = models.IntegerField(primary_key=True)
+    token = models.CharField(max_length=20)
+    request_type = models.CharField(max_length=5)
+    device = models.IntegerField()
+    state = models.IntegerField()
+    value = models.CharField(max_length=20)
+
+    class Meta:
+        managed = False
+        db_table = 'ajax_requests'
+
 class ChannelList(models.Model):
     name = models.CharField(max_length=11)
 
@@ -157,3 +169,4 @@ class StatusList(models.Model):
     class Meta:
         managed = False
         db_table = 'status_list'
+

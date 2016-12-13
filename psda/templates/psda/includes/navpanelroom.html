@@ -10,6 +10,10 @@
             <li> No rooms of this room type </li>
         {% endif %}
     </ul>
+
+<button id = "satisfier" data-url ="{% url 'satisfy' %}" > Push me </button>
+<button id = "ajax-catcher" data-url ="{% url 'ajax_catcher' %}" > Push me too</button>
+
 </div>
 
 <script>

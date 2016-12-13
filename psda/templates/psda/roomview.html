@@ -2,19 +2,6 @@
 
 {% block content %}
     {% include 'psda/includes/navpanelroom.html' %}
-    <button id = "satisfier" data-url ="{% url 'satisfy' %}" > Push me </button>
     {% include 'psda/includes/devicelist.html' %}
-
-    <script>
-    $('#satisfier').click(function(ev){
-       ev.preventDefault();
-       var $this = $(this);
-        ajaxGet($this.attr('data-url'), function(content){
-            //onSuccess
-            alert(content.result);
-        })
-    });
-
-    </script>
 {% endblock %}
 

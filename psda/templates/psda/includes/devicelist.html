@@ -1,16 +1,88 @@
-{% for device in room_object.device_set.all %}
+{% for device in devices %}
     {% if device.name != "NONE" %}
         <div class="col-sm-3 col-xs-12">
-            <div class="card card-{{device.card_color}} card-bold">
-                <div class="card-title text-right">
-                     <span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span>
-                </div>
+            <div class="card card-{{device.card_color}} card-bold" data-device="{{device.id}}" data-device-state="{{ device.state.id }}">
                 <div class="card-block text-xs-center">
-                    <i class="material-icons md-48"> {{device.icon}} </i>
+                    <i class="material-icons md-48 device-icon"> {{device.icon}}</i>
+                    <p>
+                    {% with device.statistics_set.all|dictsort:"date_time"|last as latest_stat %}
+                        {% if device.name == "temperature_humidity" %}
+                            <span class ="device-values" data-device = "{{device.id}}" data-value = "value1">
+                                {{latest_stat.value1}}
+                            </span>
+                            &#8451; &#32;
+                            <span class ="device-values" data-device = "{{device.id}}" data-value = "value2">
+                                {{latest_stat.value2}}
+                            </span>
+                            <span class="glyphicon glyphicon-tint" aria-hidden="true"></span>
+                        {% else %}
+                            <span class ="device-values" data-device = "{{device.id}}" data-value = "value1">
+                                {{latest_stat.value1}}
+                            </span>
+                        {% endif %}
+
+                        {% if not latest_stat %}
+                            <br />
+                        {% endif %}
+                    {% endwith %}
+                    </p>
                     <p>{{ device.name }}</p>
                     <p>{{ device.type.name }} {{ device.state.name }}</p>
                   </div>
-                </div>
+            </div>
         </div>
     {% endif %}
 {% endfor %}
+
+<script>
+    $(".card").click (function() {
+        $(this).css("opacity", "0.3");
+        $(this).find("i.device-icon").addClass("animate-device-icon");
+    });
+
+    $('#satisfier').click(function(ev){
+       ev.preventDefault();
+       var $this = $(this);
+        ajaxGet($this.attr('data-url'), function(content){
+            //onSuccess
+            alert(content.result);
+        })
+    });
+
+    $('#ajax-catcher').click(function(ev){
+        ev.preventDefault();
+        var $this = $(this);
+        ajaxPost($this.attr('data-url'),
+
+        {'token': 'EvHE003F0CyIB4C',
+         'request_type' : 'POST',
+         'device' : 9,
+         'state' : 3,
+         'value1' : 13},
+
+         function(content){
+            //onSuccess
+            console.log(content);
+
+         })
+    });
+
+    $( document ).ajaxComplete(function( event, xhr, settings ) {
+        var content = JSON.parse(xhr.responseText).content;
+        $("div.card").each ( function (i, card) {
+            if ($(card).attr("data-device") == content.success.device_id) {
+                $(card).css("opacity", "1");
+                $(card).find("i.device-icon").removeClass("animate-device-icon");
+                var value_fields = $(card).find("span.device-values");
+                $(value_fields).each (function (i, field) {
+                    $.each (content.success.device_values, function (value_name, value) {
+                        if ($(field).attr("data-value") == value_name) {
+                            $(field).html(value);
+                        }
+                    })
+                })
+            }
+        })
+    });
+
+</script>
