@@ -50,7 +50,8 @@ application = tornado.web.Application([
  
 if __name__ == "__main__":
     http_server = tornado.httpserver.HTTPServer(application)
-    http_server.listen(os.environ.get("PORT", 5000))
+    port = int(os.environ.get("PORT", 5000))
+    http_server.listen(port)
     myIP = socket.gethostbyname(socket.gethostname())
     print ('*** Websocket Server Started at %s***' % myIP)
     print ("port = " + str(os.environ.get("PORT", 5000)))
