@@ -2,7 +2,6 @@ from django.shortcuts import render, get_object_or_404, redirect
 from .models import Device, DeviceList, Rooms, Scenarios, RoomList, Events, AjaxRequests
 from django_ajax.decorators import ajax
 from django.views.decorators.csrf import csrf_exempt
-import requests
 
 
 def index(request):
