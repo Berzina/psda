@@ -67,7 +67,7 @@
          })
     });
 
-    $.ajaxComplete(function( event, xhr, settings ) {
+    $(document).ajaxComplete(function( event, xhr, settings ) {
         alert ("i got request");
         var content = JSON.parse(xhr.responseText).content;
         $("div.card").each ( function (i, card) {
@@ -85,5 +85,18 @@
             }
         })
     });
+
+    var ws = new WebSocket("ws://localhost:8888/websocket");
+    ws.onopen = function() {
+     // ws.send("Hello Mr. Server!");
+    }
+
+    ws.onmessage = function (e) {
+    console.log(e.data);
+    var message = JSON.parse(e.data);
+    var problem_hostname = message.hostname;
+    console.log (problem_hostname);
+    };
+    ws.onclose = function() { };
 
 </script>

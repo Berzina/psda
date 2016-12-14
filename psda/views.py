@@ -1,7 +1,8 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from .models import Device, DeviceList, Rooms, Scenarios, RoomList, Events, AjaxRequests
 from django_ajax.decorators import ajax
 from django.views.decorators.csrf import csrf_exempt
+import requests
 
 
 def index(request):
@@ -89,9 +90,11 @@ def ajax_catcher (request):
         if param == "value5":
             device_values["value5"] = value
 
-
+        print (param, value)
 
     request_template = AjaxRequests.objects.get(pk=1)
+
+    print (request.path)
 
     if token and token == request_template.token:
         good_token = True
@@ -99,6 +102,7 @@ def ajax_catcher (request):
         good_params = True
 
     proper_request = good_token and good_params
+
 
     if proper_request:
         return {'success':
