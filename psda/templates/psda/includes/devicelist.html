@@ -67,7 +67,8 @@
          })
     });
 
-    $( document ).ajaxComplete(function( event, xhr, settings ) {
+    $.ajaxComplete(function( event, xhr, settings ) {
+        alert ("i got request");
         var content = JSON.parse(xhr.responseText).content;
         $("div.card").each ( function (i, card) {
             if ($(card).attr("data-device") == content.success.device_id) {
