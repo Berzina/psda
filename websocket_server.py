@@ -53,6 +53,7 @@ if __name__ == "__main__":
     http_server.listen(os.environ.get("PORT", 5000))
     myIP = socket.gethostbyname(socket.gethostname())
     print ('*** Websocket Server Started at %s***' % myIP)
+    print ("port = " + str(os.environ.get("PORT", 5000)))
     tornado.ioloop.IOLoop.instance().start()
 
 
