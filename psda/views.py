@@ -2,6 +2,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from .models import Device, DeviceList, Rooms, Scenarios, RoomList, Events, AjaxRequests
 from django_ajax.decorators import ajax
 from django.views.decorators.csrf import csrf_exempt
+import os
 
 
 def index(request):
@@ -15,6 +16,7 @@ def index(request):
     return render(request, 'psda/index.html', context)
 
 def room(request, room_type_id, roomobject_id):
+    print (os.environ.get("PORT", 5000))
 
     room_type = RoomList.objects.get(pk=room_type_id)
     room_list = RoomList.objects.all()
