@@ -86,7 +86,7 @@
         })
     });
 
-    var ws = new WebSocket("wss://ezhome.herokuapp.com:8888/websocket");
+    var ws = new WebSocket("wss://ezhome.herokuapp.com:{{ port }}/websocket");
     ws.onopen = function() {
      // ws.send("Hello Mr. Server!");
     }

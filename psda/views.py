@@ -28,7 +28,8 @@ def room(request, room_type_id, roomobject_id):
                "rooms": room_list,
                "room_id" : roomobject_id,
                "room_object" : room_object,
-               "devices" : devices}
+               "devices" : devices,
+               "port" : os.environ.get("PORT", 5000)}
 
 
 
