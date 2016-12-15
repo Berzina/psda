@@ -62,6 +62,7 @@ def satisfy (request):
     return {'result':'i love u kate, u are very cute and smart person :3'}
 
 @ajax
+@csrf_exempt
 def token_validator (request):
 
     request_template = AjaxRequests.objects.get(pk=1)
