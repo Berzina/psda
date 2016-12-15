@@ -64,8 +64,6 @@ def satisfy (request):
 @csrf_exempt
 def ajax_catcher (request):
 
-    print ("I got ajax request!")
-
     device_values = {}
 
     for param, value in request.POST.items():
