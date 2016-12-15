@@ -16,12 +16,12 @@ def index(request):
     return render(request, 'psda/index.html', context)
 
 def room(request, room_type_id, roomobject_id):
-    print (os.environ.get("PORT", 5000))
 
     room_type = RoomList.objects.get(pk=room_type_id)
     room_list = RoomList.objects.all()
     room_object = Rooms.objects.get(pk=roomobject_id)
     devices = room_object.device_set.all()
+    request_template = AjaxRequests.objects.get(pk=1)
 
 
     context = {"current_roomtype" : room_type,
@@ -29,7 +29,7 @@ def room(request, room_type_id, roomobject_id):
                "room_id" : roomobject_id,
                "room_object" : room_object,
                "devices" : devices,
-               "port" : os.environ.get("PORT", 5000)}
+               "token" : request_template.token}
 
 
 
@@ -56,9 +56,19 @@ def devices (request):
                "rooms": room_list}
 
     return render(request, 'psda/index.html', context)
+
 @ajax
 def satisfy (request):
     return {'result':'i love u kate, u are very cute and smart person :3'}
+
+@ajax
+def token_validator (request):
+
+    request_template = AjaxRequests.objects.get(pk=1)
+    if (request.POST["token"] == request_template.token):
+        return {'valid': 'ok'}
+    else:
+        return {'valid': 'false'}
 
 @ajax
 @csrf_exempt
