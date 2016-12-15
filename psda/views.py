@@ -103,9 +103,17 @@ def ajax_catcher (request):
 
     proper_request = good_token and good_params
 
+    redirect('ajax_responser')
+
 
     if proper_request:
         return {'success':
                     {'device_id': str(device), 'state_id': str(state), 'device_values': device_values}}
     else:
         return {'error': 'Incorrect request', 'params': [token, device, state, device_values]}
+
+
+@ajax
+@csrf_exempt
+def ajax_responser(request):
+    return {'success': 'ok'}
