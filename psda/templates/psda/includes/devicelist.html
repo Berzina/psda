@@ -92,7 +92,20 @@
 
     inbox.onmessage = function(message) {
       var data = JSON.parse(message.data);
-      console.log (data);
+      var values = JSON.parse(data.values);
+      $("div.card").each ( function (i, card) {
+            if ($(card).attr("data-device") == data.device) {
+                $(card).css("opacity", "1");
+                $(card).find("i.device-icon").removeClass("animate-device-icon");
+                var value_fields = $(card).find("span.device-values");
+                $(value_fields).each (function (i, field) {
+                    $.each (values, function (i, value) {
+                        $(field).html(value);
+
+                    })
+                })
+            }
+      })
     };
 
 
