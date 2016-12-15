@@ -87,8 +87,8 @@
         })
     });
 
-    var inbox = new ReconnectingWebSocket("wss://" + location.host + "/receive");
-    var outbox = new ReconnectingWebSocket("wss://" + location.host + "/submit");
+    var inbox = new ReconnectingWebSocket("wss://ezhome-broker.herokuapp.com/receive");
+    var outbox = new ReconnectingWebSocket("wss://ezhome-broker.herokuapp.com/submit");
 
     inbox.onmessage = function(message) {
       var data = JSON.parse(message.data);
