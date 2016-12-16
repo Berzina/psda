@@ -33,6 +33,9 @@
                         </p>
                         <p>{{ device.name }}</p>
                         <p>{{ device.type.name }}</p>
+                        {% if current_roomtype == "overview" %}
+                        {% include 'psda/includes/roominfo.html' %}
+                        {% endif %}
                       </div>
                 </div>
             </div>
@@ -78,8 +81,6 @@
                             $(value_fields).each (function (i, field) {
                                 $(field).html(values [i]);
                             })
-                            var card_container = $(card).parent();
-                            $(card_container).prependTo("#devices");
                         }
                     })
                 } else if ( data.state == "5") {
@@ -92,8 +93,6 @@
                             $(value_fields).each (function (i, field) {
                                 $(field).html(values [i]);
                             })
-                            var card_container = $(card).parent();
-                            $(card_container).appendTo("#devices");
                         }
                     })
                 }

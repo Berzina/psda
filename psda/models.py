@@ -134,6 +134,7 @@ class Rooms(models.Model):
 
 class Scenarios(models.Model):
     name = models.CharField(max_length=20)
+    description = models.TextField()
     state = models.ForeignKey('StatusList', models.DO_NOTHING, db_column='state')
     auto = models.IntegerField()
     date_create = models.DateTimeField()

@@ -7,11 +7,7 @@ import os
 
 def index(request):
 
-    device_list = DeviceList.objects.all()
-    room_list = RoomList.objects.all()
-    context = {"devices" : device_list,
-               "current_roomtype" : "overview",
-               "rooms" : room_list}
+    context = {"current_roomtype" : "overview"}
 
     return render(request, 'psda/index.html', context)
 
@@ -46,7 +42,7 @@ def scenarios (request):
     return render(request, 'psda/index.html', context)
 
 def devices (request):
-    device_list = DeviceList.objects.all()
+    device_list = Device.objects.all()
     room_list = RoomList.objects.all()
     context = {"devices" : device_list,
                "current_roomtype" : "overview",

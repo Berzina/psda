@@ -230,6 +230,26 @@ margin-left: -2px;}
     font-weight: bold;
 }
 
+.indicator-on {
+    color : green !important;
+}
+
+.indicator-off {
+    color : red !important;
+}
+
+.list-group-addon {
+  right: 1%;
+  display:inline;
+  font-weight: normal;
+  line-height: 1;
+  color: #555555;
+  text-align: right;
+  background-color: #eeeeee;
+  border: 1px solid #cccccc;
+  align: right;
+}
+
 .glyphicon-refresh-animate {
     -animation: spin .7s infinite linear;
     -ms-animation: spin .7s infinite linear;

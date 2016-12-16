@@ -230,6 +230,18 @@ margin-left: -2px;}
     font-weight: bold;
 }
 
+.indicator-on {
+    color : green !important;
+}
+
+.indicator-off {
+    color : red !important;
+}
+
+.inline-icon {
+    color
+}
+
 .glyphicon-refresh-animate {
     -animation: spin .7s infinite linear;
     -ms-animation: spin .7s infinite linear;
