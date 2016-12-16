@@ -1,16 +1,19 @@
 {% for scenario in scenarios %}
     {% if scenario.name != "NONE" %}
         <div class="col-sm-6">
-            <div class="card">
+            <div class="card" data-scenario = "{{ scenario.id }}">
                 <div class ="card-block">
                     <h3 class="card-title "> {{ scenario.name }}
-                        {% if scenario.state.name == "ON" %}
-                        <span class = "indicator-on">
-                        {% else %}
-                        <span class = "indicator-off">
-                        {% endif %}
-                            &#9679;
+                        <span id = "scenario-indicator">
+                            {% if scenario.state.name == "ON" %}
+                            <span class = "indicator-on">
+                            {% else %}
+                            <span class = "indicator-off">
+                            {% endif %}
+                                &#9679;
+                            </span>
                         </span>
+                        <i id = "scenario-refresh-indicator" class = 'glyphicon glyphicon-refresh glyphicon-refresh-animate md-12 hide'></i>
                     </h3>
                     <p>{{ scenario.description }} </p>
                     <a  data-toggle="collapse" href="#{{ scenario.id }}-scenario-details" aria-expanded="false" aria-controls="collapseExample">
@@ -47,9 +50,9 @@
                 </div>
                 <div class="card-text" align ="center">
                     {% if scenario.state.name == "ON" %}
-                    <a href="#" class="card-text">OFF</a>
+                    <a href="#" id ="turnoff-scenario" class = "card-text toggle-scenario">OFF</a>
                     {% else %}
-                    <a href="#" class="card-text">ON</a>
+                    <a href="#" id ="turnon-scenario" class = "card-text toggle-scenario">ON</a>
                     {% endif %}
                 </div>
                 <br />
@@ -57,3 +60,51 @@
         </div>
     {% endif %}
 {% endfor %}
+
+<script>
+
+    $(document).on('click', ".toggle-scenario", function () {
+        $(this).parent().parent().find("#scenario-indicator").addClass("hide");
+        $(this).parent().parent().find("#scenario-refresh-indicator").removeClass("hide");
+        $(this).addClass("hide");
+    })
+
+    var inbox = new ReconnectingWebSocket("wss://ezhome-broker.herokuapp.com/receive");
+
+    inbox.onmessage = function(message) {
+      var data = JSON.parse(message.data);
+
+      ajaxPost("{% url 'token_validator' %}",
+
+        {'token': data.token},
+
+         function(content){
+            if (content.valid == "ok") {
+                if (data.state == "3") {
+                    $("div.card").each ( function (i, card) {
+                        if ($(card).attr("data-scenario") == data.scenario) {
+                            $(card).find("#scenario-indicator").html("<span class = 'indicator-on'>&#9679;</span>");
+                            $(card).find("#scenario-indicator").removeClass("hide");
+                            $(card).find("#scenario-refresh-indicator").addClass("hide");
+                            $(card).find(".card-text").html("<a href='#' id = 'turnoff-scenario' class = 'card-text toggle-scenario'>OFF</a>");
+
+                        }
+                    })
+                } else if ( data.state == "5") {
+                    $("div.card").each ( function (i, card) {
+                        if ($(card).attr("data-scenario") == data.scenario) {
+                            $(card).find("#scenario-indicator").html("<span class = 'indicator-off'>&#9679;</span>");
+                            $(card).find("#scenario-indicator").removeClass("hide");
+                            $(card).find("#scenario-refresh-indicator").addClass("hide");
+                            $(card).find(".card-text").html("<a href='#' id = 'turnon-scenario' class = 'card-text toggle-scenario'>ON</a>");
+
+                        }
+                    })
+                }
+            }
+         }
+
+      )
+
+    };
+</script>

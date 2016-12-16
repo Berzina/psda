@@ -14,9 +14,15 @@ def hello():
         token = sys.argv [1]
         device = sys.argv [2]
         state = sys.argv [3]
-        values = sys.argv [4]
 
-        message = str({ "token": token, "device" : device, "state" : state, "values": values }).replace('\'','\"')
+        try:
+            values = sys.argv [4]
+            message = str({"token": token, "device": device, "state": state, "values": values}).replace('\'', '\"')
+        except:
+            scenario = device
+            message = str({"token": token, "scenario": scenario, "state": state}).replace('\'', '\"')
+
+
 
         yield from websocket.send(message)
         print("> {}".format(message))
