@@ -19,21 +19,19 @@ def room(request, room_type_id, roomobject_id):
 
     room_type = RoomList.objects.get(pk=room_type_id)
     room_list = RoomList.objects.all()
-    room_object = Rooms.objects.get(pk=roomobject_id)
-    devices = room_object.device_set.all()
-    request_template = AjaxRequests.objects.get(pk=1)
-
-
-    context = {"current_roomtype" : room_type,
-               "rooms": room_list,
-               "room_id" : roomobject_id,
-               "room_object" : room_object,
-               "devices" : devices,
-               "token" : request_template.token}
-
-
-
-    return render(request, 'psda/roomview.html', context)
+    try:
+        room_object = Rooms.objects.get(pk=roomobject_id)
+        devices = room_object.device_set.all()
+        context = {"current_roomtype" : room_type,
+                   "rooms": room_list,
+                   "room_id" : roomobject_id,
+                   "room_object" : room_object,
+                   "devices" : devices}
+        return render(request, 'psda/roomview.html', context)
+    except:
+        context = {"current_roomtype": room_type,
+                   "rooms": room_list}
+        return render(request, 'psda/noroomview.html', context)
 
 def scenarios (request):
     scenario_list = Scenarios.objects.all()

@@ -2,7 +2,11 @@
     <ul class="nav nav-pills">
         {% if current_roomtype.rooms_set.all %}
             {% for room in current_roomtype.rooms_set.all %}
-              <li role="presentation" class="nav-item" id = "room_{{ room_id }}">
+                {% if room.id == room_object.id %}
+                <li role="presentation" class="nav-item active" id = "room_{{ room_id }}">
+                {% else %}
+                <li role="presentation" class="nav-item" id = "room_{{ room_id }}">
+                {% endif %}
                   <a href="{% url 'room' room.type_room.id room.id %}">{{ room.name }}</a>
               </li>
             {% endfor %}
@@ -11,11 +15,4 @@
         {% endif %}
     </ul>
 
-<button id = "satisfier" data-url ="{% url 'satisfy' %}" > Push me </button>
-<button id = "ajax-catcher" data-url ="{% url 'ajax_catcher' %}" > Push me too</button>
-
 </div>
-
-<script>
-$( "#room_{{room_object.id}}" ).addClass("active");
-</script>

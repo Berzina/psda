@@ -68,7 +68,13 @@
 								{% else %}
 								<li>
 							{% endif %}
-								<a href="{% url 'room' room_type.id '1' %}">
+								{% if room_type.rooms_set.all %}
+								{% with room_type.rooms_set.all|first as first_room %}
+								<a href="{% url 'room' room_type.id first_room.id %}">
+								{% endwith %}
+								{% else %}
+								<a href="{% url 'room' room_type.id '0' %}">
+								{% endif %}
 									<i class="material-icons">{{room_type.icon}}</i>
 									<p>{{room_type.name}}</p>
 								</a>
