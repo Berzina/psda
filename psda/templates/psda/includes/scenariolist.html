@@ -40,7 +40,7 @@
                             {% for event in events %}
                                 {% if scenario == event.scenario %}
                                     {% if event.event_type.id == 2 %}
-                                        <div class="list-group-item"><strong>{{ event.device.name }} </strong><div class="pull-right"><mark> {{ event.command.name }}</mark></div></div>
+                                        <a class="list-group-item"><strong>{{ event.device.name }} </strong><div class="pull-right"><mark> {{ event.command.name }}</mark></div></a>
                                     {% endif %}
                                 {% endif %}
                             {% endfor %}
