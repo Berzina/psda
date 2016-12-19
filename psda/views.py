@@ -56,6 +56,7 @@ def satisfy (request):
     return {'result':'i love u kate, u are very cute and smart person :3'}
 
 @ajax
+@csrf_exempt
 def toggle_device (request):
 
     device_id = int(request.POST["device"])
@@ -63,6 +64,7 @@ def toggle_device (request):
     return {'result': request.POST["device"] + " " + request.POST["state"]}
 
 @ajax
+@csrf_exempt
 def token_validator (request):
 
     request_template = AjaxRequests.objects.get(pk=1)
