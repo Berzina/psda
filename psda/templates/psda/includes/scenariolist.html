@@ -50,9 +50,9 @@
                 </div>
                 <div class="card-text" align ="center">
                     {% if scenario.state.name == "ON" %}
-                    <a href="#" id ="turnoff-scenario" class = "card-text toggle-scenario">OFF</a>
+                    <a href="#" id ="turnoff-scenario" class = "card-text toggle-scenario" data-scenario="{{ scenario.id }}" data-scenario-state = "{{scenario.state.id}}">OFF</a>
                     {% else %}
-                    <a href="#" id ="turnon-scenario" class = "card-text toggle-scenario">ON</a>
+                    <a href="#" id ="turnon-scenario" class = "card-text toggle-scenario" data-scenario="{{ scenario.id }}" data-scenario-state = "{{scenario.state.id}}">ON</a>
                     {% endif %}
                 </div>
                 <br />
@@ -67,6 +67,12 @@
         $(this).parent().parent().find("#scenario-indicator").addClass("hide");
         $(this).parent().parent().find("#scenario-refresh-indicator").removeClass("hide");
         $(this).addClass("hide");
+        ajaxPost("{% url 'toggle_scenario' %}",
+            {'scenario': $(this).attr("data-scenario"),
+             'state' : $(this).attr("data-scenario-state")},
+            function (content) {
+            console.log(content.result);
+        })
     })
 
     var inbox = new ReconnectingWebSocket("wss://ezhome-broker.herokuapp.com/receive");

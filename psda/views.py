@@ -1,7 +1,8 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import Device, DeviceList, Rooms, Scenarios, RoomList, Events, AjaxRequests
+from .models import Device, DeviceList, Rooms, Scenarios, RoomList, Events, AjaxRequests, Commands, CommandList, StatusList
 from django_ajax.decorators import ajax
 from django.views.decorators.csrf import csrf_exempt
+from django.utils import timezone
 import os
 
 
@@ -61,7 +62,41 @@ def toggle_device (request):
 
     device_id = int(request.POST["device"])
     state_id = int(request.POST["state"])
+
+    device = Device.objects.get(pk=device_id)
+    scenario = Scenarios.objects.get(name="NONE")
+
+    if state_id == 3:
+        command = CommandList.objects.get(name="TURN_OFF")
+        state= StatusList.objects.get(name="TO_OFF")
+        Commands.objects.create(device=device, scenario=scenario, command=command, state=state, date_time=timezone.now(), value=0)
+    elif state_id == 5:
+        command = CommandList.objects.get(name="TURN_ON")
+        state= StatusList.objects.get(name="TO_ON")
+        Commands.objects.create(device=device, scenario=scenario, command=command, state=state,
+                                date_time=timezone.now(), value=0)
     return {'result': request.POST["device"] + " " + request.POST["state"]}
+
+@ajax
+@csrf_exempt
+def toggle_scenario (request):
+
+    scenario_id = int(request.POST["scenario"])
+    state_id = int(request.POST["state"])
+
+    device = Device.objects.get(name="NONE")
+    scenario = Scenarios.objects.get(pk=scenario_id)
+
+    if state_id == 3:
+        command = CommandList.objects.get(name="STOP_SCEN")
+        state= StatusList.objects.get(name="TO_OFF")
+        Commands.objects.create(device=device, scenario=scenario, command=command, state=state, date_time=timezone.now(), value=0)
+    elif state_id == 5:
+        command = CommandList.objects.get(name="RUN_SCEN")
+        state= StatusList.objects.get(name="TO_ON")
+        Commands.objects.create(device=device, scenario=scenario, command=command, state=state,
+                                date_time=timezone.now(), value=0)
+    return {'result': request.POST["scenario"] + " " + request.POST["state"]}
 
 @ajax
 @csrf_exempt
