@@ -1,6 +1,5 @@
 {% load cache %}
 {% cache 3600 "devices" current_roomtype tab room_id %}
-<p>{{ current_roomtype }} {{ tab }} {{ room_id }}</p>
 <div id ="devices">
     {% for device in devices %}
         {% if device.name != "NONE" %}
