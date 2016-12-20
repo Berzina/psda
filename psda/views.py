@@ -43,14 +43,24 @@ def scenarios (request):
     return render(request, 'psda/index.html', context)
 
 def devices (request):
+    t= timezone.now()
+    print ("start")
     device_list = Device.objects.all()
+    t1 = timezone.now() - t
+    print ("device loaded : ", t1)
     room_list = RoomList.objects.all()
+    t2 = timezone.now() - t - t1
+    print ("rooms loaded : ", t2)
     context = {"devices" : device_list,
                "current_roomtype" : "overview",
                "tab" : "devices",
                "rooms": room_list}
-
-    return render(request, 'psda/index.html', context)
+    t3 = timezone.now()
+    print ("start rendering")
+    ret = render(request, 'psda/index.html', context)
+    t4 = timezone.now() - t3
+    print ("rendered : ", t4)
+    return ret
 
 @ajax
 def satisfy (request):

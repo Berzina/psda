@@ -1,3 +1,6 @@
+{% load cache %}
+{% cache 3600 scenarios %}
+
 {% for scenario in scenarios %}
     {% if scenario.name != "NONE" %}
         <div class="col-sm-6">
@@ -114,3 +117,5 @@
 
     };
 </script>
+
+{% endcache %}
