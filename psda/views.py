@@ -8,7 +8,8 @@ import os
 
 def index(request):
 
-    context = {"current_roomtype" : "overview"}
+    context = {"current_roomtype" : "overview",
+               "tab": "scenarios"}
 
     return render(request, 'psda/index.html', context)
 
@@ -23,11 +24,13 @@ def room(request, room_type_id, roomobject_id):
                    "rooms": room_list,
                    "room_id" : roomobject_id,
                    "room_object" : room_object,
-                   "devices" : devices}
+                   "devices" : devices,
+                   "tab" : "room"}
         return render(request, 'psda/roomview.html', context)
     except:
         context = {"current_roomtype": room_type,
-                   "rooms": room_list}
+                   "rooms": room_list,
+                   "tab": "room"}
         return render(request, 'psda/noroomview.html', context)
 
 def scenarios (request):

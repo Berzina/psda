@@ -1,5 +1,5 @@
 {% load cache %}
-{% cache 3600 header current_roomtype tab request.path %}
+{% cache 3600 header tab current_roomtype room_id %}
 
 <!doctype html>
 <html lang="en">
