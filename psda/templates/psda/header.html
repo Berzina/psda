@@ -27,7 +27,7 @@
 
 	<div class="wrapper">
 
-	    <div class="sidebar" data-color="purple" data-image="../assets/img/sidebar-1.jpg">
+	    <div class="sidebar" id = "sidebar" data-color="purple" data-image="../assets/img/sidebar-1.jpg">
 			<!--
 		        Tip 1: You can change the color of the sidebar using: data-color="purple | blue | green | orange | red"
 
@@ -91,13 +91,14 @@
 	    </div>
 
 	    <div class="main-panel">
-			<nav class="navbar navbar-transparent navbar-absolute" style = "padding-top : 0px;">
-				<button type="button" class="navbar-toggle" data-toggle="collapse">
+			<nav class="navbar navbar-default navbar-absolute" style = "padding-top : 0px;" id="main-menu-toggler">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#sidebar">
 					<span class="sr-only">Toggle navigation</span>
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 				</button>
+				<a class="navbar-brand inner-navbar-header" href="#">{{room_object.name}} </a>
 			</nav>
 
           <div class='content' style = "margin-top : 13px;">

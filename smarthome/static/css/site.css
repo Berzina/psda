@@ -614,7 +614,6 @@ margin-left: -2px;}
       transform: perspective(120px) rotateY(-180deg) rotateX(0deg);
     -webkit-transform: perspective(120px) rotateY(-180deg) rotateX(0deg)
 
-
   } 100% {
       transform: perspective(120px) rotateY(0deg) rotateX(0deg);
     -webkit-transform: perspective(120px) rotateY(0deg) rotateX(0deg);

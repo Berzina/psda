@@ -1,18 +1,28 @@
-<div class="well">
-    <ul class="nav nav-pills">
-        {% if current_roomtype.rooms_set.all %}
-            {% for room in current_roomtype.rooms_set.all %}
-                {% if room.id == room_object.id %}
-                <li role="presentation" class="nav-item active" id = "room_{{ room_id }}">
-                {% else %}
-                <li role="presentation" class="nav-item" id = "room_{{ room_id }}">
-                {% endif %}
-                  <a href="{% url 'room' room.type_room.id room.id %}">{{ room.name }}</a>
-              </li>
-            {% endfor %}
-        {% else %}
-            <li> No rooms of this room type </li>
-        {% endif %}
-    </ul>
+<nav class="navbar navbar-default navbar-fixed-top inner-navbar">
 
-</div>
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{room_object.name}} <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            {% if current_roomtype.rooms_set.all %}
+                {% for room in current_roomtype.rooms_set.all %}
+                    {% if room.id == room_object.id %}
+                    <li class="nav-item active" id = "room_{{ room_id }}">
+                    {% else %}
+                    <li class="nav-item" id = "room_{{ room_id }}">
+                    {% endif %}
+                      <a href="{% url 'room' room.type_room.id room.id %}">{{ room.name }}</a>
+                  </li>
+                {% endfor %}
+            {% else %}
+                <li> No rooms of this room type </li>
+            {% endif %}
+          </ul>
+        </li>
+        <li><a href="#">Сценарии <span class="sr-only">(current)</span></a></li>
+      </ul>
+    </div><!-- /.navbar-collapse -->
+</nav>

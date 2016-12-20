@@ -4793,14 +4793,51 @@ footer .btn {
     margin-right: 10px;
   }
 }
-@media (min-width: 768px) {
+
+.inner-navbar-header {
+    display: inline-block;
+}
+
+.inner-navbar {
+    display: none;
+}
+
+    #devices {
+    padding-top:40px;
+    }
+
+@media (min-width: 1024px) {
   .navbar > .container-fluid .navbar-brand {
     margin-left: 0;
   }
+  .inner-navbar-header {
+    display: none;
+    }
+    #main-menu-toggler {
+        display: none;
+    }
+    .inner-navbar {
+    display: inline-block;
+    }
+    #devices {
+    padding-top:40px;
+    }
 }
-@media (min-width: 992px) {
+@media (min-width: 1280px) {
   .table-full-width {
     margin-left: -20px;
     margin-right: -20px;
   }
+    .inner-navbar-header {
+    display: none;
+    }
+    .inner-navbar {
+    display: inline-block;
+    }
+    #main-menu-toggler {
+        display: none;
+    }
+    #devices {
+    padding-top:40px;
+    }
 }
