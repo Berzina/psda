@@ -6,3 +6,4 @@ djangoajax
 tornado
 channels
 pytz
+django-material

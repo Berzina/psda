@@ -20,8 +20,11 @@ from . import settings
 
 
 urlpatterns = [
-  url(r'^admin/', admin.site.urls),
-  url(r'^', include ('psda.urls'))
+  url(r'^admin/', include(admin.site.urls)),
+  url(r'^', include ('psda.urls')),
+  url(r'^jet/', include('jet.urls', 'jet'))
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+
+admin.site.site_header = 'EZhome administration'

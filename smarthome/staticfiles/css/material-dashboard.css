@@ -4800,9 +4800,14 @@ footer .btn {
 
 .inner-navbar {
     display: none;
+    padding-left:15px;
 }
 
     #devices {
+    padding-top:40px;
+    }
+
+    #scenarios {
     padding-top:40px;
     }
 

@@ -69,6 +69,9 @@ class Device(models.Model):
         managed = False
         db_table = 'device'
 
+    def __str__(self):
+        return self.name
+
 
 class DeviceList(models.Model):
     name = models.CharField(max_length=20)
@@ -76,6 +79,9 @@ class DeviceList(models.Model):
     class Meta:
         managed = False
         db_table = 'device_list'
+
+    def __str__(self):
+        return self.name
 
 class EventList(models.Model):
     name = models.CharField(max_length=10)
@@ -101,6 +107,9 @@ class Events(models.Model):
         managed = False
         db_table = 'events'
 
+    def __str__(self):
+        return self.name
+
 
 class Members(models.Model):
     name = models.CharField(max_length=20)
@@ -113,6 +122,9 @@ class Members(models.Model):
         managed = False
         db_table = 'members'
 
+    def __str__(self):
+        return self.name
+
 
 class RoomList(models.Model):
     name = models.CharField(max_length=20)
@@ -122,6 +134,9 @@ class RoomList(models.Model):
         managed = False
         db_table = 'room_list'
 
+    def __str__(self):
+        return self.name
+
 
 class Rooms(models.Model):
     name = models.CharField(max_length=20)
@@ -130,6 +145,9 @@ class Rooms(models.Model):
     class Meta:
         managed = False
         db_table = 'rooms'
+
+    def __str__(self):
+        return self.name
 
 
 class Scenarios(models.Model):
@@ -148,6 +166,9 @@ class Scenarios(models.Model):
     class Meta:
         managed = False
         db_table = 'scenarios'
+
+    def __str__(self):
+        return self.name
 
 
 class Statistics(models.Model):

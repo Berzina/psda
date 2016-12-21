@@ -1,7 +1,7 @@
 {% load cache %}
-{% cache 3600 scenarios %}
-
-{% for scenario in scenarios %}
+{% cache 3600 'scenarios' %}
+<div id="scenarios">
+    {% for scenario in scenarios %}
     {% if scenario.name != "NONE" %}
         <div class="col-sm-6">
             <div class="card" data-scenario = "{{ scenario.id }}">
@@ -63,6 +63,8 @@
         </div>
     {% endif %}
 {% endfor %}
+</div>
+
 
 <script>
 

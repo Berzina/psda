@@ -1,8 +1,12 @@
 from django.conf.urls import url, include
 from . import views
+from django.views.generic.base import RedirectView
+from  django.contrib.auth.views import login
+from django.contrib import admin
 
 urlpatterns = [
       url(r'^$', views.scenarios, name='scenarios'),
+      url(r'^login$', views.login, name='login'),
       url(r'^room/(?P<room_type_id>[0-9]+)/(?P<roomobject_id>[0-9]+)$', views.room, name='room'),
       url(r'^devices$', views.devices, name='devices'),
       url(r'^satisfy$', views.satisfy, name='satisfy'),
@@ -10,4 +14,8 @@ urlpatterns = [
       url(r'^ajaxresponse$', views.ajax_responser, name='ajax_responser'),
       url(r'^token_validator$', views.token_validator, name='token_validator'),
       url(r'^toggle_device$', views.toggle_device, name='toggle_device'),
-      url(r'^toggle_scenario$', views.toggle_scenario, name='toggle_scenario')]
+      url(r'^toggle_scenario$', views.toggle_scenario, name='toggle_scenario'),
+      url(r'^logout$', views.logout, name='logout'),
+      url(r'^admin/', RedirectView.as_view(url='/admin'), name='admin')]
+
+admin.site.site_header = 'EZhome administration'

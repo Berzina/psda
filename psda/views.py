@@ -4,6 +4,27 @@ from django_ajax.decorators import ajax
 from django.views.decorators.csrf import csrf_exempt
 from django.utils import timezone
 import os
+from django.contrib.auth import authenticate, login as login_django, logout as logout_django
+from django.http import HttpResponseRedirect
+from django.core.cache import cache
+
+
+def login (request):
+
+  print (request.POST)
+  username = request.POST.get("username", False)
+  password = request.POST.get("password", False)
+  try:
+      user = authenticate(username=username, password=password)
+      login_django(request, user)
+      # Always return an HttpResponseRedirect after successfully dealing
+      # with POST data. This prevents data from being posted twice if a
+      # user hits the Back button.
+      return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+  except:
+      return HttpResponseRedirect('/scenarios')
+
+
 
 
 def index(request):
@@ -46,6 +67,10 @@ def scenarios (request):
     return render(request, 'psda/index.html', context)
 
 def devices (request):
+    if not request.user.is_authenticated:
+        print ("!", request.user.is_authenticated)
+    else:
+        print ("!", request.user.is_authenticated)
     t= timezone.now()
     print ("start")
     device_list = Device.objects.all()
@@ -178,3 +203,13 @@ def ajax_catcher (request):
 @csrf_exempt
 def ajax_responser(request):
     return {'success': 'ok'}
+
+
+def logout(request):
+    logout_django(request)
+
+    cache.clear()
+    # Always return an HttpResponseRedirect after successfully dealing
+    # with POST data. This prevents data from being posted twice if a
+    # user hits the Back button.
+    return HttpResponseRedirect("/")
