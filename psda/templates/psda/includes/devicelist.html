@@ -12,6 +12,7 @@
                     <div class="card-block text-xs-center">
                         <i class="material-icons md-48 device-icon"> {{device.icon}}</i>
                         <p>
+                        {% if device.collect_statistic == 1 %}
                         {% with device.statistics_set.all|dictsort:"date_time"|last as latest_stat %}
                             {% if device.name == "temperature_humidity" %}
                                 <span class ="device-values" data-device = "{{device.id}}" data-value = "value1">
@@ -27,11 +28,10 @@
                                     {{latest_stat.value1}}
                                 </span>
                             {% endif %}
-
-                            {% if not latest_stat %}
-                                <br />
-                            {% endif %}
                         {% endwith %}
+                        {% else %}
+                            <br />
+                        {% endif %}
                         </p>
                         <p>{{ device.name }}</p>
                         <p>{{ device.type.name }}</p>

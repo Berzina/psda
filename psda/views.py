@@ -67,10 +67,6 @@ def scenarios (request):
     return render(request, 'psda/index.html', context)
 
 def devices (request):
-    if not request.user.is_authenticated:
-        print ("!", request.user.is_authenticated)
-    else:
-        print ("!", request.user.is_authenticated)
     t= timezone.now()
     print ("start")
     device_list = Device.objects.all()
@@ -90,6 +86,17 @@ def devices (request):
     print ("rendered : ", t4)
     return ret
 
+def charts (request):
+    room_list = RoomList.objects.all()
+
+    devices = Device.objects.all().filter(collect_statistic=1)
+
+    context = {"devices": devices,
+               "current_roomtype" : "overview",
+               "tab" : "charts",
+               "rooms": room_list}
+
+    return render(request, 'psda/index.html', context)
 @ajax
 def satisfy (request):
     return {'result':'i love u kate, u are very cute and smart person :3'}
