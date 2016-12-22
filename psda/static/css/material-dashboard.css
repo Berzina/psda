@@ -4828,10 +4828,14 @@ footer .btn {
     padding-top:40px;
     }
 }
-@media (min-width: 1280px) {
+@media (min-width: 1920px) {
   .table-full-width {
     margin-left: -20px;
     margin-right: -20px;
+  }
+
+    .navbar > .container-fluid .navbar-brand {
+    margin-left: 0;
   }
     .inner-navbar-header {
     display: none;

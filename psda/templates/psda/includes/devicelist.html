@@ -5,9 +5,9 @@
         {% if device.name != "NONE" %}
             <div class="col-sm-6 col-xs-12 col-md-3">
                 {% if device.state.id == 3 %}
-                <div class="card card-{{device.card_color}} card-bold" data-device="{{device.id}}" data-device-state="{{ device.state.id }}">
+                <div class="card card-{{device.card_color}} card-bold" data-device="{{device.id}}" data-device-state="{{ device.state.id }}" data-device-type="{{ device.type.name}}">
                 {% else %}
-                <div class="card card-lightgray card-bold" data-device="{{device.id}}" data-device-state="{{ device.state.id }}">
+                <div class="card card-lightgray card-bold" data-device="{{device.id}}" data-device-state="{{ device.state.id }}" data-device-type="{{ device.type.name}}">
                 {% endif %}
                     <div class="card-block text-xs-center">
                         <i class="material-icons md-48 device-icon"> {{device.icon}}</i>
@@ -46,7 +46,7 @@
             </div>
 
 <script>
-    $(".card").click (function() {
+    $('.card[data-device-type="RELAY"]').click (function() {
         $(this).css("opacity", "0.3");
         $(this).find("i.device-icon").addClass("animate-device-icon");
         ajaxPost("{% url 'toggle_device' %}",

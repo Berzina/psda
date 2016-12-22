@@ -106,11 +106,11 @@ def toggle_device (request):
 
     if state_id == 3:
         command = CommandList.objects.get(name="TURN_OFF")
-        state= StatusList.objects.get(name="TO_OFF")
+        state= StatusList.objects.get(name="WAIT")
         Commands.objects.create(device=device, scenario=scenario, command=command, state=state, date_time=timezone.now(), value=0)
     elif state_id == 5:
         command = CommandList.objects.get(name="TURN_ON")
-        state= StatusList.objects.get(name="TO_ON")
+        state= StatusList.objects.get(name="WAIT")
         Commands.objects.create(device=device, scenario=scenario, command=command, state=state,
                                 date_time=timezone.now(), value=0)
     return {'result': request.POST["device"] + " " + request.POST["state"]}
@@ -127,11 +127,11 @@ def toggle_scenario (request):
 
     if state_id == 3:
         command = CommandList.objects.get(name="STOP_SCEN")
-        state= StatusList.objects.get(name="TO_OFF")
+        state= StatusList.objects.get(name="WAIT")
         Commands.objects.create(device=device, scenario=scenario, command=command, state=state, date_time=timezone.now(), value=0)
     elif state_id == 5:
         command = CommandList.objects.get(name="RUN_SCEN")
-        state= StatusList.objects.get(name="TO_ON")
+        state= StatusList.objects.get(name="WAIT")
         Commands.objects.create(device=device, scenario=scenario, command=command, state=state,
                                 date_time=timezone.now(), value=0)
     return {'result': request.POST["scenario"] + " " + request.POST["state"]}
