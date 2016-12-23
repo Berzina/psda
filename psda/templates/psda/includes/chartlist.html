@@ -1,73 +1,85 @@
-<style>
-    .ct-series-a .ct-line,
-.ct-series-a .ct-point {
-  stroke: white;
-}
-
-    .ct-series-b .ct-line,
-.ct-series-b .ct-point {
-  stroke: green;
-}
-
-.ct-label {
- color:white;
- font-size: 11px;
- }
-
-</style>
-<div id ="charts" style="margin-top:40px;">
-
-
+{% if statistics %}
 {% for device in devices %}
-<div class="col-md-6">
+<div class="col-md-6 col-xs-12">
     <div class="card">
-        <div class="card-header"><canvas id="chart-{{device.id}}" width="600" height="400"></canvas></div>
-
         <div class="card-content">
+            <div id="chart-{{device.id}}"></div>
             <h4 class="title text-center"> <i class="material-icons">{{ device.icon }}</i>{{ device.name }}</h4>
         </div>
         <div class="card-footer">
             <div class="stats">
-            {% with device.statistics_set.all|slice:":1" as last_stat %}
-                <i class="material-icons">access_time</i> последнее показание снято {{ last_stat.date_time|date:"D-Y-M" }}
+            {% for stat in device.statistics_set.all %}
+                {% if forloop.last %}
+                <i class="material-icons">access_time</i> последнее показание снято {{ stat.date_time|date:"M, d H:i:s" }}
+                {% endif %}
+            {% endfor %}
             </div>
-            {% endwith %}
         </div>
     </div>
 </div>
 {% endfor %}
+{% else %}
+    <div class="alert alert-danger">
+        <i class="material-icons">whatshot</i> <strong>Мне очень жаль. </strong>Кажется, информация об этом дне недоступна. Попробуйте выбрать другой день.
+    </div>
+{% endif %}
 
-</div>
 <script>
+
+function drawCharts() {
+{% if statistics %}
         {% for device in devices %}
-        {% with device.statistics_set.all as latest_stats %}
+        {% if device.id == 9 %}
+            var fuel_data = [
+                {% for stat in statistics %}
+                {% if stat.device.id == device.id %}
+                    {% ifchanged stat.value1|floatformat:"0" or stat.value2|floatformat:"0" %}
+                    {"date_time": "{{ stat.date_time|date:"H:i:s"}}", "Температура": "{{stat.value1|floatformat:"0"}}", "Влажность": "{{stat.value2|floatformat:"0"}}"},
+                    {% endifchanged %}
+                {% endif %}
+                {% endfor %}
 
-        var ctx = document.getElementById("chart-{{device.id}}").getContext("2d");
+            ];
 
-        var data = {
-            labels: [{% for stat in latest_stats %}{% if forloop.counter|divisibleby:10 %} "{{ stat.date_time|date:"H:i"}}", {% endif %}  {% endfor %}],
-            datasets: [
-                {
-                    strokeColor: "rgba(220,220,220,1)",
-                    pointColor: "rgba(220,220,220,1)",
-                    pointHighlightStroke: "rgba(220,220,220,1)",
-                    data: [{% for stat in latest_stats %} {% if forloop.counter|divisibleby:10 %} "{{stat.value1}}", {% endif %} {% endfor %}]
-                },
-                {
-                    fillColor: "rgba(151,187,205,0.2)",
-                    strokeColor: "rgba(151,187,205,1)",
-                    pointColor: "rgba(151,187,205,1)",
-                    pointHighlightStroke: "rgba(151,187,205,1)",
-                    data: [{% for stat in latest_stats %} {% if forloop.counter|divisibleby:10 %} "{{stat.value2}}", {% endif %} {% endfor %}]
-                }
-            ]
-        };
+            Morris.Line({
+              element: 'chart-{{device.id}}',
+              hideHover: 'auto',
+              data: fuel_data,
+              xkey: 'date_time',
+              ykeys: ["Температура", "Влажность"],
+              labels: ["Температура", "Влажность"],
+              lineColors: ['#A52A2A','#72A0C1'],
+              parseTime: false,
+              smooth: false
+            });
 
-        var myLineChart = Chart.Line(ctx, {
-            data: data
-        });
+        {% elif device.id == 10 %}
 
-        {% endwith %}
+            var fuel_data = [
+                {% for stat in statistics %}
+                {% if stat.device.id == device.id %}
+                    {% ifchanged stat.value1|floatformat:"0" %}
+                    {"date_time": "{{ stat.date_time|date:"H:i:s"}}", "Освещенность": "{{stat.value1|floatformat:"0"}}"},
+                    {% endifchanged %}
+                {% endif %}
+                {% endfor %}
+            ];
+
+            Morris.Line({
+              element: 'chart-{{device.id}}',
+              hideHover: 'auto',
+              data: fuel_data,
+              xkey: 'date_time',
+              ykeys: ["Освещенность"],
+              labels: ["Освещенность"],
+              lineColors: ['#A52A2A'],
+              parseTime: false,
+              smooth: false
+            });
+
+        {% endif %}
         {% endfor %}
+{% endif %}
+    }
 
 </script>

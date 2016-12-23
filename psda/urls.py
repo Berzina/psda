@@ -11,6 +11,7 @@ urlpatterns = [
       url(r'^devices$', views.devices, name='devices'),
       url(r'^charts$', views.charts, name='charts'),
       url(r'^satisfy$', views.satisfy, name='satisfy'),
+      url(r'^redraw_charts$', views.redraw_charts, name='redraw_charts'),
       url(r'^ajaxrequest$', views.ajax_catcher, name='ajax_catcher'),
       url(r'^ajaxresponse$', views.ajax_responser, name='ajax_responser'),
       url(r'^token_validator$', views.token_validator, name='token_validator'),

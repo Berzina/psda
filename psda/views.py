@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import Device, DeviceList, Rooms, Scenarios, RoomList, Events, AjaxRequests, Commands, CommandList, StatusList
+from .models import Device, DeviceList, Rooms, Scenarios, RoomList, Events, AjaxRequests, Commands, CommandList, StatusList, Statistics
 from django_ajax.decorators import ajax
 from django.views.decorators.csrf import csrf_exempt
 from django.utils import timezone
@@ -7,6 +7,7 @@ import os
 from django.contrib.auth import authenticate, login as login_django, logout as logout_django
 from django.http import HttpResponseRedirect
 from django.core.cache import cache
+from django.template.loader import render_to_string
 
 
 def login (request):
@@ -90,11 +91,23 @@ def charts (request):
     room_list = RoomList.objects.all()
 
     devices = Device.objects.all().filter(collect_statistic=1)
+    statistics = Statistics.objects.all()
+    stats = []
+    today = timezone.now()
+    for stat in statistics:
+        if stat.date_time.month == today.month and stat.date_time.day == today.day:
+            stats.append(stat)
+
+    date = str(today.year) + "-" + str(today.month) + "-" + str(today.day)
+
+    print (date)
 
     context = {"devices": devices,
                "current_roomtype" : "overview",
                "tab" : "charts",
-               "rooms": room_list}
+               "rooms": room_list,
+               "statistics": stats,
+               "date": date}
 
     return render(request, 'psda/index.html', context)
 @ajax
@@ -152,6 +165,28 @@ def token_validator (request):
         return {'valid': 'ok'}
     else:
         return {'valid': 'false'}
+
+
+@ajax
+@csrf_exempt
+def redraw_charts(request):
+    date_str = request.POST["date"]
+    date_list = date_str.split("-") #[yyyy, mm, dd]
+
+    devices = Device.objects.all().filter(collect_statistic=1)
+    statistics = Statistics.objects.all()
+    stats = []
+
+    for stat in statistics:
+        if stat.date_time.month == int(date_list[1]) and stat.date_time.day == int(date_list[2]):
+            stats.append(stat)
+
+    context = {'devices': devices,
+               'statistics': stats}
+
+    content = render_to_string('psda/includes/chartlist.html', context)
+
+    return {'html': content}
 
 @ajax
 @csrf_exempt
