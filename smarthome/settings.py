@@ -37,7 +37,6 @@ ALLOWED_HOSTS = ['warm-forest-43150.herokuapp.com',
 INSTALLED_APPS = [
     'psda',
     'jet',
-    'channels',
     'django_ajax',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -47,12 +46,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 ]
 
-CHANNEL_LAYERS = {
-    'default': {
-        'BACKEND': 'asgiref.inmemory.ChannelLayer',
-        'ROUTING': 'routing.channel_routing',
-    },
-}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

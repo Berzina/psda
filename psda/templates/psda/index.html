@@ -15,9 +15,15 @@
             <span class="btn btn-white btn-just-icon" style = "display: table-cell; padding: 0px">
                 <i class="glyphicon glyphicon-th"></i>
             </span>
-            <span class="btn btn-white btn-just-icon hide" id="waiting"  style = "display: table-cell; padding: 0px">
-                <i class="glyphicon glyphicon-hourglass animate-device-icon" aria-hidden="true"></i>
-            </span>
+        </div>
+        <div class="col-sm-6 col-md-4" id="waiting">
+            <div class="thumbnail">
+                {% load static %}
+              <img src="{% static 'img/chartist.gif' %}" alt="...">
+              <div class="caption">
+                <h3>Инфографика скоро будет готова...</h3>
+              </div>
+            </div>
         </div>
         <div id ="charts" style="margin-top:20px;">
             {% include 'psda/includes/chartlist.html' %}
@@ -33,9 +39,12 @@
         autoclose: true
     });
 
+     $("#waiting").hide();
+
     $('.input-group.date').on("changeDate", function() {
+        $("#charts").fadeOut("slow");
         $("#charts").empty();
-        $("#waiting").removeClass("hide");
+        $("#waiting").fadeIn("slow");
 
         var date = $('.input-group.date').datepicker('getFormattedDate');
 
@@ -44,8 +53,11 @@
             {'date': date},
 
              function(content){
-                $("#waiting").addClass("hide");
+                $("#waiting").fadeOut("slow");
+                $("#waiting").hide();
+                $("#charts").hide();
                 $("#charts").html(content.html);
+                $("#charts").fadeIn("slow");
                 drawCharts();
 
              }
