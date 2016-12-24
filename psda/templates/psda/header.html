@@ -48,6 +48,21 @@
 
 				<div class="sidebar-wrapper">
 					<ul class="nav">
+                        {% if user.is_authenticated %}
+							<li>
+								<div class="card card-white">
+									<p class="text-center">Вы зашли как: <mark>{{ user.username }}</mark></p>
+									<p class="text-center text-middle">
+									{% if user.is_superuser %}
+
+									<a href = "{% url 'admin' %}" type="button" class="btn btn-outline-primary" style = "padding:1px 1px; "><i class="material-icons" style = "color: white; margin-right: 0px;">settings_applications</i> </a>
+									{% endif %}
+									<a href = "{% url 'logout' %}" type="button" class="btn btn-outline-primary" style = "padding:1px 1px; "> <i class="material-icons" style="color: white; margin-right: 0px;">directions_walk </i></a>
+								</p>
+								</div>
+							</li>
+
+						{% endif %}
 
 						{% if current_roomtype == "overview" %}
 							<li class="active">
