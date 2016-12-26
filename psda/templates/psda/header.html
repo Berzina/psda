@@ -73,7 +73,21 @@
 
 	</body>
 	</html>
+<script>
+$(function () {
+  $('[data-toggle="popover"]').popover(
+  {
+  	html: 'true',
+  	{% if user.is_superuser %}
+    content:'<a id ="gotoAdminBtn" href = "{% url 'admin' %}" type="button" class="btn btn-primary" style = "padding:1px 1px; "><i class="material-icons" style = "color: white; margin-right: 0px;">settings_applications</i> </a> <a href="{% url 'admin' %}">Панель администратора</a> <br /> <a href = "{% url 'logout' %}" type="button" class="btn btn-primary" style = "padding:1px 1px; "> <i class="material-icons" style="color: white; margin-right: 0px;">directions_walk </i></a> <a href="{% url 'logout' %}">Выход</a>'
+    {% else %}
+    content:'<a href = "{% url 'logout' %}" type="button" class="btn btn-primary" style = "padding:1px 1px; "> <i class="material-icons" style="color: white; margin-right: 0px;">directions_walk </i></a> <a href="{% url 'logout' %}">Выход</a>'
+    {% endif %}
+  }
+  );
 
+})
+</script>
 
 {% else %}
 	{% include 'psda/loginform.html' %}
