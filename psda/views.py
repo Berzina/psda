@@ -23,7 +23,7 @@ def login (request):
       # user hits the Back button.
       return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
   except:
-      return HttpResponseRedirect('/scenarios')
+      return HttpResponseRedirect('/')
 
 
 
@@ -130,6 +130,7 @@ def toggle_device (request):
         Commands.objects.create(device=device, scenario=scenario, command=command, state=state, date_time=timezone.now(), value=0)
     elif state_id == 5:
         command = CommandList.objects.get(name="TURN_ON")
+        print (command.id)
         state= StatusList.objects.get(name="WAIT")
         Commands.objects.create(device=device, scenario=scenario, command=command, state=state,
                                 date_time=timezone.now(), value=0)
@@ -249,8 +250,6 @@ def ajax_responser(request):
 
 def logout(request):
     logout_django(request)
-
-    cache.clear()
     # Always return an HttpResponseRedirect after successfully dealing
     # with POST data. This prevents data from being posted twice if a
     # user hits the Back button.

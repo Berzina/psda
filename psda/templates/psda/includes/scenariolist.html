@@ -1,5 +1,4 @@
-{% load cache %}
-{% cache 3600 'scenarios' %}
+
 <div id="scenarios">
     {% for scenario in scenarios %}
     {% if scenario.name != "NONE" %}
@@ -119,5 +118,3 @@
 
     };
 </script>
-
-{% endcache %}

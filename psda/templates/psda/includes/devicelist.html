@@ -1,5 +1,3 @@
-{% load cache %}
-{% cache 3600 "devices" current_roomtype tab room_id %}
 <div id ="devices">
     {% for device in devices %}
         {% if device.name != "NONE" %}
@@ -117,4 +115,3 @@
 
 
 </script>
-{% endcache %}

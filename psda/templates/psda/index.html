@@ -31,8 +31,9 @@
     {% endif %}
 
 <script>
-
-    drawCharts();
+    try {
+        drawCharts();
+    } catch(e) {};
 
     $('.input-group.date').datepicker({
         format: "yyyy-mm-dd",
