@@ -19,30 +19,30 @@
                     </h3>
                     <p>{{ scenario.description }} </p>
                     <a  data-toggle="collapse" href="#{{ scenario.id }}-scenario-details" aria-expanded="false" aria-controls="collapseExample">
-                        Details...
+                        Датали...
                     </a>
                     <div class="collapse" id="{{ scenario.id }}-scenario-details">
                         <br />
                         <div class="list-group">
-                            <a class="list-group-item disabled">
-                                What happened:
+                            <a class="list-group-item disabled" style="cursor:default">
+                                Что случилось:
                             </a>
                             {% for event in events %}
                                 {% if scenario == event.scenario %}
                                     {% if event.event_type.id == 1 %}
-                                        <a class="list-group-item"><strong>{{ event.device.name }} </strong><span class="pull-right"><mark> {{ event.command.name }}</mark></span></a>
+                                        <a class="list-group-item"><strong>{{ event.device.name }} </strong><span class="pull-right"><mark> {{ event.command.description }}</mark></span></a>
                                     {% endif %}
                                 {% endif %}
                             {% endfor %}
                         </div>
                         <div class="list-group">
-                            <a class="list-group-item disabled">
-                                What I'll do:
+                            <a class="list-group-item disabled" style="cursor:default">
+                                Что я сделаю:
                             </a>
                             {% for event in events %}
                                 {% if scenario == event.scenario %}
                                     {% if event.event_type.id == 2 %}
-                                        <a class="list-group-item"><strong>{{ event.device.name }} </strong><div class="pull-right"><mark> {{ event.command.name }}</mark></div></a>
+                                        <a class="list-group-item"><strong>{{ event.device.name }} </strong><div class="pull-right"><mark> {{ event.command.description }}</mark></div></a>
                                     {% endif %}
                                 {% endif %}
                             {% endfor %}
@@ -52,9 +52,9 @@
                 </div>
                 <div class="card-text" align ="center">
                     {% if scenario.state.name == "ON" %}
-                    <a href="#" id ="turnoff-scenario" class = "card-text toggle-scenario" data-scenario="{{ scenario.id }}" data-scenario-state = "{{scenario.state.id}}">OFF</a>
+                    <a href="#" id ="turnoff-scenario" class = "card-text toggle-scenario" data-scenario="{{ scenario.id }}" data-scenario-state = "{{scenario.state.id}}">ВЫКЛ</a>
                     {% else %}
-                    <a href="#" id ="turnon-scenario" class = "card-text toggle-scenario" data-scenario="{{ scenario.id }}" data-scenario-state = "{{scenario.state.id}}">ON</a>
+                    <a href="#" id ="turnon-scenario" class = "card-text toggle-scenario" data-scenario="{{ scenario.id }}" data-scenario-state = "{{scenario.state.id}}">ВКЛ</a>
                     {% endif %}
                 </div>
                 <br />

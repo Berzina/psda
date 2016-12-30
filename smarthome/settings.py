@@ -35,7 +35,7 @@ ALLOWED_HOSTS = ['warm-forest-43150.herokuapp.com',
 # Application definition
 
 INSTALLED_APPS = [
-    'psda',
+    'psda', 
     'jet',
     'django_ajax',
     'django.contrib.admin',

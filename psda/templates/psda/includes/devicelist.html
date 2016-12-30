@@ -1,6 +1,6 @@
 <div id ="devices">
     {% for device in devices %}
-        {% if device.name != "NONE" %}
+        {% if device.display != 0 %}
             <div class="col-sm-6 col-xs-12 col-md-3">
                 {% if device.state.id == 3 %}
                 <div class="card card-{{device.card_color}} card-bold" data-device="{{device.id}}" data-device-state="{{ device.state.id }}" data-device-type="{{ device.type.name}}">
@@ -32,7 +32,6 @@
                         {% endif %}
                         </p>
                         <p>{{ device.name }}</p>
-                        <p>{{ device.type.name }}</p>
                         {% if current_roomtype == "overview" %}
                         {% include 'psda/includes/roominfo.html' %}
                         {% endif %}

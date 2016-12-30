@@ -59,10 +59,28 @@ def scenarios (request):
     scenario_list = Scenarios.objects.all()
     room_list = RoomList.objects.all()
     events = Events.objects.all()
+
+    scenarios = {}
+    for scenario in scenario_list:
+        past_events = {}
+        future_events = {}
+        for event in events:
+            if scenario.id == event.scenario.id:
+                if event.event_type.id == 1:
+                    past_events [event.device.name] = event.command.description
+                if event.event_type.id == 2:
+                    future_events [event.device.name] = event.command.description
+        scenarios [scenario.id] = {"name" : scenario.name, "descr": scenario.description, "state" : scenario.state.name,
+                                   "events" : {
+                                       "past" : past_events,
+                                       "future" : future_events
+                                   }}
+
+    print (scenarios)
     context = {"scenarios" : scenario_list,
                "current_roomtype" : "overview",
                "tab" : "scenarios",
-               "rooms": room_list,
+               "rooms": room_list.values(),
                "events" : events}
 
     return render(request, 'psda/index.html', context)
@@ -79,7 +97,7 @@ def devices (request):
     context = {"devices" : device_list,
                "current_roomtype" : "overview",
                "tab" : "devices",
-               "rooms": room_list}
+               "rooms": room_list.values()}
     t3 = timezone.now()
     print ("start rendering")
     ret = render(request, 'psda/index.html', context)

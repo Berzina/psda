@@ -24,6 +24,7 @@ class ChannelList(models.Model):
 
 class CommandList(models.Model):
     name = models.CharField(max_length=10)
+    description = models.CharField(max_length=30)
 
     class Meta:
         managed = False
@@ -44,6 +45,7 @@ class Commands(models.Model):
 
 
 class Device(models.Model):
+    display = models.IntegerField()
     name = models.CharField(max_length=20)
     icon = models.CharField(max_length=100)
     card_color = models.CharField(max_length=20)
