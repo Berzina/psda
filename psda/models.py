@@ -5,10 +5,7 @@ from django.db import models
 class AjaxRequests(models.Model):
     id = models.IntegerField(primary_key=True)
     token = models.CharField(max_length=20)
-    request_type = models.CharField(max_length=5)
-    device = models.IntegerField()
-    state = models.IntegerField()
-    value = models.CharField(max_length=20)
+
 
     class Meta:
         managed = False
@@ -51,21 +48,9 @@ class Device(models.Model):
     card_color = models.CharField(max_length=20)
     state = models.ForeignKey('StatusList', models.DO_NOTHING, db_column='state')
     room = models.ForeignKey('Rooms', models.DO_NOTHING, db_column='room')
-    channel = models.ForeignKey(ChannelList, models.DO_NOTHING, db_column='channel')
     type = models.ForeignKey('DeviceList', models.DO_NOTHING, db_column='type')
-    voltage = models.FloatField()
     logic = models.IntegerField()
     collect_statistic = models.IntegerField()
-    pin1 = models.IntegerField()
-    pin2 = models.IntegerField()
-    pin3 = models.IntegerField()
-    pin4 = models.IntegerField()
-    pin5 = models.IntegerField()
-    pin6 = models.IntegerField()
-    pin7 = models.IntegerField()
-    pin8 = models.IntegerField()
-    pin9 = models.IntegerField()
-    pin10 = models.IntegerField()
 
     class Meta:
         managed = False
@@ -97,13 +82,8 @@ class Events(models.Model):
     scenario = models.ForeignKey('Scenarios', models.DO_NOTHING, db_column='scenario')
     event_type = models.ForeignKey(EventList, models.DO_NOTHING, db_column='event_type')
     device = models.ForeignKey(Device, models.DO_NOTHING, db_column='device')
-    run_scena = models.IntegerField()
     command = models.ForeignKey(CommandList, models.DO_NOTHING, db_column='command')
-    value1 = models.FloatField()
-    value2 = models.FloatField()
-    value3 = models.FloatField()
-    value4 = models.FloatField()
-    member = models.ForeignKey('Members', models.DO_NOTHING, db_column='member')
+
 
     class Meta:
         managed = False
@@ -115,10 +95,7 @@ class Events(models.Model):
 
 class Members(models.Model):
     name = models.CharField(max_length=20)
-    v1 = models.IntegerField()
-    v2 = models.IntegerField()
-    v3 = models.IntegerField()
-    v4 = models.IntegerField()
+
 
     class Meta:
         managed = False
@@ -157,13 +134,6 @@ class Scenarios(models.Model):
     description = models.TextField()
     state = models.ForeignKey('StatusList', models.DO_NOTHING, db_column='state')
     auto = models.IntegerField()
-    date_create = models.DateTimeField()
-    date_begin = models.DateTimeField()
-    date_end = models.DateTimeField()
-    days_of_week = models.IntegerField()
-    time_of_daye_begin = models.TimeField()
-    time_of_daye_end = models.TimeField()
-    period_sec = models.IntegerField()
 
     class Meta:
         managed = False

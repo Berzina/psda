@@ -1,13 +1,13 @@
 
 <div id="scenarios">
-    {% for scenario in scenarios %}
-    {% if scenario.name != "NONE" %}
+    {% for scenario, info in scenarios.items %}
+    {% if info.name != "NONE" %}
         <div class="col-sm-6">
-            <div class="card" data-scenario = "{{ scenario.id }}">
+            <div class="card" data-scenario = "{{ scenario }}">
                 <div class ="card-block">
-                    <h3 class="card-title "> {{ scenario.name }}
+                    <h3 class="card-title "> {{ info.name }}
                         <span id = "scenario-indicator">
-                            {% if scenario.state.name == "ON" %}
+                            {% if info.state == "ON" %}
                             <span class = "indicator-on">
                             {% else %}
                             <span class = "indicator-off">
@@ -17,44 +17,39 @@
                         </span>
                         <i id = "scenario-refresh-indicator" class = 'glyphicon glyphicon-refresh glyphicon-refresh-animate md-12 hide'></i>
                     </h3>
-                    <p>{{ scenario.description }} </p>
-                    <a  data-toggle="collapse" href="#{{ scenario.id }}-scenario-details" aria-expanded="false" aria-controls="collapseExample">
-                        Датали...
+                    <p>{{ info.description }} </p>
+                    <a  data-toggle="collapse" href="#{{ scenario }}-scenario-details" aria-expanded="false" aria-controls="collapseExample">
+                        Дeтали...
                     </a>
-                    <div class="collapse" id="{{ scenario.id }}-scenario-details">
+                    <div class="collapse" id="{{ scenario }}-scenario-details">
                         <br />
                         <div class="list-group">
                             <a class="list-group-item disabled" style="cursor:default">
                                 Что случилось:
                             </a>
-                            {% for event in events %}
-                                {% if scenario == event.scenario %}
-                                    {% if event.event_type.id == 1 %}
-                                        <a class="list-group-item"><strong>{{ event.device.name }} </strong><span class="pull-right"><mark> {{ event.command.description }}</mark></span></a>
-                                    {% endif %}
-                                {% endif %}
+                            {% for device, event in info.events.past.items %}
+
+                                        <a class="list-group-item"><strong>{{ device}} </strong><span class="pull-right"><mark> {{ event }}</mark></span></a>
+
                             {% endfor %}
                         </div>
                         <div class="list-group">
                             <a class="list-group-item disabled" style="cursor:default">
                                 Что я сделаю:
                             </a>
-                            {% for event in events %}
-                                {% if scenario == event.scenario %}
-                                    {% if event.event_type.id == 2 %}
-                                        <a class="list-group-item"><strong>{{ event.device.name }} </strong><div class="pull-right"><mark> {{ event.command.description }}</mark></div></a>
-                                    {% endif %}
-                                {% endif %}
+                            {% for device, event in info.events.future.items %}
+                                        <a class="list-group-item"><strong>{{ device}} </strong><span class="pull-right"><mark> {{ event }}</mark></span></a>
+
                             {% endfor %}
                         </div>
                     </div>
 
                 </div>
                 <div class="card-text" align ="center">
-                    {% if scenario.state.name == "ON" %}
-                    <a href="#" id ="turnoff-scenario" class = "card-text toggle-scenario" data-scenario="{{ scenario.id }}" data-scenario-state = "{{scenario.state.id}}">ВЫКЛ</a>
+                    {% if info.state == "ON" %}
+                    <a href="#" id ="turnoff-scenario" class = "card-text toggle-scenario" data-scenario="{{ scenario }}" data-scenario-state = "{{info.state}}">ВЫКЛ</a>
                     {% else %}
-                    <a href="#" id ="turnon-scenario" class = "card-text toggle-scenario" data-scenario="{{ scenario.id }}" data-scenario-state = "{{scenario.state.id}}">ВКЛ</a>
+                    <a href="#" id ="turnon-scenario" class = "card-text toggle-scenario" data-scenario="{{ scenario }}" data-scenario-state = "{{info.state}}">ВКЛ</a>
                     {% endif %}
                 </div>
                 <br />

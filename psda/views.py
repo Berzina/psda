@@ -56,34 +56,54 @@ def room(request, room_type_id, roomobject_id):
         return render(request, 'psda/noroomview.html', context)
 
 def scenarios (request):
+    t= timezone.now()
+    print ("start")
     scenario_list = Scenarios.objects.all()
-    room_list = RoomList.objects.all()
-    events = Events.objects.all()
+    print (scenario_list.values())
 
+    t1 = timezone.now() - t
+    print ("scena loaded : ", t1)
+    room_list = RoomList.objects.all()
+
+    t2 = timezone.now() - t - t1
+    print ("events loaded : ", t2)
+
+    t3 = timezone.now()
+    print ("making computes...")
     scenarios = {}
+
     for scenario in scenario_list:
         past_events = {}
         future_events = {}
+        events = scenario.events_set.all()
+
         for event in events:
             if scenario.id == event.scenario.id:
                 if event.event_type.id == 1:
-                    past_events [event.device.name] = event.command.description
+                    past_events[event.device.name] = event.command.description
                 if event.event_type.id == 2:
-                    future_events [event.device.name] = event.command.description
+                    future_events[event.device.name] = event.command.description
+
         scenarios [scenario.id] = {"name" : scenario.name, "descr": scenario.description, "state" : scenario.state.name,
                                    "events" : {
                                        "past" : past_events,
                                        "future" : future_events
                                    }}
 
-    print (scenarios)
-    context = {"scenarios" : scenario_list,
+    t4 = timezone.now() - t3
+    print ("computed:", t4)
+    context = {"scenarios" : scenarios,
                "current_roomtype" : "overview",
                "tab" : "scenarios",
-               "rooms": room_list.values(),
-               "events" : events}
+               "rooms": room_list}
 
-    return render(request, 'psda/index.html', context)
+    t5 = timezone.now()
+    print ("start rendering")
+    ret = render(request, 'psda/index.html', context)
+    t6 = timezone.now() - t5
+    print ("rendered : ", t6)
+    print ("score: ", timezone.now() - t)
+    return ret
 
 def devices (request):
     t= timezone.now()
@@ -97,7 +117,7 @@ def devices (request):
     context = {"devices" : device_list,
                "current_roomtype" : "overview",
                "tab" : "devices",
-               "rooms": room_list.values()}
+               "rooms": room_list}
     t3 = timezone.now()
     print ("start rendering")
     ret = render(request, 'psda/index.html', context)
