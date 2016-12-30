@@ -78,7 +78,7 @@ def scenarios (request):
         events = scenario.events_set.all()
 
         for event in events:
-            if scenario.id == event.scenario.id:
+            if scenario.id == event.scenario_id:
                 if event.event_type.id == 1:
                     past_events[event.device.name] = event.command.description
                 if event.event_type.id == 2:
