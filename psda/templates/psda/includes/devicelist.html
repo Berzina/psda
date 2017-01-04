@@ -81,6 +81,7 @@
                     if (data.state == "3") {
                         $("div.card").each ( function (i, card) {
                             if ($(card).attr("data-device") == data.device) {
+                                $(card).attr("data-device-state","3");
                                 $(card).css("opacity", "1");
                                 $(card).find("i.device-icon").removeClass("animate-device-icon");
                                 $(card).removeClass ("card-lightgray");
@@ -93,6 +94,7 @@
                     } else if ( data.state == "5") {
                         $("div.card").each ( function (i, card) {
                             if ($(card).attr("data-device") == data.device) {
+                                $(card).attr("data-device-state","5");
                                 $(card).css("opacity", "1");
                                 $(card).find("i.device-icon").removeClass("animate-device-icon");
                                 $(card).addClass ("card-lightgray");
