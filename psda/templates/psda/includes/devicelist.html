@@ -5,7 +5,7 @@
                 {% if device.state.id == 3 %}
                 <div class="card card-{{device.card_color}} card-bold" data-device="{{device.id}}" data-device-state="{{ device.state.id }}" data-device-type="{{ device.type.name}}">
                 {% else %}
-                <div class="card card-lightgray card-bold" data-device="{{device.id}}" data-device-state="{{ device.state.id }}" data-device-type="{{ device.type.name}}">
+                <div class="card card-{{device.card_color}} card-lightgray card-bold" data-device="{{device.id}}" data-device-state="{{ device.state.id }}" data-device-type="{{ device.type.name}}">
                 {% endif %}
                     <div class="card-block text-xs-center">
                         <i class="material-icons md-48 device-icon"> {{device.icon}}</i>
