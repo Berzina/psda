@@ -38,7 +38,7 @@ def index(request):
 def room(request, room_type_id, roomobject_id):
 
     room_type = RoomList.objects.get(pk=room_type_id)
-    room_list = RoomList.objects.values()
+    room_list = RoomList.objects.all()
     try:
         room_object = Rooms.objects.get(pk=roomobject_id)
         devices = room_object.device_set.all()
@@ -59,7 +59,6 @@ def scenarios (request):
     t= timezone.now()
     print ("start")
     scenario_list = Scenarios.objects.all()
-    event_list = Events.objects.values()
     print (scenario_list.values())
 
     t1 = timezone.now() - t
@@ -76,18 +75,14 @@ def scenarios (request):
     for scenario in scenario_list:
         past_events = {}
         future_events = {}
-        # events = scenario.events_set.all()
-        print (Events.objects.values().filter(scenario=scenario.id))
-        events = Events.objects.values().filter(scenario=scenario.id)
+        events = scenario.events_set.all()
+
         for event in events:
-            command = CommandList.objects.values().filter(id=event["command_id"])
-            device = Device.objects.values().filter(id=event["device_id"])
-            print (device[0]["name"], command[0])
-        # if scenario.id == event.scenario_id:
-            if event["event_type_id"] == 1:
-                past_events[device[0]["name"]] = command[0]["description"]
-            if event["event_type_id"] == 2:
-                future_events[device[0]["name"]] = command[0]["description"]
+            if scenario.id == event.scenario_id:
+                if event.event_type.id == 1:
+                    past_events[event.device.name] = event.command.description
+                if event.event_type.id == 2:
+                    future_events[event.device.name] = event.command.description
 
         scenarios [scenario.id] = {"name" : scenario.name, "descr": scenario.description, "state" : scenario.state.name,
                                    "events" : {
