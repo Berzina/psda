@@ -3,11 +3,11 @@
     {% for scenario, info in scenarios.items %}
     {% if info.name != "NONE" %}
         <div class="col-sm-6">
-            <div class="card" data-scenario = "{{ scenario }}">
+            <div class="card" data-scenario = "{{ scenario }}" data-scenario-state = "{{info.state}}">
                 <div class ="card-block">
                     <h3 class="card-title "> {{ info.name }}
                         <span id = "scenario-indicator">
-                            {% if info.state == "ON" %}
+                            {% if info.state == 3 %}
                             <span class = "indicator-on">
                             {% else %}
                             <span class = "indicator-off">
@@ -63,14 +63,38 @@
 <script>
 
     $(document).on('click', ".toggle-scenario", function () {
+        var prev_scenario_state = $(this).parent().parent().attr("data-scenario-state");
         $(this).parent().parent().find("#scenario-indicator").addClass("hide");
         $(this).parent().parent().find("#scenario-refresh-indicator").removeClass("hide");
+        $(this).parent().parent().attr("data-scenario-state","8");
         $(this).addClass("hide");
         ajaxPost("{% url 'toggle_scenario' %}",
-            {'scenario': $(this).attr("data-scenario"),
-             'state' : $(this).attr("data-scenario-state")},
+            {'scenario': $(this).parent().parent().attr("data-scenario"),
+             'state' : prev_scenario_state},
             function (content) {
-            console.log(content.result);
+                var scenario_info = content.result;
+                var scenario = $(".card[data-scenario="+scenario_info.scenario+"]");
+                var timeout = content.result.timeout;
+                console.log (timeout);
+                setTimeout(function(){
+                    if ($(scenario).attr("data-scenario-state") == "8") {
+                        $(scenario).attr("data-scenario-state", scenario_info.state);
+                        if (scenario_info.state == 3) {
+                            $(scenario).find("#scenario-indicator").html("<span class = 'indicator-on'>&#9679;</span>");
+                            $(scenario).find("#scenario-indicator").removeClass("hide");
+                            $(scenario).find("#scenario-refresh-indicator").addClass("hide");
+                            $(scenario).find(".card-text").html("<a href='#' id = 'turnoff-scenario' class = 'card-text toggle-scenario'>ВЫКЛ</a>");
+                        } else if (scenario_info.state == 5) {
+                            $(scenario).find("#scenario-indicator").html("<span class = 'indicator-off'>&#9679;</span>");
+                            $(scenario).find("#scenario-indicator").removeClass("hide");
+                            $(scenario).find("#scenario-refresh-indicator").addClass("hide");
+                            $(scenario).find(".card-text").html("<a href='#' id = 'turnon-scenario' class = 'card-text toggle-scenario'>ВКЛ</a>");
+                        }
+                        if ($("#server-down").length == 0) {
+                            $("#scenarios").prepend('<div id = "server-down" class="alert alert-danger"><a class="close" data-dismiss="alert">×</a><strong><i class="material-icons">sentiment_dissatisfied</i> Вот незадача. </strong>Кажется, сервер недоступен.</div>');
+                        }
+                    }
+                }, parseInt(timeout) * 1000);
         })
     })
 
@@ -91,7 +115,7 @@
                             $(card).find("#scenario-indicator").html("<span class = 'indicator-on'>&#9679;</span>");
                             $(card).find("#scenario-indicator").removeClass("hide");
                             $(card).find("#scenario-refresh-indicator").addClass("hide");
-                            $(card).find(".card-text").html("<a href='#' id = 'turnoff-scenario' class = 'card-text toggle-scenario'>OFF</a>");
+                            $(card).find(".card-text").html("<a href='#' id = 'turnoff-scenario' class = 'card-text toggle-scenario'>ВЫКЛ</a>");
 
                         }
                     })
@@ -101,7 +125,7 @@
                             $(card).find("#scenario-indicator").html("<span class = 'indicator-off'>&#9679;</span>");
                             $(card).find("#scenario-indicator").removeClass("hide");
                             $(card).find("#scenario-refresh-indicator").addClass("hide");
-                            $(card).find(".card-text").html("<a href='#' id = 'turnon-scenario' class = 'card-text toggle-scenario'>ON</a>");
+                            $(card).find(".card-text").html("<a href='#' id = 'turnon-scenario' class = 'card-text toggle-scenario'>ВКЛ</a>");
 
                         }
                     })
