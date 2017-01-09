@@ -172,7 +172,10 @@ def toggle_device (request):
         state= StatusList.objects.get(name="WAIT")
         Commands.objects.create(device=device, scenario=scenario, command=command, state=state,
                                 date_time=timezone.now(), value=0)
-    return {'result': request.POST["device"] + " " + request.POST["state"]}
+    return {'result':
+                {'device': request.POST["device"],
+                 'state' : request.POST["state"]}
+            }
 
 @ajax
 @csrf_exempt
