@@ -1,7 +1,7 @@
 {% extends "psda/header.html" %}
 
 {% block content %}
-
+    <button onclick="push()" style="margin-top:40px;">Очень полезная кнопка</button>
     {% include 'psda/includes/navpanelindex.html' %}
     {% if tab == "scenarios" %}
         {% include 'psda/includes/scenariolist.html' %}
@@ -65,6 +65,12 @@
         )
 
     });
+
+    function push() {
+        Push.create('Привет!', {
+            body: 'Я самое полезное уведомление, что ты когда-либо видел!'
+        });
+    }
 </script>
 {% endblock %}
 
