@@ -66,7 +66,7 @@
         var prev_scenario_state = $(this).parent().parent().attr("data-scenario-state");
         $(this).parent().parent().find("#scenario-indicator").addClass("hide");
         $(this).parent().parent().find("#scenario-refresh-indicator").removeClass("hide");
-        $(this).parent().parent().attr("data-scenario-state","8");
+        $(this).parent().parent().attr("data-scenario-state","WAIT");
         $(this).addClass("hide");
         ajaxPost("{% url 'toggle_scenario' %}",
             {'scenario': $(this).parent().parent().attr("data-scenario"),
@@ -77,14 +77,14 @@
                 var timeout = content.result.timeout;
                 console.log (timeout);
                 setTimeout(function(){
-                    if ($(scenario).attr("data-scenario-state") == "8") {
+                    if ($(scenario).attr("data-scenario-state") == "WAIT") {
                         $(scenario).attr("data-scenario-state", scenario_info.state);
-                        if (scenario_info.state == 3) {
+                        if (scenario_info.state == "ON") {
                             $(scenario).find("#scenario-indicator").html("<span class = 'indicator-on'>&#9679;</span>");
                             $(scenario).find("#scenario-indicator").removeClass("hide");
                             $(scenario).find("#scenario-refresh-indicator").addClass("hide");
                             $(scenario).find(".card-text").html("<a href='#' id = 'turnoff-scenario' class = 'card-text toggle-scenario'>ВЫКЛ</a>");
-                        } else if (scenario_info.state == 5) {
+                        } else if (scenario_info.state == "OFF") {
                             $(scenario).find("#scenario-indicator").html("<span class = 'indicator-off'>&#9679;</span>");
                             $(scenario).find("#scenario-indicator").removeClass("hide");
                             $(scenario).find("#scenario-refresh-indicator").addClass("hide");
