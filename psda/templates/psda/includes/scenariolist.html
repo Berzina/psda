@@ -7,7 +7,7 @@
                 <div class ="card-block">
                     <h3 class="card-title "> {{ info.name }}
                         <span id = "scenario-indicator">
-                            {% if info.state == 3 %}
+                            {% if info.state == "ON" %}
                             <span class = "indicator-on">
                             {% else %}
                             <span class = "indicator-off">
@@ -102,6 +102,7 @@
 
     inbox.onmessage = function(message) {
       var data = JSON.parse(message.data);
+      console.log(data);
 
       ajaxPost("{% url 'token_validator' %}",
 

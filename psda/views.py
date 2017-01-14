@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import Device, DeviceList, Rooms, Scenarios, RoomList, Events, AjaxRequests, Commands, CommandList, StatusList, Statistics
+from .models import Device, DeviceList, Rooms, Scenarios, RoomList, Events, AjaxRequests, Commands, CommandList, StatusList, Statistics, Parameter
 from django_ajax.decorators import ajax
 from django.views.decorators.csrf import csrf_exempt
 from django.utils import timezone
@@ -225,6 +225,10 @@ def toggle_device (request):
     device = Device.objects.get(pk=device_id)
     scenario = Scenarios.objects.get(name="NONE")
 
+    timeout = Parameter.objects.get(code="WAIT_SERVER").value
+
+    print ("timeout=", timeout)
+
     if state_id == 3:
         command = CommandList.objects.get(name="TURN_OFF")
         state= StatusList.objects.get(name="WAIT")
@@ -235,7 +239,11 @@ def toggle_device (request):
         state= StatusList.objects.get(name="WAIT")
         Commands.objects.create(device=device, scenario=scenario, command=command, state=state,
                                 date_time=timezone.now(), value=0)
-    return {'result': request.POST["device"] + " " + request.POST["state"]}
+    return {'result':
+                {'device': request.POST["device"],
+                 'state' : request.POST["state"],
+                 'timeout': timeout}
+            }
 
 @ajax
 @csrf_exempt
@@ -246,6 +254,7 @@ def toggle_scenario (request):
 
     device = Device.objects.get(name="NONE")
     scenario = Scenarios.objects.get(pk=scenario_id)
+    timeout = Parameter.objects.get(code="WAIT_SERVER").value
 
     if state_id == 3:
         command = CommandList.objects.get(name="STOP_SCEN")
@@ -256,7 +265,11 @@ def toggle_scenario (request):
         state= StatusList.objects.get(name="WAIT")
         Commands.objects.create(device=device, scenario=scenario, command=command, state=state,
                                 date_time=timezone.now(), value=0)
-    return {'result': request.POST["scenario"] + " " + request.POST["state"]}
+    return {'result':
+                {'scenario': request.POST["scenario"],
+                 'state' : request.POST["state"],
+                 'timeout': timeout}
+            }
 
 @ajax
 @csrf_exempt
