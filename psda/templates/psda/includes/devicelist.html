@@ -120,7 +120,7 @@
 
     inbox.onmessage = function(message) {
       var data = JSON.parse(message.data);
-        console.log(data);
+        console.log("received from ws:", data);
 
       try {
         var values = JSON.parse(data.values);

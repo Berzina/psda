@@ -102,7 +102,7 @@
 
     inbox.onmessage = function(message) {
       var data = JSON.parse(message.data);
-      console.log(data);
+      console.log("received from ws:", data);
 
       ajaxPost("{% url 'token_validator' %}",
 
