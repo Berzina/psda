@@ -2,7 +2,7 @@
 <div id="scenarios">
     {% for scenario, info in scenarios.items %}
     {% if info.name != "NONE" %}
-        <div class="col-sm-6">
+        <div class="col-sm-12">
             <div class="card" data-scenario = "{{ scenario }}" data-scenario-state = "{{info.state}}">
                 <div class ="card-block">
                     <h3 class="card-title "> {{ info.name }}

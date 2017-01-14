@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import Device, DeviceList, Rooms, Scenarios, RoomList, Events, AjaxRequests, Commands, CommandList, StatusList, Statistics, Parameter
+from .models import Device, DeviceList, Rooms, Scenarios, RoomList, Events, AjaxRequests, Commands, CommandList, StatusList, Statistics
 from django_ajax.decorators import ajax
 from django.views.decorators.csrf import csrf_exempt
 from django.utils import timezone
@@ -26,12 +26,75 @@ def login (request):
       return HttpResponseRedirect('/')
 
 
+def home(request):
+    t = timezone.now()
+    print("start")
+    scenario_list = Scenarios.objects.all()
+    print(scenario_list.values())
 
+    t1 = timezone.now() - t
+    print("scena loaded : ", t1)
+
+    t2 = timezone.now() - t - t1
+    print("events loaded : ", t2)
+
+    t3 = timezone.now()
+    print("making computes...")
+    scenarios = {}
+
+    for scenario in scenario_list:
+        past_events = {}
+        future_events = {}
+        events = scenario.events_set.all()
+
+        for event in events:
+            if scenario.id == event.scenario_id:
+                if event.event_type.id == 1:
+                    past_events[event.device.name] = event.command.description
+                if event.event_type.id == 2:
+                    future_events[event.device.name] = event.command.description
+
+        scenarios[scenario.id] = {"name": scenario.name, "descr": scenario.description, "state": scenario.state.name,
+                                  "events": {
+                                      "past": past_events,
+                                      "future": future_events
+                                  }}
+
+    t4 = timezone.now() - t3
+    print("computed:", t4)
+
+    t5 = timezone.now()
+    print("start rendering")
+    t6 = timezone.now() - t5
+    print("rendered : ", t6)
+    print("score: ", timezone.now() - t)
+
+    t = timezone.now()
+    print("start")
+    device_list = Device.objects.filter(device_or_sensor=1)
+    sensor_list = Device.objects.filter(device_or_sensor=0)
+    t1 = timezone.now() - t
+    print("device loaded : ", t1)
+    room_list = RoomList.objects.values()
+    t2 = timezone.now() - t - t1
+    print("rooms loaded : ", t2)
+    context = {"devices": device_list,
+               "sensors": sensor_list,
+               "scenarios": scenarios,
+               "current_roomtype": "overview",
+               "tab": "home",
+               "rooms": room_list}
+    t3 = timezone.now()
+    print("start rendering")
+    ret = render(request, 'psda/index.html', context)
+    t4 = timezone.now() - t3
+    print("rendered : ", t4)
+    return ret
 
 def index(request):
 
     context = {"current_roomtype" : "overview",
-               "tab": "scenarios"}
+               "tab": "home"}
 
     return render(request, 'psda/index.html', context)
 
@@ -84,7 +147,7 @@ def scenarios (request):
                 if event.event_type.id == 2:
                     future_events[event.device.name] = event.command.description
 
-        scenarios [scenario.id] = {"name" : scenario.name, "descr": scenario.description, "state" : scenario.state.id,
+        scenarios [scenario.id] = {"name" : scenario.name, "descr": scenario.description, "state" : scenario.state.name,
                                    "events" : {
                                        "past" : past_events,
                                        "future" : future_events
@@ -161,8 +224,6 @@ def toggle_device (request):
 
     device = Device.objects.get(pk=device_id)
     scenario = Scenarios.objects.get(name="NONE")
-    print ("scenario = ", scenario)
-    timeout = Parameter.objects.get(code="WAIT_SERVER").value
 
     if state_id == 3:
         command = CommandList.objects.get(name="TURN_OFF")
@@ -174,11 +235,7 @@ def toggle_device (request):
         state= StatusList.objects.get(name="WAIT")
         Commands.objects.create(device=device, scenario=scenario, command=command, state=state,
                                 date_time=timezone.now(), value=0)
-    return {'result':
-                {'device': request.POST["device"],
-                 'state' : request.POST["state"],
-                 'timeout': timeout}
-            }
+    return {'result': request.POST["device"] + " " + request.POST["state"]}
 
 @ajax
 @csrf_exempt
@@ -189,7 +246,6 @@ def toggle_scenario (request):
 
     device = Device.objects.get(name="NONE")
     scenario = Scenarios.objects.get(pk=scenario_id)
-    timeout = Parameter.objects.get(code="WAIT_SERVER").value
 
     if state_id == 3:
         command = CommandList.objects.get(name="STOP_SCEN")
@@ -200,12 +256,7 @@ def toggle_scenario (request):
         state= StatusList.objects.get(name="WAIT")
         Commands.objects.create(device=device, scenario=scenario, command=command, state=state,
                                 date_time=timezone.now(), value=0)
-
-    return {'result':
-                {'scenario': request.POST["scenario"],
-                 'state' : request.POST["state"],
-                 'timeout': timeout}
-            }
+    return {'result': request.POST["scenario"] + " " + request.POST["state"]}
 
 @ajax
 @csrf_exempt

@@ -1,13 +1,16 @@
 {% extends "psda/header.html" %}
 
 {% block content %}
-    <button onclick="push()" style="margin-top:40px;">Очень полезная кнопка</button>
+
     {% include 'psda/includes/navpanelindex.html' %}
-    {% if tab == "scenarios" %}
-        {% include 'psda/includes/scenariolist.html' %}
-    {% endif %}
-    {% if tab == "devices" %}
-        {% include 'psda/includes/devicelist.html' %}
+    {% if tab == "home" %}
+        <div class="col-md-7">
+            {% include 'psda/includes/devicelist.html' %}
+        </div>
+        <div class="col-md-5">
+            {% include 'psda/includes/scenariolist.html' %}
+        </div>
+
     {% endif %}
     {% if tab == "charts" %}
         <div class="input-group date col-md-6 col-xs-12" style="margin-top:20px;">
@@ -65,12 +68,6 @@
         )
 
     });
-
-    function push() {
-        Push.create('Привет!', {
-            body: 'Я самое полезное уведомление, что ты когда-либо видел!'
-        });
-    }
 </script>
 {% endblock %}
 

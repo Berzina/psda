@@ -43,6 +43,7 @@ class Commands(models.Model):
 
 class Device(models.Model):
     display = models.IntegerField()
+    device_or_sensor = models.IntegerField()
     name = models.CharField(max_length=20)
     icon = models.CharField(max_length=100)
     card_color = models.CharField(max_length=20)
@@ -103,15 +104,6 @@ class Members(models.Model):
 
     def __str__(self):
         return self.name
-
-class Parameter(models.Model):
-    code = models.CharField(max_length=20)
-    value = models.CharField(max_length=20)
-    description = models.CharField(max_length=150)
-
-    class Meta:
-        managed = False
-        db_table = 'parametrs'
 
 
 class RoomList(models.Model):

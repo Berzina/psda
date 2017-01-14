@@ -1,7 +1,8 @@
 <div id ="devices">
-    {% for device in devices %}
+<div class="col-md-5">
+    {% for device in sensors %}
         {% if device.display != 0 %}
-            <div class="col-sm-6 col-xs-12 col-md-3">
+            <div class="col-sm-12 col-xs-12 col-md-12">
                 {% if device.state.id == 3 %}
                 <div class="card card-{{device.card_color}} card-bold" data-device="{{device.id}}" data-device-state="{{ device.state.id }}" data-device-type="{{ device.type.name}}">
                 {% else %}
@@ -12,7 +13,7 @@
                         <p>
                         {% if device.collect_statistic == 1 %}
                         {% with device.statistics_set.all|dictsort:"date_time"|last as latest_stat %}
-                            {% if device.name == "temperature_humidity" %}
+{#                            {% if device.name == "temperature_humidity" %}#}
                                 <span class ="device-values" data-device = "{{device.id}}" data-value = "value1">
                                     {{latest_stat.value1}}
                                 </span>
@@ -21,14 +22,12 @@
                                     {{latest_stat.value2}}
                                 </span>
                                 <span class="glyphicon glyphicon-tint" aria-hidden="true"></span>
-                            {% else %}
-                                <span class ="device-values" data-device = "{{device.id}}" data-value = "value1">
-                                    {{latest_stat.value1}}
-                                </span>
-                            {% endif %}
+{#                            {% else %}#}
+{#                                <span class ="device-values" data-device = "{{device.id}}" data-value = "value1">#}
+{#                                    {{latest_stat.value1}}#}
+{#                                </span>#}
+{#                            {% endif %}#}
                         {% endwith %}
-                        {% else %}
-                            <br />
                         {% endif %}
                         </p>
                         <p>{{ device.name }}</p>
@@ -40,35 +39,54 @@
             </div>
         {% endif %}
     {% endfor %}
+</div>
+<div class="col-md-7">
+    {% for device in devices %}
+        {% if device.display != 0 %}
+            <div class="col-sm-6 col-xs-12 col-md-6">
+                {% if device.state.id == 3 %}
+                <div class="card card-{{device.card_color}} card-bold" data-device="{{device.id}}" data-device-state="{{ device.state.id }}" data-device-type="{{ device.type.name}}">
+                {% else %}
+                <div class="card card-{{device.card_color}} card-lightgray card-bold" data-device="{{device.id}}" data-device-state="{{ device.state.id }}" data-device-type="{{ device.type.name}}">
+                {% endif %}
+                    <div class="card-block text-xs-center">
+                        <i class="material-icons md-48 device-icon"> {{device.icon}}</i>
+                        <p>
+                        {% if device.collect_statistic == 1 %}
+                        {% with device.statistics_set.all|dictsort:"date_time"|last as latest_stat %}
+                                <span class ="device-values" data-device = "{{device.id}}" data-value = "value1">
+                                    {{latest_stat.value1}}
+                                </span>
+                                &#8451; &#32;
+                                <span class ="device-values" data-device = "{{device.id}}" data-value = "value2">
+                                    {{latest_stat.value2}}
+                                </span>
+                                <span class="glyphicon glyphicon-tint" aria-hidden="true"></span>
+                        {% endwith %}
+                        {% endif %}
+                        </p>
+                        <p>{{ device.name }}</p>
+                        {% if current_roomtype == "overview" %}
+                        {% include 'psda/includes/roominfo.html' %}
+                        {% endif %}
+                      </div>
+                </div>
+            </div>
+        {% endif %}
+    {% endfor %}
+</div>
             </div>
 
 <script>
-    $('.card[data-device-type="RELAY"][data-device-state!=8]').click (function() {
-        var prev_device_state = $(this).attr("data-device-state");
-        if ($(this).attr("data-device-state") != "8") {
-            $(this).css("opacity", "0.3");
-            $(this).find("i.device-icon").addClass("animate-device-icon");
-            $(this).attr("data-device-state","8");
-            ajaxPost("{% url 'toggle_device' %}",
-                {'device': $(this).attr("data-device"),
-                 'state' : prev_device_state},
-                function (content) {
-                    var device_info = content.result;
-                    var device = $(".card[data-device="+device_info.device+"]");
-                    var timeout = content.result.timeout;
-                    console.log (timeout);
-                    setTimeout(function(){
-                        if ($(device).attr("data-device-state") == "8") {
-                            $(device).attr("data-device-state", device_info.state);
-                            $(device).find("i.device-icon").removeClass("animate-device-icon");
-                            $(device).css("opacity", "1");
-                            if ($("#server-down").length == 0) {
-                                $("#devices").prepend('<div id = "server-down" class="alert alert-danger"><a class="close" data-dismiss="alert">×</a><strong><i class="material-icons">sentiment_dissatisfied</i> Вот незадача. </strong>Кажется, сервер недоступен.</div>');
-                            }
-                        }
-                    }, parseInt(timeout) * 1000);
-            })
-        }
+    $('.card[data-device-type="RELAY"]').click (function() {
+        $(this).css("opacity", "0.3");
+        $(this).find("i.device-icon").addClass("animate-device-icon");
+        ajaxPost("{% url 'toggle_device' %}",
+            {'device': $(this).attr("data-device"),
+             'state' : $(this).attr("data-device-state")},
+            function (content) {
+            console.log(content.result);
+        })
     });
 
     $('#satisfier').click(function(ev){
