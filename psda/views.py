@@ -250,7 +250,10 @@ def toggle_device (request):
 def toggle_scenario (request):
 
     scenario_id = int(request.POST["scenario"])
-    state_id = int(request.POST["state"])
+    if request.POST["state"] == "ON":
+        state_id = 3
+    else:
+        state_id = 5
 
     device = Device.objects.get(name="NONE")
     scenario = Scenarios.objects.get(pk=scenario_id)
