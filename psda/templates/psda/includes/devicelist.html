@@ -43,15 +43,32 @@
             </div>
 
 <script>
-    $('.card[data-device-type="RELAY"]').click (function() {
-        $(this).css("opacity", "0.3");
-        $(this).find("i.device-icon").addClass("animate-device-icon");
-        ajaxPost("{% url 'toggle_device' %}",
-            {'device': $(this).attr("data-device"),
-             'state' : $(this).attr("data-device-state")},
-            function (content) {
-            console.log(content.result);
-        })
+    $('.card[data-device-type="RELAY"][data-device-state!=8]').click (function() {
+        var prev_device_state = $(this).attr("data-device-state");
+        if ($(this).attr("data-device-state") != "8") {
+            $(this).css("opacity", "0.3");
+            $(this).find("i.device-icon").addClass("animate-device-icon");
+            $(this).attr("data-device-state","8");
+            ajaxPost("{% url 'toggle_device' %}",
+                {'device': $(this).attr("data-device"),
+                 'state' : prev_device_state},
+                function (content) {
+                    var device_info = content.result;
+                    var device = $(".card[data-device="+device_info.device+"]");
+                    var timeout = content.result.timeout;
+                    console.log (timeout);
+                    setTimeout(function(){
+                        if ($(device).attr("data-device-state") == "8") {
+                            $(device).attr("data-device-state", device_info.state);
+                            $(device).find("i.device-icon").removeClass("animate-device-icon");
+                            $(device).css("opacity", "1");
+                            if ($("#server-down").length == 0) {
+                                $("#devices").prepend('<div id = "server-down" class="alert alert-danger"><a class="close" data-dismiss="alert">×</a><strong><i class="material-icons">sentiment_dissatisfied</i> Вот незадача. </strong>Кажется, сервер недоступен.</div>');
+                            }
+                        }
+                    }, parseInt(timeout) * 1000);
+            })
+        }
     });
 
     $('#satisfier').click(function(ev){
