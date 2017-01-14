@@ -110,7 +110,7 @@
 
          function(content){
             if (content.valid == "ok") {
-                if (data.state == "3") {
+                if (data.state == "ON") {
                     $("div.card").each ( function (i, card) {
                         if ($(card).attr("data-scenario") == data.scenario) {
                             $(card).find("#scenario-indicator").html("<span class = 'indicator-on'>&#9679;</span>");
@@ -120,7 +120,7 @@
 
                         }
                     })
-                } else if ( data.state == "5") {
+                } else if ( data.state == "OFF") {
                     $("div.card").each ( function (i, card) {
                         if ($(card).attr("data-scenario") == data.scenario) {
                             $(card).find("#scenario-indicator").html("<span class = 'indicator-off'>&#9679;</span>");

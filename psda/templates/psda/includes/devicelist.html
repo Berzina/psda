@@ -131,7 +131,7 @@
 
              function(content){
                 if (content.valid == "ok") {
-                    if (data.state == "3") {
+                    if (data.state == "ON") {
                         $("div.card").each ( function (i, card) {
                             if ($(card).attr("data-device") == data.device) {
                                 $(card).attr("data-device-state","3");
@@ -144,7 +144,7 @@
                                 })
                             }
                         })
-                    } else if ( data.state == "5") {
+                    } else if ( data.state == "OFF") {
                         $("div.card").each ( function (i, card) {
                             if ($(card).attr("data-device") == data.device) {
                                 $(card).attr("data-device-state","5");
