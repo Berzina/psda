@@ -1,7 +1,21 @@
 
 <div id="scenarios">
+    <div class="col-md-12 center">
+        <button class="btn btn-primary btn-round btn-just-icon">
+            <i class="material-icons">view_list</i>
+            <div class="ripple-container"></div>
+        </button>
+    </div>
+    <div class="col-md-6 dotted-box-right-border-no-margin"></div>
+    <div class="col-md-12 center">
+        <button class="btn btn-primary btn-round btn-just-icon">
+            <i class="material-icons">pan_tool</i>
+            <div class="ripple-container"></div>
+        </button>
+    </div>
     {% for scenario, info in scenarios.items %}
     {% if info.name != "NONE" %}
+
         <div class="col-sm-12">
             <div class="card" data-scenario = "{{ scenario }}" data-scenario-state = "{{info.state}}">
                 <div class ="card-block">

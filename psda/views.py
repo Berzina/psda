@@ -169,6 +169,7 @@ def scenarios (request):
     return ret
 
 def devices (request):
+
     t= timezone.now()
     print ("start")
     device_list = Device.objects.all()

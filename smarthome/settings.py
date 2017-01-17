@@ -145,3 +145,12 @@ STATICFILES_DIRS = (
 )
 
 JET_DEFAULT_THEME = 'light-violet'
+
+# CACHES = {
+#     'default': {
+#         'BACKEND': 'caching.backends.memcached.MemcachedCache',
+#         'LOCATION': '127.0.0.1:11211',
+#     }
+# }
+
+# CACHE_COUNT_TIMEOUT = 60  # seconds, not too long.

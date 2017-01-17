@@ -1,5 +1,14 @@
-<div id ="devices">
-<div class="col-md-5">
+<div class="col-md-3">
+    <div id ="sensors">
+
+    <div class="col-md-12 center">
+        <button class="btn btn-primary btn-round btn-just-icon">
+            <i class="material-icons">wifi_tethering</i>
+            <div class="ripple-container"></div>
+        </button>
+    </div>
+
+    <div class="col-md-6 dotted-box-right-border"></div>
     {% for device in sensors %}
         {% if device.display != 0 %}
             <div class="col-sm-12 col-xs-12 col-md-12">
@@ -40,14 +49,29 @@
         {% endif %}
     {% endfor %}
 </div>
-<div class="col-md-7">
+</div>
+<div class="col-md-5 wave-back">
+    {% include 'psda/includes/scenariolist.html' %}
+</div>
+
+<div class="col-md-4">
+    <div id="devices">
+    <div class="col-md-12 center">
+        <button class="btn btn-primary btn-round btn-just-icon">
+            <i class="material-icons">developer_board</i>
+            <div class="ripple-container"></div>
+        </button>
+    </div>
+    <div class="col-md-6 dotted-box-right-border-short"></div>
+    <div class="col-md-6" style="height:10px;"></div>
+    <div class="col-md-3"></div> <div class="col-md-6 dotted-box-top-n-sides-border"></div><div class="col-md-3"></div>
     {% for device in devices %}
         {% if device.display != 0 %}
             <div class="col-sm-6 col-xs-12 col-md-6">
                 {% if device.state.id == 3 %}
-                <div class="card card-{{device.card_color}} card-bold" data-device="{{device.id}}" data-device-state="{{ device.state.id }}" data-device-type="{{ device.type.name}}">
+                <div class="card card-{{device.card_color}} card-bold" data-device="{{device.id}}" data-device-state="{{ device.state.id }}" data-device-type="{{ device.type.name}}" style="box-shadow:0 0 6px 0 {{ device.card_color}}">
                 {% else %}
-                <div class="card card-{{device.card_color}} card-lightgray card-bold" data-device="{{device.id}}" data-device-state="{{ device.state.id }}" data-device-type="{{ device.type.name}}">
+                <div class="card card-{{device.card_color}} card-lightgray card-bold boxshadow-low" data-device="{{device.id}}" data-device-state="{{ device.state.id }}" data-device-type="{{ device.type.name}}">
                 {% endif %}
                     <div class="card-block text-xs-center">
                         <i class="material-icons md-48 device-icon"> {{device.icon}}</i>
@@ -76,7 +100,7 @@
     {% endfor %}
 </div>
             </div>
-
+</div>
 <script>
     $('.card[data-device-type="RELAY"][data-device-state!=8]').click (function() {
         var prev_device_state = $(this).attr("data-device-state");
