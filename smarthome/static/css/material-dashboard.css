@@ -4815,10 +4815,6 @@ padding-top:40px;
 
 }
 
-.wave-back {
-    background: url(../img/seigaiha.png) repeat;
-    height: 100%;
-}
 
 @media (min-width: 1024px) {
   .navbar > .container-fluid .navbar-brand {
