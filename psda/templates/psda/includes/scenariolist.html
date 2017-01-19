@@ -1,12 +1,13 @@
 
 <div id="scenarios">
     <div class="col-md-12 center">
-        <button class="btn btn-primary btn-round btn-just-icon">
+        <button class="btn btn-primary btn-round btn-just-icon" data-trigger="focus" data-toggle="popover-scenarios-opt" data-placement="bottom">
             <i class="material-icons">view_list</i>
             <div class="ripple-container"></div>
         </button>
     </div>
-    <div class="col-md-6 dotted-box-right-border-no-margin"></div>
+    <div id="scenario-toggle">
+    <div class="row"><div class="col-md-6 col-xs-6 dotted-box-right-border-no-margin"></div></div>
     <div class="col-md-12 center">
         <button class="btn btn-primary btn-round btn-just-icon">
             <i class="material-icons">pan_tool</i>
@@ -72,7 +73,7 @@
     {% endif %}
 {% endfor %}
 </div>
-
+</div>
 
 <script>
 

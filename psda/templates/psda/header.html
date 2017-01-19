@@ -22,10 +22,8 @@
 					</button>
 					 {% if room_object.name %}
 						<a class="navbar-brand inner-navbar-header" href="#">{{room_object.name}} </a>
-					 {% elif  tab == "scenarios" %}
-						<a class="navbar-brand inner-navbar-header" href="#">Сценарии </a>
-					 {% elif  tab == "devices" %}
-						<a class="navbar-brand inner-navbar-header" href="#">Устройства </a>
+					 {% elif  tab == "home" %}
+						<a class="navbar-brand inner-navbar-header" href="#">Дом </a>
                      {% elif  tab == "charts" %}
 						<a class="navbar-brand inner-navbar-header" href="#">Инфографика </a>
 					 {% endif %}
@@ -86,7 +84,39 @@ $(function () {
   }
   );
 
+  $('[data-toggle="popover-sensors-opt"]').popover(
+  {
+  	html: 'true',
+    content:'<a href = "#" type="button" class="btn btn-round btn-warning" style="padding:12px 13px;" onclick="hideSensors()"><i class="glyphicon glyphicon-eye-close"></i> </a>'
+  }
+  );
+
+  $('[data-toggle="popover-scenarios-opt"]').popover(
+  {
+  	html: 'true',
+    content:'<a href = "#" type="button" class="btn btn-round btn-warning" style="padding:12px 15px;" onclick="hideScenarios()"><i class="glyphicon glyphicon-eye-close"></i> </a> <a href = "#" type="button" class="btn btn-round btn-warning" style="padding:12px" onclick="hideScenarios()"><i class="material-icons">add</i> </a>'
+  }
+  );
+  $('[data-toggle="popover-devices-opt"]').popover(
+  {
+  	html: 'true',
+    content:'<a href = "#" type="button" class="btn btn-round btn-warning" style="padding:12px 15px;" onclick="hideDevices()"><i class="glyphicon glyphicon-eye-close"></i> </a>'
+  }
+  );
+
 })
+
+function hideSensors() {
+	$("#sensor-toggle").toggleClass("hide");
+}
+
+function hideScenarios() {
+	$("#scenario-toggle").toggleClass("hide");
+}
+
+function hideDevices() {
+	$("#device-toggle").toggleClass("hide");
+}
 </script>
 
 {% else %}

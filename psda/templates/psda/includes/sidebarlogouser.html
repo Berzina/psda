@@ -16,7 +16,7 @@
 					<ul class="nav">
                         {% if user.is_authenticated %}
 							<li>
-									<a href="#" type="button" class="btn btn-lg btn-default" data-toggle="popover"  data-placement="bottom" style="padding:5px 36px">
+									<a href="#" type="button" class="btn btn-lg btn-default" data-toggle="popover" data-trigger="focus" data-placement="bottom" style="padding:5px 36px">
                                         <i class="material-icons" style = "color: white;">person</i>
                                         <p>{{ user.username }}</p>
 									</a>

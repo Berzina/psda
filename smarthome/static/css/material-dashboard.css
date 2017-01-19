@@ -3399,12 +3399,41 @@ fieldset[disabled] .form-group.is-focused .togglebutton label {
 .popover-title {
   background-color: #FFFFFF;
   border: none;
-  padding: 15px 15px 5px;
+  border: none;
   font-size: 1.3em;
 }
 
 .popover-content {
-  padding: 10px 15px 15px;
+  line-height: 1.4;
+}
+
+#sensors > .popover, .tooltip-inner {
+  color: #555555;
+  line-height: 1.5em;
+  background: transparent;
+  border: none;
+  border-radius: 3px;
+
+}
+
+#sensors > .popover {
+  padding: 0;
+  box-shadow: none;
+
+}
+#sensors > .popover.left > .arrow, .popover.right > .arrow, .popover.top > .arrow, .popover.bottom > .arrow {
+  border: none;
+  display: none;
+}
+
+#sensors > .popover-title {
+  background-color: #FFFFFF;
+  border: none;
+  padding: 15px 15px 5px;
+  font-size: 1.3em;
+}
+
+#sensors > .popover-content {
   line-height: 1.4;
 }
 
@@ -4854,4 +4883,24 @@ padding-top:40px;
     #devices {
     padding-top:40px;
     }
+}
+
+
+  .mobile{
+    display:none;
+  }
+
+  .non-mobile{
+    display:block;
+  }
+
+@media (max-width: 767px) {
+.mobile{
+display:block;
+}
+
+.non-mobile{
+display:none;
+}
+
 }
