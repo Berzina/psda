@@ -10,7 +10,7 @@
 
 		<div class="wrapper">
 
-			{% include 'psda/includes/sidebar.html' %}
+
 
 			<div class="main-panel">
 				<nav class="navbar navbar-default navbar-absolute" style = "padding-top : 0px;" id="main-menu-toggler">
@@ -30,12 +30,10 @@
 
 				</nav>
 
-			  <div class='content' style = "margin-top : 13px;">
+			  <div class='content col-md-12' style = "margin-top : 13px;">
 				 {% block content %}
 				 {% endblock %}
-			  </div>
-
-				<footer class="footer">
+				  <footer class="footer">
 					<div class="container-fluid">
 						<nav class="pull-left">
 							<ul>
@@ -66,6 +64,9 @@
 						</p>
 					</div>
 				</footer>
+			  </div>
+
+
 			</div>
 		</div>
 
@@ -73,23 +74,7 @@
 	</html>
 <script>
 $(function () {
-  $('[data-toggle="popover"]').popover(
-  {
-  	html: 'true',
-  	{% if user.is_superuser %}
-    content:'<a id ="gotoAdminBtn" href = "{% url 'admin' %}" type="button" class="btn btn-primary" style = "padding:1px 1px; "><i class="material-icons" style = "color: white; margin-right: 0px;">settings_applications</i> </a> <a href="{% url 'admin' %}">Панель администратора</a> <br /> <a href = "{% url 'logout' %}" type="button" class="btn btn-primary" style = "padding:1px 1px; "> <i class="material-icons" style="color: white; margin-right: 0px;">directions_walk </i></a> <a href="{% url 'logout' %}">Выход</a>'
-    {% else %}
-    content:'<a href = "{% url 'logout' %}" type="button" class="btn btn-primary" style = "padding:1px 1px; "> <i class="material-icons" style="color: white; margin-right: 0px;">directions_walk </i></a> <a href="{% url 'logout' %}">Выход</a>'
-    {% endif %}
-  }
-  );
 
-  $('[data-toggle="popover-sensors-opt"]').popover(
-  {
-  	html: 'true',
-    content:'<a href = "#" type="button" class="btn btn-round btn-warning" style="padding:12px 13px;" onclick="hideSensors()"><i class="glyphicon glyphicon-eye-close"></i> </a>'
-  }
-  );
 
   $('[data-toggle="popover-scenarios-opt"]').popover(
   {
@@ -97,26 +82,17 @@ $(function () {
     content:'<a href = "#" type="button" class="btn btn-round btn-warning" style="padding:12px 15px;" onclick="hideScenarios()"><i class="glyphicon glyphicon-eye-close"></i> </a> <a href = "#" type="button" class="btn btn-round btn-warning" style="padding:12px" onclick="hideScenarios()"><i class="material-icons">add</i> </a>'
   }
   );
-  $('[data-toggle="popover-devices-opt"]').popover(
-  {
-  	html: 'true',
-    content:'<a href = "#" type="button" class="btn btn-round btn-warning" style="padding:12px 15px;" onclick="hideDevices()"><i class="glyphicon glyphicon-eye-close"></i> </a>'
-  }
-  );
+
 
 })
 
-function hideSensors() {
-	$("#sensor-toggle").toggleClass("hide");
-}
+
 
 function hideScenarios() {
 	$("#scenario-toggle").toggleClass("hide");
 }
 
-function hideDevices() {
-	$("#device-toggle").toggleClass("hide");
-}
+
 </script>
 
 {% else %}

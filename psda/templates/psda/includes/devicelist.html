@@ -9,7 +9,7 @@
     <div id ="sensors">
 
     <div class="col-md-12 center" id="sensor-control">
-        <a tabindex="0" role="button" class="btn btn-primary btn-round btn-just-icon" data-trigger="focus" data-toggle="popover-sensors-opt" data-placement="bottom">
+        <a id="sensor-toggler" role="button" class="btn btn-primary btn-round btn-just-icon">
             <i class="material-icons">wifi_tethering</i>
             <div class="ripple-container"></div>
         </a>
@@ -60,23 +60,23 @@
 </div>
 </div>
     </div>
-<div class="col-md-5 col-xs-12 wave-back">
+<div class="col-md-5 col-xs-12 wave-back central-content">
     {% include 'psda/includes/scenariolist.html' %}
 </div>
 
 <div class="col-md-4 col-sm-12 col-xs-12">
     <div id="devices">
     <div class="col-md-12 center">
-        <a tabindex="0" role="button" class="btn btn-primary btn-round btn-just-icon" data-trigger="focus" data-toggle="popover-devices-opt" data-placement="bottom">
+        <a id="device-toggler" role="button" class="btn btn-primary btn-round btn-just-icon">
             <i class="material-icons">developer_board</i>
             <div class="ripple-container"></div>
         </a>
     </div>
     <div id="device-toggle">
     <div class="col-md-6 col-xs-6 dotted-box-right-border mobile"></div>
-    <div class="col-md-6 dotted-box-right-border-short non-mobile"></div>
-    <div class="col-md-6 non-mobile" style="height:10px;"></div>
-    <div class="col-md-3 non-mobile"></div> <div class="col-md-6 dotted-box-top-n-sides-border non-mobile"></div><div class="col-md-3"></div>
+    <div class="col-md-6 col-sm-6 dotted-box-right-border-short non-mobile"></div>
+    <div class="col-md-6 col-sm-6 non-mobile" style="height:10px;"></div>
+    <div class="col-md-3 col-sm-3 non-mobile"></div> <div class="col-md-6 col-sm-6 dotted-box-top-n-sides-border non-mobile"></div><div class="col-md-3"></div>
     {% for device in devices %}
         {% if device.display != 0 %}
             <div class="col-sm-6 col-xs-12 col-md-6">
@@ -191,6 +191,7 @@
 
     };
 
-
+$("#sensor-toggler").click(function(){$("#sensor-toggle").toggleClass("hide")});
+$("#device-toggler").click(function(){$("#device-toggle").toggleClass("hide")});
 </script>
 </div>

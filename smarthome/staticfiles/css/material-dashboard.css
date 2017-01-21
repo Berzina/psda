@@ -654,15 +654,10 @@ h2.title {
 .main-panel {
   position: relative;
   z-index: 2;
-  float: right;
   overflow: auto;
-  width: calc(100% - 260px);
+
   min-height: 100%;
-  -webkit-transform: translate3d(0px, 0, 0);
-  -moz-transform: translate3d(0px, 0, 0);
-  -o-transform: translate3d(0px, 0, 0);
-  -ms-transform: translate3d(0px, 0, 0);
-  transform: translate3d(0px, 0, 0);
+
   -webkit-transition: all 0.33s cubic-bezier(0.685, 0.0473, 0.346, 1);
   -moz-transition: all 0.33s cubic-bezier(0.685, 0.0473, 0.346, 1);
   -o-transition: all 0.33s cubic-bezier(0.685, 0.0473, 0.346, 1);
@@ -673,6 +668,8 @@ h2.title {
   margin-top: 70px;
   padding: 30px 15px;
   min-height: calc(100% - 123px);
+  	border-top-left-radius: 300px;
+	border-top-right-radius: 300px;
 }
 .main-panel > .footer {
   border-top: 1px solid #e7e7e7;
@@ -2893,7 +2890,7 @@ fieldset[disabled] .form-group.is-focused .togglebutton label {
 }
 .navbar .navbar-brand {
   position: relative;
-  height: 50px;
+  height: 80px;
   line-height: 30px;
   color: inherit;
   padding: 10px 15px;
@@ -3346,7 +3343,7 @@ fieldset[disabled] .form-group.is-focused .togglebutton label {
     */
   }
   .navbar .navbar-brand {
-    height: 50px;
+    height: 80px;
     padding: 10px 15px;
   }
   .navbar .navbar-nav > li > a {

@@ -3,6 +3,7 @@
 {% block content %}
 
     {% include 'psda/includes/navpanelindex.html' %}
+    <div class="main-content">
     {% if tab == "home" %}
         <div class="col-md-12">
             {% include 'psda/includes/devicelist.html' %}
@@ -29,7 +30,7 @@
             {% include 'psda/includes/chartlist.html' %}
         </div>
     {% endif %}
-
+</div>
 <script>
     try {
         drawCharts();

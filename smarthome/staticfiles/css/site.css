@@ -646,3 +646,39 @@ margin-left: -2px;}
     border-left: 2px dotted gray;
     margin-bottom: 8px;
 }
+
+.nav-panel-mask {
+    background-color: #eeeeee;
+    border-top-left-radius: 10000%;
+    border-top-right-radius: 10000%;
+    height: 48px;
+    position: fixed;
+    width: 100%;
+    z-index: 1050;
+}
+
+.central-content {
+    margin-top: 8px;
+    z-index: 1050;
+}
+
+.central-content-btn {
+    margin-top: -48px;
+}
+
+.round-nav {
+    margin: -10px;
+}
+
+.btn-purple-outline {
+    border: 2px solid purple;
+    color: purple !important;
+    height: 40%;
+    margin-top: 8px;
+    padding-bottom: 4px !important;
+    padding-top: 4px !important;
+}
+
+.top-menu-side-margin {
+    margin-left:16px;
+}
