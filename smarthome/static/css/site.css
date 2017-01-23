@@ -649,9 +649,9 @@ margin-left: -2px;}
 
 .nav-panel-mask {
     background-color: #eeeeee;
-    border-top-left-radius: 10000%;
-    border-top-right-radius: 10000%;
-    height: 48px;
+    border-top-left-radius: 8%;
+    border-top-right-radius: 8%;
+    height: 100%;
     position: fixed;
     width: 100%;
     z-index: 1050;
@@ -682,3 +682,8 @@ margin-left: -2px;}
 .top-menu-side-margin {
     margin-left:16px;
 }
+
+.z-1050 {
+    z-index: 1050;
+}
+
