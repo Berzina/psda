@@ -654,15 +654,10 @@ h2.title {
 .main-panel {
   position: relative;
   z-index: 2;
-  float: right;
   overflow: auto;
-  width: calc(100% - 260px);
+
   min-height: 100%;
-  -webkit-transform: translate3d(0px, 0, 0);
-  -moz-transform: translate3d(0px, 0, 0);
-  -o-transform: translate3d(0px, 0, 0);
-  -ms-transform: translate3d(0px, 0, 0);
-  transform: translate3d(0px, 0, 0);
+
   -webkit-transition: all 0.33s cubic-bezier(0.685, 0.0473, 0.346, 1);
   -moz-transition: all 0.33s cubic-bezier(0.685, 0.0473, 0.346, 1);
   -o-transition: all 0.33s cubic-bezier(0.685, 0.0473, 0.346, 1);
@@ -673,6 +668,8 @@ h2.title {
   margin-top: 70px;
   padding: 30px 15px;
   min-height: calc(100% - 123px);
+  	border-top-left-radius: 300px;
+	border-top-right-radius: 300px;
 }
 .main-panel > .footer {
   border-top: 1px solid #e7e7e7;
@@ -1464,7 +1461,7 @@ h2.title {
 }
 
 body {
-  background-color: #EEEEEE;
+  background-color: #FFFFFF;
   color: #3C4858;
 }
 body.inverse {
@@ -2893,7 +2890,7 @@ fieldset[disabled] .form-group.is-focused .togglebutton label {
 }
 .navbar .navbar-brand {
   position: relative;
-  height: 50px;
+  height: 80px;
   line-height: 30px;
   color: inherit;
   padding: 10px 15px;
@@ -3346,7 +3343,7 @@ fieldset[disabled] .form-group.is-focused .togglebutton label {
     */
   }
   .navbar .navbar-brand {
-    height: 50px;
+    height: 80px;
     padding: 10px 15px;
   }
   .navbar .navbar-nav > li > a {
@@ -3399,12 +3396,41 @@ fieldset[disabled] .form-group.is-focused .togglebutton label {
 .popover-title {
   background-color: #FFFFFF;
   border: none;
-  padding: 15px 15px 5px;
+  border: none;
   font-size: 1.3em;
 }
 
 .popover-content {
-  padding: 10px 15px 15px;
+  line-height: 1.4;
+}
+
+#sensors > .popover, .tooltip-inner {
+  color: #555555;
+  line-height: 1.5em;
+  background: transparent;
+  border: none;
+  border-radius: 3px;
+
+}
+
+#sensors > .popover {
+  padding: 0;
+  box-shadow: none;
+
+}
+#sensors > .popover.left > .arrow, .popover.right > .arrow, .popover.top > .arrow, .popover.bottom > .arrow {
+  border: none;
+  display: none;
+}
+
+#sensors > .popover-title {
+  background-color: #FFFFFF;
+  border: none;
+  padding: 15px 15px 5px;
+  font-size: 1.3em;
+}
+
+#sensors > .popover-content {
   line-height: 1.4;
 }
 
@@ -4802,14 +4828,19 @@ footer .btn {
     display: none;
     padding-left:15px;
 }
+#sensors {
+padding-top:40px;
+}
 
-    #devices {
-    padding-top:40px;
-    }
 
-    #scenarios {
-    padding-top:40px;
-    }
+
+
+
+#scenarios {
+padding-top:40px;
+
+}
+
 
 @media (min-width: 1024px) {
   .navbar > .container-fluid .navbar-brand {
@@ -4849,4 +4880,24 @@ footer .btn {
     #devices {
     padding-top:40px;
     }
+}
+
+
+  .mobile{
+    display:none;
+  }
+
+  .non-mobile{
+    display:block;
+  }
+
+@media (max-width: 767px) {
+.mobile{
+display:block;
+}
+
+.non-mobile{
+display:none;
+}
+
 }
