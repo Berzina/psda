@@ -71,11 +71,14 @@ def home(request):
 
     t = timezone.now()
     print("start")
-    device_list = Device.objects.filter(device_or_sensor=1)
-    sensor_list = Device.objects.filter(device_or_sensor=0)
+    device_list = Device.objects.filter(device_or_sensor=1).values()
+    print(device_list)
+    sensor_list = Device.objects.filter(device_or_sensor=0).values()
     t1 = timezone.now() - t
     print("device loaded : ", t1)
     room_list = RoomList.objects.values()
+    room = Rooms.objects.values()
+    print(room)
     t2 = timezone.now() - t - t1
     print("rooms loaded : ", t2)
     context = {"devices": device_list,
@@ -83,7 +86,8 @@ def home(request):
                "scenarios": scenarios,
                "current_roomtype": "overview",
                "tab": "home",
-               "rooms": room_list}
+               "rooms": room_list,
+               "room" : room}
     t3 = timezone.now()
     print("start rendering")
     ret = render(request, 'psda/index.html', context)

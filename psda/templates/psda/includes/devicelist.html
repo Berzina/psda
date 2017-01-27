@@ -18,32 +18,32 @@
     {% for device in sensors %}
         {% if device.display != 0 %}
             <div class="col-sm-12 col-xs-12 col-md-12">
-                {% if device.state.id == 3 %}
-                <div class="card card-{{device.card_color}} card-bold" data-device="{{device.id}}" data-device-state="{{ device.state.id }}" data-device-type="{{ device.type.name}}">
+                {% if device.state_id == 3 %}
+                <div class="card card-{{device.card_color}} card-bold" data-device="{{device.id}}" data-device-state="{{ device.state_id }}" data-device-type="{{ device.type.name}}">
                 {% else %}
-                <div class="card card-{{device.card_color}} card-lightgray card-bold" data-device="{{device.id}}" data-device-state="{{ device.state.id }}" data-device-type="{{ device.type.name}}">
+                <div class="card card-{{device.card_color}} card-lightgray card-bold" data-device="{{device.id}}" data-device-state="{{ device.state_id }}" data-device-type="{{ device.type.name}}">
                 {% endif %}
                     <div class="row" style="margin:0px">
                         {% if current_roomtype == "overview" %}
                             {% include 'psda/includes/roominfo.html' %}
                         {% endif %}
-                                {% if device.collect_statistic == 1 %}
-                        {% with device.statistics_set.all|dictsort:"date_time"|last as latest_stat %}
+                                <!--{% if device.collect_statistic == 1 %}-->
+                        <!--{% with device.statistics_set.all|dictsort:"date_time"|last as latest_stat %}-->
                                 <span class="pull-right low-margin">
                                 <span class ="device-values" data-device = "{{device.id}}" data-value = "value1">
-                                    {{latest_stat.value1}}
+                                    {{device.value1}}
                                 </span>
 
                                 &#8451; &#32;
                                 <span class ="device-values" data-device = "{{device.id}}" data-value = "value2">
-                                    {{latest_stat.value2}}
+                                    {{device.value2}}
                                 </span>
                                 </span>
 
 
 
-                        {% endwith %}
-                        {% endif %}
+                        <!--{% endwith %}-->
+                        <!--{% endif %}-->
                     </div>
                     <div class="text-xs-center low-padding no-padding-top">
                         <i class="material-icons md-48 device-icon"> {{device.icon}}</i>
@@ -79,10 +79,10 @@
     {% for device in devices %}
         {% if device.display != 0 %}
             <div class="col-sm-6 col-xs-12 col-md-6">
-                {% if device.state.id == 3 %}
-                <div class="card card-{{device.card_color}} card-bold" data-device="{{device.id}}" data-device-state="{{ device.state.id }}" data-device-type="{{ device.type.name}}" style="box-shadow:0 0 6px 0 {{ device.card_color}}">
+                {% if device.state_id == 3 %}
+                <div class="card card-{{device.card_color}} card-bold" data-device="{{device.id}}" data-device-state="{{ device.state_id }}" data-device-type="{{ device.type.name}}" style="box-shadow:0 0 6px 0 {{ device.card_color}}">
                 {% else %}
-                <div class="card card-{{device.card_color}} card-lightgray card-bold boxshadow-low" data-device="{{device.id}}" data-device-state="{{ device.state.id }}" data-device-type="{{ device.type.name}}">
+                <div class="card card-{{device.card_color}} card-lightgray card-bold boxshadow-low" data-device="{{device.id}}" data-device-state="{{ device.state_id }}" data-device-type="{{ device.type.name}}">
                 {% endif %}
                     <div class="row" style="margin:0px">
                         {% if current_roomtype == "overview" %}
@@ -147,7 +147,6 @@
 
       try {
         var values = JSON.parse(data.values);
-
           ajaxPost("{% url 'token_validator' %}",
 
             {'token': data.token},

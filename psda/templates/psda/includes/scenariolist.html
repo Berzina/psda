@@ -116,6 +116,7 @@
     var inbox = new ReconnectingWebSocket("wss://ezhome-broker.herokuapp.com/receive");
 
     inbox.onmessage = function(message) {
+    try {
       var data = JSON.parse(message.data);
       console.log("received from ws:", data);
 
@@ -152,6 +153,8 @@
          }
 
       )
+    } catch (e) {
+    }
 
     };
 </script>

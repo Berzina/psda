@@ -1,2 +1,12 @@
 
-    <span class="pull-left low-margin no-top-margin" style="padding-top:4px;"> <i class="material-icons" style = "vertical-align : middle">{{device.room.type_room.icon}}</i> {{ device.room.name }}</span>
+    <span class="pull-left low-margin no-top-margin" style="padding-top:4px;"> <i class="material-icons" style = "vertical-align : middle">
+        {% for room_type in rooms %}
+            {% for room_name in room %}
+                {% if device.room_id == room_name.id %}
+                    {% if room_name.type_room_id == room_type.id %}
+                        {{room_type.icon}}</i> {{ room_name.name }}
+                    {% endif %}
+                {% endif %}
+            {% endfor %}
+        {% endfor %}
+    </span>

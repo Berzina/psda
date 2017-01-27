@@ -44,13 +44,14 @@ class Commands(models.Model):
 class Device(models.Model):
     display = models.IntegerField()
     device_or_sensor = models.IntegerField()
+    value1 = models.FloatField()
+    value2 = models.FloatField()
     name = models.CharField(max_length=20)
     icon = models.CharField(max_length=100)
     card_color = models.CharField(max_length=20)
     state = models.ForeignKey('StatusList', models.DO_NOTHING, db_column='state')
     room = models.ForeignKey('Rooms', models.DO_NOTHING, db_column='room')
     type = models.ForeignKey('DeviceList', models.DO_NOTHING, db_column='type')
-    logic = models.IntegerField()
     collect_statistic = models.IntegerField()
 
     class Meta:
