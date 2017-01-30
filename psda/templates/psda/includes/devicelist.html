@@ -19,9 +19,9 @@
         {% if device.display != 0 %}
             <div class="col-sm-12 col-xs-12 col-md-12">
                 {% if device.state_id == 3 %}
-                <div class="card card-{{device.card_color}} card-bold" data-device="{{device.id}}" data-device-state="{{ device.state_id }}" data-device-type="{{ device.type.name}}">
+                <div class="card card-{{device.card_color}} card-bold" data-device="{{device.id}}" data-device-state="{{ device.state_id }}" data-device-type="{{ device.type_id}}">
                 {% else %}
-                <div class="card card-{{device.card_color}} card-lightgray card-bold" data-device="{{device.id}}" data-device-state="{{ device.state_id }}" data-device-type="{{ device.type.name}}">
+                <div class="card card-{{device.card_color}} card-lightgray card-bold" data-device="{{device.id}}" data-device-state="{{ device.state_id }}" data-device-type="{{ device.type_id}}">
                 {% endif %}
                     <div class="row" style="margin:0px">
                         {% if current_roomtype == "overview" %}
@@ -80,9 +80,9 @@
         {% if device.display != 0 %}
             <div class="col-sm-6 col-xs-12 col-md-6">
                 {% if device.state_id == 3 %}
-                <div class="card card-{{device.card_color}} card-bold" data-device="{{device.id}}" data-device-state="{{ device.state_id }}" data-device-type="{{ device.type.name}}" style="box-shadow:0 0 6px 0 {{ device.card_color}}">
+                <div class="card card-{{device.card_color}} card-bold" data-device="{{device.id}}" data-device-state="{{ device.state_id }}" data-device-type="{{ device.type_id}}" style="box-shadow:0 0 6px 0 {{ device.card_color}}">
                 {% else %}
-                <div class="card card-{{device.card_color}} card-lightgray card-bold boxshadow-low" data-device="{{device.id}}" data-device-state="{{ device.state_id }}" data-device-type="{{ device.type.name}}">
+                <div class="card card-{{device.card_color}} card-lightgray card-bold boxshadow-low" data-device="{{device.id}}" data-device-state="{{ device.state_id }}" data-device-type="{{ device.type_id}}">
                 {% endif %}
                     <div class="row" style="margin:0px">
                         {% if current_roomtype == "overview" %}
@@ -101,7 +101,7 @@
             </div>
 </div>
 <script>
-    $('.card[data-device-type="RELAY"][data-device-state!=8]').click (function() {
+    $('.card[data-device-type="2"][data-device-state!=8]').click (function() {
         var prev_device_state = $(this).attr("data-device-state");
         if ($(this).attr("data-device-state") != "8") {
             $(this).css("opacity", "0.3");
