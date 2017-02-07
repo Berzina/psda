@@ -9,12 +9,82 @@
     <div id="scenario-toggle">
     <div class="row"><div class="col-md-6 col-xs-6 dotted-box-right-border-no-margin"></div></div>
     <div class="col-md-12 center">
-        <button class="btn btn-primary btn-round btn-just-icon">
+        <button id="manual-scenario-toggler" class="btn btn-primary btn-round btn-just-icon">
             <i class="material-icons">pan_tool</i>
             <div class="ripple-container"></div>
         </button>
     </div>
-    {% for scenario, info in scenarios.items %}
+    <div id="manual-scenario-toggle">
+    {% for scenario, info in manual_scenarios.items %}
+    {% if info.name != "NONE" %}
+
+        <div class="col-sm-12">
+            <div class="card" data-scenario = "{{ scenario }}" data-scenario-state = "{{info.state}}">
+                <div class ="card-block">
+                    <h3 class="card-title "> {{ info.name }}
+                        <span id = "scenario-indicator">
+                            {% if info.state == "ON" %}
+                            <span class = "indicator-on">
+                            {% else %}
+                            <span class = "indicator-off">
+                            {% endif %}
+                                &#9679;
+                            </span>
+                        </span>
+                        <i id = "scenario-refresh-indicator" class = 'glyphicon glyphicon-refresh glyphicon-refresh-animate md-12 hide'></i>
+                    </h3>
+                    <p>{{ info.descr }} </p>
+                    <a  data-toggle="collapse" href="#{{ scenario }}-scenario-details" aria-expanded="false" aria-controls="collapseExample">
+                        Дeтали...
+                    </a>
+                    <div class="collapse" id="{{ scenario }}-scenario-details">
+                        <br />
+                        <div class="list-group">
+                            <a class="list-group-item disabled" style="cursor:default">
+                                Что случилось:
+                            </a>
+                            {% for device, event in info.events.past.items %}
+
+                                        <a class="list-group-item"><strong>{{ device}} </strong><span class="pull-right"><mark> {{ event }}</mark></span></a>
+
+                            {% endfor %}
+                        </div>
+                        <div class="list-group">
+                            <a class="list-group-item disabled" style="cursor:default">
+                                Что я сделаю:
+                            </a>
+                            {% for device, event in info.events.future.items %}
+                                        <a class="list-group-item"><strong>{{ device}} </strong><span class="pull-right"><mark> {{ event }}</mark></span></a>
+
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                </div>
+                <div class="card-text" align ="center">
+                    {% if info.state == "ON" %}
+                    <a href="#" id ="turnoff-scenario" class = "card-text toggle-scenario" data-scenario="{{ scenario }}" data-scenario-state = "{{info.state}}">ВЫКЛ</a>
+                    {% else %}
+                    <a href="#" id ="turnon-scenario" class = "card-text toggle-scenario" data-scenario="{{ scenario }}" data-scenario-state = "{{info.state}}">ВКЛ</a>
+                    {% endif %}
+                </div>
+                <br />
+            </div>
+        </div>
+    {% endif %}
+{% endfor %}
+    </div>
+</div>
+
+    <div class="row"><div class="col-md-6 col-xs-6 dotted-box-right-border-no-margin"></div></div>
+    <div class="col-md-12 center">
+        <button id="auto-scenario-toggler" class="btn btn-primary btn-round btn-just-icon">
+            <i class="material-icons">security</i>
+            <div class="ripple-container"></div>
+        </button>
+    </div>
+    <div id="auto-scenario-toggle">
+    {% for scenario, info in auto_scenarios.items %}
     {% if info.name != "NONE" %}
 
         <div class="col-sm-12">

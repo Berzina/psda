@@ -40,7 +40,8 @@ def home(request):
 
     t3 = timezone.now()
     print("making computes...")
-    scenarios = {}
+    manual_scenarios = {}
+    auto_scenarios = {}
 
     for scenario in scenario_list:
         past_events = {}
@@ -54,11 +55,19 @@ def home(request):
                 if event.event_type.id == 2:
                     future_events[event.device.name] = event.command.description
 
-        scenarios[scenario.id] = {"name": scenario.name, "descr": scenario.description, "state": scenario.state.name,
-                                  "events": {
-                                      "past": past_events,
-                                      "future": future_events
-                                  }}
+        if scenario.auto == 1:
+            manual_scenarios[scenario.id] = {"name": scenario.name, "descr": scenario.description, "state": scenario.state.name,
+                                      "events": {
+                                          "past": past_events,
+                                          "future": future_events
+                                      }}
+        else:
+            auto_scenarios[scenario.id] = {"name": scenario.name, "descr": scenario.description, "state": scenario.state.name,
+                                      "events": {
+                                          "past": past_events,
+                                          "future": future_events
+                                      }}
+
 
     t4 = timezone.now() - t3
     print("computed:", t4)
@@ -83,7 +92,8 @@ def home(request):
     print("rooms loaded : ", t2)
     context = {"devices": device_list,
                "sensors": sensor_list,
-               "scenarios": scenarios,
+               "manual_scenarios": manual_scenarios,
+               "auto_scenarios": auto_scenarios,
                "current_roomtype": "overview",
                "tab": "home",
                "rooms": room_list,
