@@ -4,7 +4,7 @@
     background: url({% static 'img/seigaiha.png' %}) repeat;
 }
 </style>
-<div class="col-md-3 col-sm-12 col-xs-12 z-1050">
+<div class="col-md-3 col-sm-12 col-xs-12 z-1050 container">
     <div id ="sensors">
 
     <div class="col-md-12 center" id="sensor-control">
@@ -59,11 +59,9 @@
 </div>
 </div>
     </div>
-<div class="col-md-5 col-xs-12 z-1050 wave-back central-content">
-    {% include 'psda/includes/scenariolist.html' %}
-</div>
 
-<div class="col-md-4 col-sm-12 col-xs-12 z-1050">
+
+<div class="col-md-4 col-sm-12 col-xs-12 z-1050 wave-back central-content container">
     <div id="devices">
     <div class="col-md-12 center">
         <a id="device-toggler" role="button" class="btn btn-primary btn-round btn-just-icon">
@@ -98,7 +96,11 @@
         {% endif %}
     {% endfor %}
 </div>
-            </div>
+    </div>
+</div>
+
+<div class="col-md-5 col-xs-12 z-1050 container">
+    {% include 'psda/includes/scenariolist.html' %}
 </div>
 <script>
     $('.card[data-device-type="2"][data-device-state!=8]').click (function() {
@@ -120,23 +122,24 @@
                             $(device).attr("data-device-state", device_info.state);
                             $(device).find("i.device-icon").removeClass("animate-device-icon");
                             $(device).css("opacity", "1");
-                            if ($("#server-down").length == 0) {
-                                $("#devices").prepend('<div id = "server-down" class="alert alert-danger"><a class="close" data-dismiss="alert">×</a><strong><i class="material-icons">sentiment_dissatisfied</i> Вот незадача. </strong>Кажется, сервер недоступен.</div>');
-                            }
+                            ajaxPost("{% url 'device_state' %}",
+                                {'device': $(device).attr("data-device")},
+                                function(content) {
+                                    var device_info = content.result;
+                                    $(device).attr("data-device-state", device_info.state)
+                                    if (device_info.state == "3") {
+                                        $(device).removeClass ("card-lightgray");
+                                    } else if ( device_info.state == "5") {
+                                        $(device).addClass ("card-lightgray");
+                                    }
+                                }
+                            );
                         }
                     }, parseInt(timeout) * 1000);
             })
         }
     });
 
-    $('#satisfier').click(function(ev){
-       ev.preventDefault();
-       var $this = $(this);
-        ajaxGet($this.attr('data-url'), function(content){
-            //onSuccess
-            alert(content.result);
-        })
-    });
 
     var inbox = new ReconnectingWebSocket("wss://ezhome-broker.herokuapp.com/receive");
     <!--var outbox = new ReconnectingWebSocket("wss://ezhome-broker.herokuapp.com/submit");-->
@@ -188,6 +191,26 @@
       }
 
     };
+
+    $(document).ready(function(){
+
+      // Cache the highest
+      var highestBox = 0;
+
+      // Select and loop the elements you want to equalise
+      $('.container', this).each(function(){
+
+        // If this box is higher than the cached highest then store it
+        if($(this).height() > highestBox) {
+          highestBox = $(this).height();
+        }
+
+      });
+
+      // Set the height of all those children to whichever was highest
+      $('.container',this).height(highestBox);
+
+});
 
 $("#sensor-toggler").click(function(){$("#sensor-toggle").toggleClass("hide")});
 $("#device-toggler").click(function(){$("#device-toggle").toggleClass("hide")});

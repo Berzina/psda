@@ -95,6 +95,27 @@ def home(request):
     print("rendered : ", t4)
     return ret
 
+@ajax
+@csrf_exempt
+def get_device_state (request):
+
+    device_id = int(request.POST["device"])
+    state = Device.objects.get(pk=device_id)
+    return {'result':
+                {'state' : state.state.id}
+            }
+
+@ajax
+@csrf_exempt
+def get_scenario_state (request):
+
+    scenario_id = int(request.POST["scenario"])
+    state = Scenarios.objects.get(pk=scenario_id)
+    return {'result':
+                {'state' : state.state.id}
+            }
+
+
 def index(request):
 
     context = {"current_roomtype" : "overview",

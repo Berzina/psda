@@ -94,20 +94,24 @@
                 setTimeout(function(){
                     if ($(scenario).attr("data-scenario-state") == "WAIT") {
                         $(scenario).attr("data-scenario-state", scenario_info.state);
-                        if (scenario_info.state == "ON") {
-                            $(scenario).find("#scenario-indicator").html("<span class = 'indicator-on'>&#9679;</span>");
-                            $(scenario).find("#scenario-indicator").removeClass("hide");
-                            $(scenario).find("#scenario-refresh-indicator").addClass("hide");
-                            $(scenario).find(".card-text").html("<a href='#' id = 'turnoff-scenario' class = 'card-text toggle-scenario'>ВЫКЛ</a>");
-                        } else if (scenario_info.state == "OFF") {
-                            $(scenario).find("#scenario-indicator").html("<span class = 'indicator-off'>&#9679;</span>");
-                            $(scenario).find("#scenario-indicator").removeClass("hide");
-                            $(scenario).find("#scenario-refresh-indicator").addClass("hide");
-                            $(scenario).find(".card-text").html("<a href='#' id = 'turnon-scenario' class = 'card-text toggle-scenario'>ВКЛ</a>");
-                        }
-                        if ($("#server-down").length == 0) {
-                            $("#scenarios").prepend('<div id = "server-down" class="alert alert-danger"><a class="close" data-dismiss="alert">×</a><strong><i class="material-icons">sentiment_dissatisfied</i> Вот незадача. </strong>Кажется, сервер недоступен.</div>');
-                        }
+                        ajaxPost("{% url 'scenario_state' %}",
+                                {'scenario': $(scenario).attr("data-scenario")},
+                                function(content) {
+                                    var scenario_info = content.result;
+                                    $(scenario).attr("data-scenario-state", scenario_info.state)
+                                    if (scenario_info.state == "3") {
+                                        $(scenario).find("#scenario-indicator").html("<span class = 'indicator-on'>&#9679;</span>");
+                                        $(scenario).find("#scenario-indicator").removeClass("hide");
+                                        $(scenario).find("#scenario-refresh-indicator").addClass("hide");
+                                        $(scenario).find(".card-text").html("<a href='#' id = 'turnoff-scenario' class = 'card-text toggle-scenario'>ВЫКЛ</a>");
+                                    } else if ( scenario_info.state == "5") {
+                                        $(scenario).find("#scenario-indicator").html("<span class = 'indicator-off'>&#9679;</span>");
+                                        $(scenario).find("#scenario-indicator").removeClass("hide");
+                                        $(scenario).find("#scenario-refresh-indicator").addClass("hide");
+                                        $(scenario).find(".card-text").html("<a href='#' id = 'turnon-scenario' class = 'card-text toggle-scenario'>ВКЛ</a>");
+                                    }
+                                }
+                        );
                     }
                 }, parseInt(timeout) * 1000);
         })
