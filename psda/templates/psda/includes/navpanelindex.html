@@ -1,18 +1,18 @@
 <nav class="navbar navbar-default navbar-fixed-top inner-navbar" style="min-height:80px;">
     <div class="row">
 
-        <div class="collapse navbar-collapse " id="bs-example-navbar-collapse-1">
+        <div class="collapse navbar-collapse " >
             <ul class="nav navbar-nav round-nav top-menu-side-margin col-md-4">
             {% if user.is_authenticated %}
                 <li>
-                    <a href="#" id="user-name" class="btn-purple-outline">
+                    <a href="#" id="user-name" class="user-name btn-purple-outline">
                         <i class="material-icons">person</i>
                         <span>{{ user.username }}</span>
                     </a>
                 </li>
             {% endif %}
                 {% if user.is_superuser %}
-                <div id="user-func" class="hide">
+                <div id="user-func" class="user-func hide">
                     <a class="top-menu-side-margin" id ="gotoAdminBtn" href = "{% url 'admin' %}">
                         <i class="material-icons" >settings_applications</i>
                     </a>
@@ -46,5 +46,5 @@
 
 <script>
 $( "#nav-{{ tab }}" ).addClass("active");
-$("#user-name").click(function(){$("#user-func").toggleClass("hide")})
+$("#user-name").click(function(){console.log("!!!");$("#user-func").toggleClass("hide")})
 </script>

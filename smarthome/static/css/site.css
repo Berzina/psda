@@ -686,3 +686,34 @@ margin-left: -2px;}
     z-index: 1050;
 }
 
+.off-canvas-sidebar .nav li:nth-child(1) > a {
+    border-radius: 50%;
+    height: 72pt;
+}
+
+.off-canvas-sidebar .nav li:nth-child(1) {
+    margin-left: 25%;
+    width: 50%;
+}
+
+.off-canvas-sidebar .user-func {
+    display:block !important;
+}
+
+.off-canvas-sidebar .nav span {
+    margin-left: 25%;
+}
+
+.off-canvas-sidebar .nav li i {
+    font-size: 24px;
+    line-height: 30px;
+    margin-left: 25%;
+    margin-right: 15px;
+    margin-top: 25%;
+    text-align: center;
+}
+
+.off-canvas-sidebar .user-func {
+    margin-left:5%;
+}
+
