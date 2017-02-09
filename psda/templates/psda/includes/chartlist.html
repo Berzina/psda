@@ -1,6 +1,6 @@
 {% if statistics %}
 {% for device in devices %}
-<div class="col-md-6 col-xs-12">
+<div class="col-md-6 col-xs-12 z-1050">
     <div class="card">
         <div class="card-content">
             <div id="chart-{{device.id}}"></div>
@@ -19,7 +19,7 @@
 </div>
 {% endfor %}
 {% else %}
-    <div class="alert alert-warning">
+    <div class="alert alert-warning z-1050">
         <i class="material-icons">whatshot</i> <strong>Мне очень жаль. </strong>Кажется, информация об этом дне недоступна. Попробуйте выбрать другой день.
     </div>
 {% endif %}

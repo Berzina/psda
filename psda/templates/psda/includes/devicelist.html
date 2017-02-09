@@ -8,8 +8,9 @@
     <div id ="sensors">
 
     <div class="col-md-12 center" id="sensor-control">
-        <a id="sensor-toggler" role="button" class="btn btn-primary btn-round btn-just-icon">
-            <i class="material-icons">wifi_tethering</i>
+        <a id="sensor-toggler" role="button" class="btn btn-primary btn-round">
+            <!--<i class="material-icons">wifi_tethering</i>-->
+            <span>Датчики</span>
             <div class="ripple-container"></div>
         </a>
     </div>
@@ -33,11 +34,13 @@
                                 <span class ="device-values" data-device = "{{device.id}}" data-value = "value1">
                                     {{device.value1}}
                                 </span>
-
-                                &#8451; &#32;
-                                <span class ="device-values" data-device = "{{device.id}}" data-value = "value2">
-                                    {{device.value2}}
-                                </span>
+                                {% if device.id == 9 %}
+                                &#8451;
+                                {% endif %}
+                                    <!--&#32;-->
+                                <!--<span class ="device-values" data-device = "{{device.id}}" data-value = "value2">-->
+                                    <!--{{device.value2}}-->
+                                <!--</span>-->
                                 </span>
 
 
@@ -64,8 +67,9 @@
 <div class="col-md-4 col-sm-12 col-xs-12 z-1050 wave-back central-content container">
     <div id="devices">
     <div class="col-md-12 center">
-        <a id="device-toggler" role="button" class="btn btn-primary btn-round btn-just-icon">
-            <i class="material-icons">developer_board</i>
+        <a id="device-toggler" role="button" class="btn btn-primary btn-round">
+            <span>Устройства</span>
+            <!--<i class="material-icons">developer_board</i>-->
             <div class="ripple-container"></div>
         </a>
     </div>
@@ -143,72 +147,82 @@
 
     var inbox = new ReconnectingWebSocket("wss://ezhome-broker.herokuapp.com/receive");
     <!--var outbox = new ReconnectingWebSocket("wss://ezhome-broker.herokuapp.com/submit");-->
+    $(document).ready(function(){
+        inbox.onmessage = function(message) {
+          var data = JSON.parse(message.data);
+            console.log("received from ws:", data);
 
-    inbox.onmessage = function(message) {
-      var data = JSON.parse(message.data);
-        console.log("received from ws:", data);
+          try {
+            var values = JSON.parse(data.values);
+              ajaxPost("{% url 'token_validator' %}",
 
-      try {
-        var values = JSON.parse(data.values);
-          ajaxPost("{% url 'token_validator' %}",
+                {'token': data.token},
 
-            {'token': data.token},
-
-             function(content){
-                if (content.valid == "ok") {
-                    if (data.state == "ON") {
-                        $("div.card").each ( function (i, card) {
-                            if ($(card).attr("data-device") == data.device) {
-                                $(card).attr("data-device-state","3");
-                                $(card).css("opacity", "1");
-                                $(card).find("i.device-icon").removeClass("animate-device-icon");
-                                $(card).removeClass ("card-lightgray");
-                                var value_fields = $(card).find("span.device-values");
-                                $(value_fields).each (function (i, field) {
-                                    $(field).html(values [i]);
-                                })
-                            }
-                        })
-                    } else if ( data.state == "OFF") {
-                        $("div.card").each ( function (i, card) {
-                            if ($(card).attr("data-device") == data.device) {
-                                $(card).attr("data-device-state","5");
-                                $(card).css("opacity", "1");
-                                $(card).find("i.device-icon").removeClass("animate-device-icon");
-                                $(card).addClass ("card-lightgray");
-                                var value_fields = $(card).find("span.device-values");
-                                $(value_fields).each (function (i, field) {
-                                    $(field).html(values [i]);
-                                })
-                            }
-                        })
+                 function(content){
+                    if (content.valid == "ok") {
+                        if (data.state == "ON") {
+                            $("div.card").each ( function (i, card) {
+                                if ($(card).attr("data-device") == data.device) {
+                                    $(card).attr("data-device-state","3");
+                                    $(card).css("opacity", "1");
+                                    $(card).find("i.device-icon").removeClass("animate-device-icon");
+                                    $(card).removeClass ("card-lightgray");
+                                    var value_fields = $(card).find("span.device-values");
+                                    $(value_fields).each (function (i, field) {
+                                        $(field).html(values [i]);
+                                    })
+                                }
+                            })
+                        } else if ( data.state == "OFF") {
+                            $("div.card").each ( function (i, card) {
+                                if ($(card).attr("data-device") == data.device) {
+                                    $(card).attr("data-device-state","5");
+                                    $(card).css("opacity", "1");
+                                    $(card).find("i.device-icon").removeClass("animate-device-icon");
+                                    $(card).addClass ("card-lightgray");
+                                    var value_fields = $(card).find("span.device-values");
+                                    $(value_fields).each (function (i, field) {
+                                        $(field).html(values [i]);
+                                    })
+                                }
+                            })
+                        }
                     }
-                }
-             }
+                 }
 
-          )
-      } catch (e) {
-      }
+              )
+          } catch (e) {
+          }
 
-    };
+        };
+    }
 
     $(document).ready(function(){
 
-      // Cache the highest
-      var highestBox = 0;
+      if ($(document).width() >= 512) {
+          // Cache the highest
+          var highestBox = 0;
 
-      // Select and loop the elements you want to equalise
-      $('.container', this).each(function(){
+          // Select and loop the elements you want to equalise
+          $('.container', this).each(function(){
 
-        // If this box is higher than the cached highest then store it
-        if($(this).height() > highestBox) {
-          highestBox = $(this).height();
-        }
+            // If this box is higher than the cached highest then store it
+            if($(this).height() > highestBox) {
+              highestBox = $(this).height();
+            }
 
-      });
+          });
 
-      // Set the height of all those children to whichever was highest
-      $('.container',this).height(highestBox);
+          // Set the height of all those children to whichever was highest
+          $('.container',this).height(highestBox);
+      } else {
+        $(".home-back").css("background-size","cover");
+        $(".home-back").css("background-position","top left");
+        $(".home-back").css("background-repeat","repeat");
+         var height_of_three = $("#devices").height() + $("#sensors").height() + $("#scenarios").height()*2 - 200;
+         $(".nav-panel-mask").css("height", height_of_three);
+         $(".nav-panel-mask").css("border-radius", "0pt");
+      }
 
 });
 

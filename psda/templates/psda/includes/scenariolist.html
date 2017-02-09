@@ -1,16 +1,18 @@
 
 <div id="scenarios">
     <div class="col-md-12 center central-content-btn">
-        <a tabindex="0" role="button" class="btn btn-primary btn-round btn-just-icon" data-trigger="focus" data-toggle="popover-scenarios-opt" data-placement="bottom">
-            <i class="material-icons">view_list</i>
+        <a tabindex="0" role="button" class="btn btn-primary btn-round" data-trigger="focus" data-toggle="popover-scenarios-opt" data-placement="bottom">
+            <!--<i class="material-icons">view_list</i>-->
+            <span>Сценарии</span>
             <div class="ripple-container"></div>
         </a>
     </div>
     <div id="scenario-toggle">
     <div class="row"><div class="col-md-6 col-xs-6 dotted-box-right-border-no-margin"></div></div>
     <div class="col-md-12 center">
-        <button id="manual-scenario-toggler" class="btn btn-primary btn-round btn-just-icon">
-            <i class="material-icons">pan_tool</i>
+        <button id="manual-scenario-toggler" class="btn btn-primary btn-round">
+            <!--<i class="material-icons">pan_tool</i>-->
+            <span>Ручные</span>
             <div class="ripple-container"></div>
         </button>
     </div>
@@ -78,8 +80,9 @@
 
     <div class="row"><div class="col-md-6 col-xs-6 dotted-box-right-border-no-margin"></div></div>
     <div class="col-md-12 center">
-        <button id="auto-scenario-toggler" class="btn btn-primary btn-round btn-just-icon">
-            <i class="material-icons">security</i>
+        <button id="auto-scenario-toggler" class="btn btn-primary btn-round">
+            <!--<i class="material-icons">security</i>-->
+            <span>Авто</span>
             <div class="ripple-container"></div>
         </button>
     </div>
@@ -188,47 +191,48 @@
     })
 
     var inbox = new ReconnectingWebSocket("wss://ezhome-broker.herokuapp.com/receive");
+    $(document).ready(function(){
+        inbox.onmessage = function(message) {
+        try {
+          var data = JSON.parse(message.data);
+          console.log("received from ws:", data);
 
-    inbox.onmessage = function(message) {
-    try {
-      var data = JSON.parse(message.data);
-      console.log("received from ws:", data);
+          ajaxPost("{% url 'token_validator' %}",
 
-      ajaxPost("{% url 'token_validator' %}",
+            {'token': data.token},
 
-        {'token': data.token},
+             function(content){
+                if (content.valid == "ok") {
+                    if (data.state == "ON") {
+                        $("div.card").each ( function (i, card) {
+                            if ($(card).attr("data-scenario") == data.scenario) {
+                                $(card).attr("data-scenario-state","ON");
+                                $(card).find("#scenario-indicator").html("<span class = 'indicator-on'>&#9679;</span>");
+                                $(card).find("#scenario-indicator").removeClass("hide");
+                                $(card).find("#scenario-refresh-indicator").addClass("hide");
+                                $(card).find(".card-text").html("<a href='#' id = 'turnoff-scenario' class = 'card-text toggle-scenario'>ВЫКЛ</a>");
 
-         function(content){
-            if (content.valid == "ok") {
-                if (data.state == "ON") {
-                    $("div.card").each ( function (i, card) {
-                        if ($(card).attr("data-scenario") == data.scenario) {
-                            $(card).attr("data-scenario-state","ON");
-                            $(card).find("#scenario-indicator").html("<span class = 'indicator-on'>&#9679;</span>");
-                            $(card).find("#scenario-indicator").removeClass("hide");
-                            $(card).find("#scenario-refresh-indicator").addClass("hide");
-                            $(card).find(".card-text").html("<a href='#' id = 'turnoff-scenario' class = 'card-text toggle-scenario'>ВЫКЛ</a>");
+                            }
+                        })
+                    } else if ( data.state == "OFF") {
+                        $("div.card").each ( function (i, card) {
+                            if ($(card).attr("data-scenario") == data.scenario) {
+                                $(card).attr("data-scenario-state","OFF");
+                                $(card).find("#scenario-indicator").html("<span class = 'indicator-off'>&#9679;</span>");
+                                $(card).find("#scenario-indicator").removeClass("hide");
+                                $(card).find("#scenario-refresh-indicator").addClass("hide");
+                                $(card).find(".card-text").html("<a href='#' id = 'turnon-scenario' class = 'card-text toggle-scenario'>ВКЛ</a>");
 
-                        }
-                    })
-                } else if ( data.state == "OFF") {
-                    $("div.card").each ( function (i, card) {
-                        if ($(card).attr("data-scenario") == data.scenario) {
-                            $(card).attr("data-scenario-state","OFF");
-                            $(card).find("#scenario-indicator").html("<span class = 'indicator-off'>&#9679;</span>");
-                            $(card).find("#scenario-indicator").removeClass("hide");
-                            $(card).find("#scenario-refresh-indicator").addClass("hide");
-                            $(card).find(".card-text").html("<a href='#' id = 'turnon-scenario' class = 'card-text toggle-scenario'>ВКЛ</a>");
-
-                        }
-                    })
+                            }
+                        })
+                    }
                 }
-            }
-         }
+             }
 
-      )
-    } catch (e) {
+          )
+        } catch (e) {
+        }
+
+        };
     }
-
-    };
 </script>

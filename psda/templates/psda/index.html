@@ -11,13 +11,14 @@
 
     {% endif %}
     {% if tab == "charts" %}
-        <div class="input-group date col-md-6 col-xs-12" style="margin-top:20px;">
-          <input type="text" class="form-control" id ="date" value="{{date}}"  style = "display: table-cell; padding: 0px">
-            <span class="btn btn-white btn-just-icon" style = "display: table-cell; padding: 0px">
+        <div class = "col-md-5 col-xs-12" style="margin-right: 32px;"></div>
+        <div class="input-group date col-md-2 col-xs-12 z-1050" style="margin-top:20px;">
+          <input type="text" class="form-control" id ="date" value="{{date}}"  style = "display: table-cell; padding: 0px;color: purple;font-weight: bold;">
+            <span class="btn btn-white  btn-just-icon" style = "display: table-cell;">
                 <i class="glyphicon glyphicon-th"></i>
             </span>
         </div>
-        <div class="col-sm-6 col-md-4" id="waiting">
+        <div class="col-sm-6 col-md-4 z-1050" id="waiting">
             <div class="thumbnail">
                 {% load static %}
               <img src="{% static 'img/chartist.gif' %}" alt="...">
