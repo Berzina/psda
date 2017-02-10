@@ -149,7 +149,7 @@
 </div>
 
 <script>
-
+$(document).ready(function(){
     $(document).on('click', ".toggle-scenario", function () {
         var prev_scenario_state = $(this).parent().parent().attr("data-scenario-state");
         $(this).parent().parent().find("#scenario-indicator").addClass("hide");
@@ -191,7 +191,7 @@
     })
 
     var inbox = new ReconnectingWebSocket("wss://ezhome-broker.herokuapp.com/receive");
-    $(document).ready(function(){
+
         inbox.onmessage = function(message) {
         try {
           var data = JSON.parse(message.data);

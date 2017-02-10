@@ -107,6 +107,7 @@
     {% include 'psda/includes/scenariolist.html' %}
 </div>
 <script>
+$(document).ready(function(){
     $('.card[data-device-type="2"][data-device-state!=8]').click (function() {
         var prev_device_state = $(this).attr("data-device-state");
         if ($(this).attr("data-device-state") != "8") {
@@ -146,11 +147,10 @@
 
 
     var inbox = new ReconnectingWebSocket("wss://ezhome-broker.herokuapp.com/receive");
-    <!--var outbox = new ReconnectingWebSocket("wss://ezhome-broker.herokuapp.com/submit");-->
-    $(document).ready(function(){
+    // <!--var outbox = new ReconnectingWebSocket("wss://ezhome-broker.herokuapp.com/submit");-->
         inbox.onmessage = function(message) {
           var data = JSON.parse(message.data);
-            console.log("received from ws:", data);
+            
 
           try {
             var values = JSON.parse(data.values);
@@ -195,9 +195,7 @@
           }
 
         };
-    })
 
-    $(document).ready(function(){
 
       if ($(document).width() >= 512) {
           // Cache the highest
@@ -219,9 +217,9 @@
         $(".home-back").css("background-size","cover");
         $(".home-back").css("background-position","top left");
         $(".home-back").css("background-repeat","repeat");
-         var height_of_three = $("#devices").height() + $("#sensors").height() + $("#scenarios").height()*2 - 200;
-         $(".nav-panel-mask").css("height", height_of_three);
-         $(".nav-panel-mask").css("border-radius", "0pt");
+        var height_of_three = $("#devices").height() + $("#sensors").height() + $("#scenarios").height()*2 - 200;
+        $(".nav-panel-mask").css("height", height_of_three);
+        $(".nav-panel-mask").css("border-radius", "0pt");
       }
 
 });

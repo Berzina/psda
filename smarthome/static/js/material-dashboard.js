@@ -65,7 +65,7 @@ $(document).ready(function(){
     md.checkSidebarImage();
 
     //  Activate the tooltips
-    $('[rel="tooltip"]').tooltip();
+    //$('[rel="tooltip"]').tooltip();
 
 
     $('.form-control').on("focus", function(){
