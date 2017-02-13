@@ -18,6 +18,9 @@ class ChannelList(models.Model):
         managed = False
         db_table = 'channel_list'
 
+    def __str__(self):
+        return self.name
+
 
 class CommandList(models.Model):
     name = models.CharField(max_length=10)
@@ -26,6 +29,9 @@ class CommandList(models.Model):
     class Meta:
         managed = False
         db_table = 'command_list'
+
+    def __str__(self):
+        return self.description
 
 
 class Commands(models.Model):
@@ -39,6 +45,8 @@ class Commands(models.Model):
     class Meta:
         managed = False
         db_table = 'commands'
+    def __str__(self):
+        return self.command
 
 
 class Device(models.Model):
@@ -78,6 +86,9 @@ class EventList(models.Model):
     class Meta:
         managed = False
         db_table = 'event_list'
+
+    def __str__(self):
+        return self.name
 
 
 class Events(models.Model):
@@ -167,6 +178,9 @@ class Statistics(models.Model):
         managed = False
         db_table = 'statistics'
 
+    def __str__(self):
+        return self.value1
+
 
 class StatusList(models.Model):
     name = models.CharField(unique=True, max_length=20)
@@ -174,4 +188,7 @@ class StatusList(models.Model):
     class Meta:
         managed = False
         db_table = 'status_list'
+
+    def __str__(self):
+        return self.name
 

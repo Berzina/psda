@@ -663,8 +663,8 @@ h2.title {
 }
 .main-panel > .content {
   margin-top: 70px;
-  padding: 30px 15px;
-  min-height: calc(100% - 123px);
+  padding: 30px 0px 30px 15px;
+  min-height: calc(100% + 120px);
   	border-top-left-radius: 300px;
 	border-top-right-radius: 300px;
 }
@@ -2882,7 +2882,7 @@ fieldset[disabled] .form-group.is-focused .togglebutton label {
 .navbar {
   border: 0;
   border-radius: 3px;
-  border-bottom: 1px solid #ededf3;
+
   padding: 10px 0;
 }
 .navbar .navbar-brand {

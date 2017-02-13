@@ -1,19 +1,20 @@
 {% if request.user.is_authenticated %}
 
 	<!doctype html>
+	<title>Ядома</title>
 	<html lang="en">
 	<head>
 	{% include 'psda/includes/staticincludes.html' %}
 	</head>
 
-	<body>
+	<body class="home-back">
 <style>
 .home-back {
     {% load static %}
-    background: url({% static 'img/home.jpeg' %});
-    background-position:center;
-    background-size: cover;
-    opacity:0.6;
+    background: url({% static 'img/home.jpeg' %}), rgba(0,0,0,0.6);
+    background-position: top left, center;
+    background-size: cover, repeat;
+    overflow:hidden;
 }
 </style>
 <!--<div class="home-back" style="height: 100%;min-height: 900px;min-width: 800px;width: 100%;">-->
@@ -23,7 +24,7 @@
 
 
 
-			<div class="main-panel" style="opacity:1 !important;">
+			<div class="main-panel " style="opacity:1 !important;">
 				<nav class="navbar navbar-default navbar-absolute" style = "padding-top : 0px;" id="main-menu-toggler">
 					<button type="button" class="navbar-toggle" data-toggle="collapse">
 						<span class="sr-only">Toggle navigation</span>
@@ -46,30 +47,30 @@
 				 {% endblock %}
 				  <footer class="footer">
 					<div class="container-fluid">
-						<nav class="pull-left">
-							<ul>
-								<li>
-									<a href="#">
-										Home
-									</a>
-								</li>
-								<li>
-									<a href="#">
-										Company
-									</a>
-								</li>
-								<li>
-									<a href="#">
-										Portfolio
-									</a>
-								</li>
-								<li>
-									<a href="#">
-									   Blog
-									</a>
-								</li>
-							</ul>
-						</nav>
+						<!--<nav class="pull-left">-->
+							<!--<ul>-->
+								<!--<li>-->
+									<!--<a href="#">-->
+										<!--Home-->
+									<!--</a>-->
+								<!--</li>-->
+								<!--<li>-->
+									<!--<a href="#">-->
+										<!--Company-->
+									<!--</a>-->
+								<!--</li>-->
+								<!--<li>-->
+									<!--<a href="#">-->
+										<!--Portfolio-->
+									<!--</a>-->
+								<!--</li>-->
+								<!--<li>-->
+									<!--<a href="#">-->
+									   <!--Blog-->
+									<!--</a>-->
+								<!--</li>-->
+							<!--</ul>-->
+						<!--</nav>-->
 						<p class="copyright pull-right">
 							&copy; <script>document.write(new Date().getFullYear())</script> <a href="#">Kate Khotko</a>
 						</p>
