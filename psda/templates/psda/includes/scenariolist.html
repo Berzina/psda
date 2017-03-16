@@ -47,7 +47,7 @@
                             </a>
                             {% for device, event in info.events.past.items %}
 
-                                        <a class="list-group-item"><strong>{{ device}} </strong><span class="pull-right"><mark> {{ event }}</mark></span></a>
+                                <a class="list-group-item"><strong>{{ device}} </strong><span class="pull-right"><mark> {{ event }}</mark></span></a>
 
                             {% endfor %}
                         </div>
@@ -56,7 +56,14 @@
                                 Что я сделаю:
                             </a>
                             {% for device, event in info.events.future.items %}
-                                        <a class="list-group-item"><strong>{{ device}} </strong><span class="pull-right"><mark> {{ event }}</mark></span></a>
+
+                                <a class="list-group-item"><strong>
+                                    {% if device == "NONE" %}
+                                        {{scenario}}
+                                    {% else %}
+                                        {{ device}}
+                                    {% endif %}
+                                </strong><span class="pull-right"><mark> {{ event }}</mark></span></a>
 
                             {% endfor %}
                         </div>
@@ -126,7 +133,13 @@
                                 Что я сделаю:
                             </a>
                             {% for device, event in info.events.future.items %}
-                                        <a class="list-group-item"><strong>{{ device}} </strong><span class="pull-right"><mark> {{ event }}</mark></span></a>
+                                        <a class="list-group-item"><strong>
+                                    {% if device == "NONE" %}
+                                        {{scenario}}
+                                    {% else %}
+                                        {{ device}}
+                                    {% endif %}
+                                        </strong><span class="pull-right"><mark> {{ event }}</mark></span></a>
 
                             {% endfor %}
                         </div>
