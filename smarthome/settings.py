@@ -98,7 +98,6 @@ DATABASES = {
         'NAME': 'sql11161511',
         'USER': 'sql11161511',
         'PASSWORD': 'ChqUfvMnHB'
-        'BACKEND': 'django.db.backends.mysql',
         'HOST': 'sql11.freemysqlhosting.net',  # Or an IP Address that your DB is hosted on
         'PORT': '3306'
     }
