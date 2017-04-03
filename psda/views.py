@@ -36,7 +36,7 @@ def login (request):
 def home(request):
     t = timezone.now()
     print("start")
-    scenario_list = Scenarios.using(DATABASE_TO_CHOOSE).objects.all()
+    scenario_list = Scenarios.objects.using(DATABASE_TO_CHOOSE).all()
     print(scenario_list.values())
 
     t1 = timezone.now() - t
@@ -87,13 +87,13 @@ def home(request):
 
     t = timezone.now()
     print("start")
-    device_list = Device.using(DATABASE_TO_CHOOSE).objects.filter(device_or_sensor=1).values()
+    device_list = Device.objects.using(DATABASE_TO_CHOOSE).filter(device_or_sensor=1).values()
     print(device_list)
-    sensor_list = Device.using(DATABASE_TO_CHOOSE).objects.filter(device_or_sensor=0).values()
+    sensor_list = Device.objects.using(DATABASE_TO_CHOOSE).filter(device_or_sensor=0).values()
     t1 = timezone.now() - t
     print("device loaded : ", t1)
-    room_list = RoomList.objects.values()
-    room = Rooms.objects.values()
+    room_list = RoomList.objects.using(DATABASE_TO_CHOOSE).values()
+    room = Rooms.objects.using(DATABASE_TO_CHOOSE).values()
     print(room)
     t2 = timezone.now() - t - t1
     print("rooms loaded : ", t2)
@@ -117,7 +117,7 @@ def home(request):
 def get_device_state (request):
 
     device_id = int(request.POST["device"])
-    state = Device.objects.get(pk=device_id)
+    state = Device.objects.using(DATABASE_TO_CHOOSE).get(pk=device_id)
     return {'result':
                 {'state' : state.state.id}
             }
@@ -127,7 +127,7 @@ def get_device_state (request):
 def get_scenario_state (request):
 
     scenario_id = int(request.POST["scenario"])
-    state = Scenarios.objects.get(pk=scenario_id)
+    state = Scenarios.objects.using(DATABASE_TO_CHOOSE).get(pk=scenario_id)
     return {'result':
                 {'state' : state.state.id}
             }
@@ -232,10 +232,10 @@ def devices (request):
     return ret
 
 def charts (request):
-    room_list = RoomList.objects.values()
+    room_list = RoomList.objects.using(DATABASE_TO_CHOOSE).values()
 
-    devices = Device.objects.all().filter(collect_statistic=1)
-    statistics = Statistics.objects.all()
+    devices = Device.objects.using(DATABASE_TO_CHOOSE).all().filter(collect_statistic=1)
+    statistics = Statistics.objects.using(DATABASE_TO_CHOOSE).all()
     stats = []
     today = timezone.now()
     for stat in statistics:
@@ -265,22 +265,22 @@ def toggle_device (request):
     device_id = int(request.POST["device"])
     state_id = int(request.POST["state"])
 
-    device = Device.objects.get(pk=device_id)
-    scenario = Scenarios.objects.get(name="NONE")
+    device = Device.objects.using(DATABASE_TO_CHOOSE).get(pk=device_id)
+    scenario = Scenarios.objects.using(DATABASE_TO_CHOOSE).get(name="NONE")
 
-    timeout = Parameter.objects.get(code="WAIT_SERVER").value
+    timeout = Parameter.objects.using(DATABASE_TO_CHOOSE).get(code="WAIT_SERVER").value
 
     print ("timeout=", timeout)
 
     if state_id == 3:
-        command = CommandList.objects.get(name="TURN_OFF")
-        state= StatusList.objects.get(name="WAIT")
-        Commands.objects.create(device=device, scenario=scenario, command=command, state=state, date_time=timezone.now(), value=0)
+        command = CommandList.objects.using(DATABASE_TO_CHOOSE).get(name="TURN_OFF")
+        state= StatusList.objects.using(DATABASE_TO_CHOOSE).get(name="WAIT")
+        Commands.objects.using(DATABASE_TO_CHOOSE).create(device=device, scenario=scenario, command=command, state=state, date_time=timezone.now(), value=0)
     elif state_id == 5:
-        command = CommandList.objects.get(name="TURN_ON")
+        command = CommandList.objects.using(DATABASE_TO_CHOOSE).get(name="TURN_ON")
         print (command.id)
-        state= StatusList.objects.get(name="WAIT")
-        Commands.objects.create(device=device, scenario=scenario, command=command, state=state,
+        state= StatusList.objects.using(DATABASE_TO_CHOOSE).get(name="WAIT")
+        Commands.objects.using(DATABASE_TO_CHOOSE).create(device=device, scenario=scenario, command=command, state=state,
                                 date_time=timezone.now(), value=0)
     return {'result':
                 {'device': request.POST["device"],
@@ -298,18 +298,18 @@ def toggle_scenario (request):
     else:
         state_id = 5
 
-    device = Device.objects.get(name="NONE")
-    scenario = Scenarios.objects.get(pk=scenario_id)
-    timeout = Parameter.objects.get(code="WAIT_SERVER").value
+    device = Device.objects.using(DATABASE_TO_CHOOSE).get(name="NONE")
+    scenario = Scenarios.objects.using(DATABASE_TO_CHOOSE).get(pk=scenario_id)
+    timeout = Parameter.objects.using(DATABASE_TO_CHOOSE).get(code="WAIT_SERVER").value
 
     if state_id == 3:
-        command = CommandList.objects.get(name="STOP_SCEN")
-        state= StatusList.objects.get(name="WAIT")
-        Commands.objects.create(device=device, scenario=scenario, command=command, state=state, date_time=timezone.now(), value=0)
+        command = CommandList.objects.using(DATABASE_TO_CHOOSE).get(name="STOP_SCEN")
+        state= StatusList.objects.using(DATABASE_TO_CHOOSE).get(name="WAIT")
+        Commands.objects.using(DATABASE_TO_CHOOSE).create(device=device, scenario=scenario, command=command, state=state, date_time=timezone.now(), value=0)
     elif state_id == 5:
-        command = CommandList.objects.get(name="RUN_SCEN")
-        state= StatusList.objects.get(name="WAIT")
-        Commands.objects.create(device=device, scenario=scenario, command=command, state=state,
+        command = CommandList.objects.using(DATABASE_TO_CHOOSE).get(name="RUN_SCEN")
+        state= StatusList.objects.using(DATABASE_TO_CHOOSE).get(name="WAIT")
+        Commands.objects.using(DATABASE_TO_CHOOSE).create(device=device, scenario=scenario, command=command, state=state,
                                 date_time=timezone.now(), value=0)
     return {'result':
                 {'scenario': request.POST["scenario"],
@@ -321,7 +321,7 @@ def toggle_scenario (request):
 @csrf_exempt
 def token_validator (request):
 
-    request_template = AjaxRequests.objects.get(pk=1)
+    request_template = AjaxRequests.objects.using(DATABASE_TO_CHOOSE).get(pk=1)
     if (request.POST["token"] == request_template.token):
         return {'valid': 'ok'}
     else:
@@ -334,8 +334,8 @@ def redraw_charts(request):
     date_str = request.POST["date"]
     date_list = date_str.split("-") #[yyyy, mm, dd]
 
-    devices = Device.objects.all().filter(collect_statistic=1)
-    statistics = Statistics.objects.all()
+    devices = Device.objects.using(DATABASE_TO_CHOOSE).all().filter(collect_statistic=1)
+    statistics = Statistics.objects.using(DATABASE_TO_CHOOSE).all()
     stats = []
 
     for stat in statistics:
