@@ -92,6 +92,15 @@ DATABASES = {
         'PASSWORD': 'hUu52AKlch',
         'HOST': 'sql7.freemysqlhosting.net',   # Or an IP Address that your DB is hosted on
         'PORT': '3306',
+    },
+    'client1': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'sql11161511',
+        'USER': 'sql11161511',
+        'PASSWORD': 'ChqUfvMnHB'
+        'BACKEND': 'django.db.backends.mysql',
+        'HOST': 'sql11.freemysqlhosting.net',  # Or an IP Address that your DB is hosted on
+        'PORT': '3306'
     }
 }
 

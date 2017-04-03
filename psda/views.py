@@ -9,27 +9,34 @@ from django.http import HttpResponseRedirect
 from django.core.cache import cache
 from django.template.loader import render_to_string
 
+DATABASE_TO_CHOOSE = "default"
 
 def login (request):
+    global DATABASE_TO_CHOOSE
 
-  print (request.POST)
-  username = request.POST.get("username", False)
-  password = request.POST.get("password", False)
-  try:
+    print (request.POST)
+    username = request.POST.get("username", False)
+    password = request.POST.get("password", False)
+    try:
       user = authenticate(username=username, password=password)
       login_django(request, user)
+      if username == "haspl":
+          DATABASE_TO_CHOOSE = "client1"
+      else:
+          DATABASE_TO_CHOOSE = "default"
+
       # Always return an HttpResponseRedirect after successfully dealing
       # with POST data. This prevents data from being posted twice if a
       # user hits the Back button.
       return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
-  except:
+    except:
       return HttpResponseRedirect('/')
 
 
 def home(request):
     t = timezone.now()
     print("start")
-    scenario_list = Scenarios.objects.all()
+    scenario_list = Scenarios.using(DATABASE_TO_CHOOSE).objects.all()
     print(scenario_list.values())
 
     t1 = timezone.now() - t
@@ -80,9 +87,9 @@ def home(request):
 
     t = timezone.now()
     print("start")
-    device_list = Device.objects.filter(device_or_sensor=1).values()
+    device_list = Device.using(DATABASE_TO_CHOOSE).objects.filter(device_or_sensor=1).values()
     print(device_list)
-    sensor_list = Device.objects.filter(device_or_sensor=0).values()
+    sensor_list = Device.using(DATABASE_TO_CHOOSE).objects.filter(device_or_sensor=0).values()
     t1 = timezone.now() - t
     print("device loaded : ", t1)
     room_list = RoomList.objects.values()
